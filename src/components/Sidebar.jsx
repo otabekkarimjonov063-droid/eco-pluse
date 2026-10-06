@@ -22,7 +22,6 @@ const Sidebar = ({ activeTab, setActiveTab, onOpenLogin }) => {
     { id: 'calculator', name: t('navbar', 'calculator'), icon: <Calculator size={20} /> },
     { id: 'projects', name: t('navbar', 'projects'), icon: <GalleryVerticalEnd size={20} /> },
     { id: 'plant', name: t('navbar', 'plant'), icon: <TreePine size={20} /> },
-    { id: 'admin', name: 'Admin Panel', icon: <ShieldAlert size={20} /> },
   ];
 
   const langs = ['UZ', 'RU', 'EN'];
@@ -104,6 +103,15 @@ const Sidebar = ({ activeTab, setActiveTab, onOpenLogin }) => {
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Admin Panel Toggle */}
+            <button 
+              onClick={() => setActiveTab('admin')} 
+              className="flex-1 p-3 flex items-center justify-center premium-glass rounded-xl hover:bg-red-500/10 dark:hover:bg-red-500/20 transition-all text-slate-700 dark:text-red-400 group"
+              title="Admin Panel"
+            >
+              <ShieldAlert size={20} className="group-hover:scale-110 transition-transform" />
+            </button>
+
             {/* Theme Toggle */}
             <button 
               onClick={toggleTheme} 
