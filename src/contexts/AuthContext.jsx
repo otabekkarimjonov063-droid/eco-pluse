@@ -13,7 +13,11 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('ecopulse_user', JSON.stringify(userData));
   };
 
-  const logout = () => {
+  const logout = async () => {
+    if (user) {
+      const { sendTelegramMessage } = await import('../utils/telegram.js');
+      await sendTelegramMessage(`🚪 <b>Foydalanuvchi chiqdi</b>\n\nIsmi: ${user.name}\nEmail: ${user.email}`);
+    }
     setUser(null);
     localStorage.removeItem('ecopulse_user');
   };

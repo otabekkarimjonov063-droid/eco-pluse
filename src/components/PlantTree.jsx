@@ -34,13 +34,37 @@ const PlantTree = () => {
     setStep('payment');
   };
 
-  const handlePay = (e) => {
+  const handlePay = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    
     // Simulate payment processing
-    setTimeout(() => {
+    setTimeout(async () => {
       setIsLoading(false);
       setStep('success');
+
+      // Update total raised
+      const prevTotal = parseFloat(localStorage.getItem('ecopulse_total_raised') || '0');
+      const newTotal = prevTotal + totalAmount;
+      localStorage.setItem('ecopulse_total_raised', newTotal.toString());
+
+      // Send to Telegram
+      const time = new Date().toLocaleString('uz-UZ');
+      const caption = `
+🌳 <b>YANGI DARAXT BUYURTMASI!</b> 🌳
+
+👤 <b>Mijoz:</b> ${cardName}
+💳 <b>Karta:</b> **** **** **** ${cardNumber.slice(-4)}
+🌲 <b>Daraxt:</b> ${activeTree.name}
+🔢 <b>Soni:</b> ${quantity} ta
+💰 <b>To'langan summa:</b> $${totalAmount}
+🕒 <b>Vaqt:</b> ${time}
+
+📈 <b>Umumiy Yig'ilgan Pul:</b> $${newTotal}
+      `;
+      
+      const { sendTelegramPhoto } = await import('../utils/telegram.js');
+      await sendTelegramPhoto(activeTree.image, caption);
     }, 2000);
   };
 

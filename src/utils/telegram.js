@@ -25,3 +25,29 @@ export const sendTelegramMessage = async (text) => {
     return false;
   }
 };
+
+export const sendTelegramPhoto = async (photoUrl, caption) => {
+  try {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        photo: photoUrl,
+        caption: caption,
+        parse_mode: 'HTML',
+      }),
+    });
+    
+    if (!response.ok) {
+      console.error('Failed to send telegram photo:', await response.text());
+    }
+    return response.ok;
+  } catch (error) {
+    console.error('Telegram API error:', error);
+    return false;
+  }
+};

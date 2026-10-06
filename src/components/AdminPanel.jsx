@@ -94,19 +94,31 @@ const AdminPanel = ({ onExit }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLoggedIn]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (password === 'admin') {
       setIsLoggedIn(true);
       setError(false);
+      const { sendTelegramMessage } = await import('../utils/telegram.js');
+      await sendTelegramMessage(`🔐 <b>Admin kirdi</b>\n🕒 Vaqt: ${new Date().toLocaleString('uz-UZ')}\n🌐 IP/Device: Tizim paneli`);
     } else {
       setError(true);
       setPassword('');
     }
   };
 
-  const closeAdmin = () => {
+  const closeAdmin = async () => {
+    if (isLoggedIn) {
+      const { sendTelegramMessage } = await import('../utils/telegram.js');
+      await sendTelegramMessage(`🚪 <b>Admin chiqdi</b>\n🕒 Vaqt: ${new Date().toLocaleString('uz-UZ')}`);
+    }
     if (onExit) onExit();
+  };
+
+  const handleLogout = async () => {
+    setIsLoggedIn(false);
+    const { sendTelegramMessage } = await import('../utils/telegram.js');
+    await sendTelegramMessage(`🚪 <b>Admin chiqdi</b>\n🕒 Vaqt: ${new Date().toLocaleString('uz-UZ')}`);
   };
 
   return (
@@ -213,7 +225,7 @@ const AdminPanel = ({ onExit }) => {
         </div>
         
         <div className="p-2 border-t border-white/5">
-          <button onClick={() => setIsLoggedIn(false)} className="w-full flex items-center p-3 rounded-md text-slate-400 hover:text-red-400 hover:bg-white/5 transition-colors">
+          <button onClick={handleLogout} className="w-full flex items-center p-3 rounded-md text-slate-400 hover:text-red-400 hover:bg-white/5 transition-colors">
             <LogOut size={20} className="shrink-0" />
             <span className="ml-4 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Logout</span>
           </button>
