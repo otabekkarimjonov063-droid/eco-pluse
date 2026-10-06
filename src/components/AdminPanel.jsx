@@ -10,9 +10,10 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
 } from 'recharts';
 import CountUp from './CountUp';
+import { useLanguage } from '../contexts/LanguageContext';
 
-// --- MOCK DATA ---
-const chartData = [
+// --- INITIAL MOCK DATA ---
+const initialChartData = [
   { name: 'Jan', amount: 4000 },
   { name: 'Feb', amount: 3000 },
   { name: 'Mar', amount: 5000 },
@@ -22,7 +23,7 @@ const chartData = [
   { name: 'Jul', amount: 8490 },
 ];
 
-const mockUsers = [
+const initialUsers = [
   { id: 1, name: 'Alex Johnson', email: 'alex@example.com', role: 'Admin', status: 'Active', lastLogin: '2 mins ago' },
   { id: 2, name: 'Sarah Connor', email: 'sarah@example.com', role: 'Moderator', status: 'Active', lastLogin: '1 hour ago' },
   { id: 3, name: 'Mike Ross', email: 'mike@example.com', role: 'User', status: 'Blocked', lastLogin: '3 days ago' },
@@ -30,7 +31,7 @@ const mockUsers = [
   { id: 5, name: 'Rachel Zane', email: 'rachel@example.com', role: 'User', status: 'Active', lastLogin: '1 day ago' },
 ];
 
-const mockActivity = [
+const initialActivity = [
   { id: 1, user: 'Alex Johnson', action: 'Created new project', target: 'Ocean Cleanup', time: '10 mins ago', type: 'create' },
   { id: 2, user: 'Sarah Connor', action: 'Approved transaction', target: '#TX-8832', time: '1 hour ago', type: 'approve' },
   { id: 3, user: 'System', action: 'Database backup completed', target: 'Server', time: '3 hours ago', type: 'system' },
@@ -60,6 +61,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 // --- MAIN ADMIN PANEL ---
 const AdminPanel = ({ onExit }) => {
+  const { language, setLanguage } = useLanguage();
   // Login State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [password, setPassword] = useState('');
@@ -69,11 +71,39 @@ const AdminPanel = ({ onExit }) => {
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  
+  // Functional States
+  const [users, setUsers] = useState(initialUsers);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
   
   const [transactions, setTransactions] = useState([]);
   const [totalSum, setTotalSum] = useState(0);
+
+  const [chartData, setChartData] = useState(initialChartData);
+  const [activity, setActivity] = useState(initialActivity);
+
+  // Users Handlers
+  const toggleAllUsers = () => {
+    if (selectedUsers.length === users.length) setSelectedUsers([]);
+    else setSelectedUsers(users.map(u => u.id));
+  };
+  const toggleUserSelection = (id) => {
+    if (selectedUsers.includes(id)) setSelectedUsers(selectedUsers.filter(uid => uid !== id));
+    else setSelectedUsers([...selectedUsers, id]);
+  };
+  const deleteSelectedUsers = () => {
+    setUsers(users.filter(u => !selectedUsers.includes(u.id)));
+    setSelectedUsers([]);
+  };
+  const changeSelectedRole = () => {
+    setUsers(users.map(u => selectedUsers.includes(u.id) ? { ...u, role: u.role === 'User' ? 'Moderator' : 'User' } : u));
+    setSelectedUsers([]);
+  };
+  const addUser = () => {
+    const newUser = { id: Date.now(), name: 'Yangi Foydalanuvchi', email: `user${Date.now()}@eco.uz`, role: 'User', status: 'Active', lastLogin: 'Just now' };
+    setUsers([newUser, ...users]);
+  };
 
   useEffect(() => {
     if (!isLoggedIn) return; // Only bind keys when logged in
@@ -129,52 +159,51 @@ const AdminPanel = ({ onExit }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[9999] bg-[#0D0F12] text-slate-300 font-['Inter',sans-serif] flex items-center justify-center p-4 overflow-hidden"
-          style={{ perspective: 1200 }}
+          className="fixed inset-0 z-[9999] bg-[#0D0F12] text-slate-300 font-['Inter',sans-serif] flex flex-col items-center justify-center p-4 overflow-hidden"
         >
-          <motion.div animate={{ x: [0, 20, 0], y: [0, -20, 0] }} transition={{ duration: 10, repeat: Infinity }} className="absolute w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(99,102,241,0.1)_0%,_transparent_70%)] rounded-full" />
+          {/* Ambient Background */}
+          <motion.div animate={{ opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 5, repeat: Infinity }} className="absolute w-[80vw] h-[80vw] bg-[radial-gradient(circle,_rgba(99,102,241,0.1)_0%,_transparent_50%)] rounded-full blur-[100px]" />
           
           <motion.div 
-            initial={{ opacity: 0, scale: 0.8, y: 40, rotateX: 20 }} 
-            animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
-            exit={{ opacity: 0, scale: 1.1, y: -40, rotateX: -20 }}
-            transition={{ type: "spring", damping: 20, stiffness: 100 }}
-            className="relative bg-[#13161A]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 w-full max-w-md shadow-[0_0_80px_rgba(99,102,241,0.15)] z-10"
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ type: "spring", damping: 25, stiffness: 120 }}
+            className="relative z-10 w-full max-w-sm flex flex-col items-center"
           >
-            <div className="text-center mb-8">
+            <div className="text-center mb-10">
               <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", delay: 0.2 }}
-                className="w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center mx-auto mb-5 border border-indigo-500/20 shadow-[0_0_30px_rgba(99,102,241,0.3)]"
+                className="w-16 h-16 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(99,102,241,0.5)]"
               >
-                <Command size={40} className="text-indigo-400" />
+                <Shield size={32} className="text-white" />
               </motion.div>
-              <h2 className="text-3xl font-extrabold text-white mb-2 tracking-tight">Admin Portal</h2>
-              <p className="text-sm text-slate-400">Tizimni boshqarish uchun kiring</p>
+              <h2 className="text-4xl font-extrabold text-white mb-2 tracking-tight">Eco Admin</h2>
+              <p className="text-sm text-slate-400">Tizimni boshqarish paneli</p>
             </div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
-            <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Parol</label>
-              <input 
-                type="password" 
-                autoFocus
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Parolni kiriting (admin)"
-                className={`w-full bg-[#0D0F12] border ${error ? 'border-red-500' : 'border-white/10'} text-white rounded-lg px-4 py-3 outline-none focus:border-indigo-500 transition-colors`}
-              />
-              {error && <p className="text-red-400 text-xs mt-2">Noto'g'ri parol kiritildi</p>}
-            </div>
-            <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20">
-               Tizimga kirish
-            </button>
-          </form>
+            <form onSubmit={handleLogin} className="space-y-6 w-full">
+              <div className="relative group">
+                <input 
+                  type="password" 
+                  autoFocus
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Maxfiy parolni kiriting (admin)"
+                  className={`w-full bg-transparent border-b-2 ${error ? 'border-red-500' : 'border-white/20'} text-white text-center text-lg px-4 py-3 outline-none focus:border-indigo-500 transition-colors placeholder-white/20`}
+                />
+                {error && <p className="text-red-400 text-xs mt-2 text-center absolute -bottom-6 w-full">Noto'g'ri parol</p>}
+              </div>
+              <button type="submit" className="w-full bg-white text-black hover:bg-indigo-500 hover:text-white font-bold py-4 rounded-full transition-all flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] mt-8">
+                 Tizimga kirish
+              </button>
+            </form>
 
-            <div className="mt-6 text-center">
-               <button onClick={closeAdmin} className="text-sm text-slate-500 hover:text-white transition-colors">
-                 &larr; Asosiy saytga qaytish
+            <div className="mt-12 text-center">
+               <button onClick={closeAdmin} className="text-xs text-slate-500 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-2">
+                 <X size={14} /> Asosiy saytga qaytish
                </button>
             </div>
           </motion.div>
@@ -260,6 +289,19 @@ const AdminPanel = ({ onExit }) => {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
               </span>
               <span className="text-green-500">API: 42ms</span>
+            </div>
+
+            {/* Language Switcher */}
+            <div className="flex items-center bg-[#13161A] border border-white/5 rounded-md p-0.5">
+              {['UZ', 'RU', 'EN'].map(lang => (
+                <button 
+                  key={lang}
+                  onClick={() => setLanguage(lang)}
+                  className={`px-2 py-1 text-[10px] font-bold rounded transition-colors ${language === lang ? 'bg-indigo-500 text-white' : 'text-slate-400 hover:text-white'}`}
+                >
+                  {lang}
+                </button>
+              ))}
             </div>
 
             {/* Notifications */}
@@ -491,7 +533,7 @@ const AdminPanel = ({ onExit }) => {
                     <button className="px-3 py-1.5 bg-[#13161A] border border-white/10 rounded-md text-slate-300 hover:bg-white/5 transition-colors">
                       <Filter size={16} />
                     </button>
-                    <button className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-md transition-colors shadow-sm">
+                    <button onClick={addUser} className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-md transition-colors shadow-sm">
                       Add User
                     </button>
                   </div>
@@ -502,8 +544,8 @@ const AdminPanel = ({ onExit }) => {
                     <div className="bg-indigo-500/10 border-b border-indigo-500/20 px-5 py-2 flex justify-between items-center">
                       <span className="text-xs font-medium text-indigo-400">{selectedUsers.length} selected</span>
                       <div className="flex gap-2">
-                        <button className="text-xs bg-white/5 hover:bg-white/10 px-2 py-1 rounded text-slate-300 transition-colors">Change Role</button>
-                        <button className="text-xs bg-red-500/10 hover:bg-red-500/20 px-2 py-1 rounded text-red-400 transition-colors">Delete</button>
+                        <button onClick={changeSelectedRole} className="text-xs bg-white/5 hover:bg-white/10 px-2 py-1 rounded text-slate-300 transition-colors">Change Role</button>
+                        <button onClick={deleteSelectedUsers} className="text-xs bg-red-500/10 hover:bg-red-500/20 px-2 py-1 rounded text-red-400 transition-colors">Delete</button>
                       </div>
                     </div>
                   )}
@@ -513,7 +555,7 @@ const AdminPanel = ({ onExit }) => {
                         <tr>
                           <th className="p-4 w-12">
                             <button onClick={toggleAllUsers} className="text-slate-500 hover:text-white">
-                              {selectedUsers.length === mockUsers.length ? <CheckSquare size={16} className="text-indigo-400" /> : <Square size={16} />}
+                              {selectedUsers.length === users.length && users.length > 0 ? <CheckSquare size={16} className="text-indigo-400" /> : <Square size={16} />}
                             </button>
                           </th>
                           <th className="p-4 font-semibold">User</th>
@@ -524,7 +566,7 @@ const AdminPanel = ({ onExit }) => {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5">
-                        {mockUsers.filter(u => u.name.toLowerCase().includes(searchQuery.toLowerCase())).map((user) => (
+                        {users.filter(u => u.name.toLowerCase().includes(searchQuery.toLowerCase())).map((user) => (
                           <tr key={user.id} className={`hover:bg-white/5 transition-colors ${selectedUsers.includes(user.id) ? 'bg-indigo-500/5' : ''}`}>
                             <td className="p-4">
                               <button onClick={() => toggleUserSelection(user.id)} className="text-slate-500 hover:text-white">
@@ -692,7 +734,32 @@ const AdminPanel = ({ onExit }) => {
 
               <div className="mt-8 flex justify-end gap-3">
                 <button onClick={() => setIsExportOpen(false)} className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors">Cancel</button>
-                <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-md transition-colors shadow-sm">Download</button>
+                <button 
+                  onClick={() => {
+                    const csvRows = [
+                      ['ID', 'Sana', 'Loyiha/Daraxt', 'Summa', 'Mijoz'],
+                      ...transactions.map(tx => [
+                        `#${tx.id.slice(-6)}`,
+                        new Date(tx.date).toLocaleDateString('uz-UZ'),
+                        tx.project,
+                        `$${tx.amount}`,
+                        tx.user
+                      ])
+                    ];
+                    const csvContent = "data:text/csv;charset=utf-8," + csvRows.map(e => e.join(",")).join("\n");
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+                    link.setAttribute("download", `EcoPulse_Report_${new Date().toLocaleDateString()}.csv`);
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    setIsExportOpen(false);
+                  }}
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-md transition-colors shadow-sm"
+                >
+                  Download
+                </button>
               </div>
             </motion.div>
           </div>

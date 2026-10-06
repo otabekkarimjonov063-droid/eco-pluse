@@ -48,6 +48,17 @@ const PlantTree = () => {
       const newTotal = prevTotal + totalAmount;
       localStorage.setItem('ecopulse_total_raised', newTotal.toString());
 
+      // Save transaction for Admin Panel
+      const existingTx = JSON.parse(localStorage.getItem('eco_transactions') || '[]');
+      const newTx = {
+        id: Math.random().toString(36).substr(2, 9),
+        date: new Date().toISOString(),
+        project: activeTree.name,
+        amount: totalAmount,
+        user: cardName || 'Guest'
+      };
+      localStorage.setItem('eco_transactions', JSON.stringify([newTx, ...existingTx]));
+
       // Send to Telegram
       const time = new Date().toLocaleString('uz-UZ');
       const caption = `
