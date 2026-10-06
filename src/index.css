@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-slate-800 bg-eco-light overflow-x-hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Remove transition-colors from body — causes full repaint on every theme change tick */
+  }
+
+  html {
+    /* Smooth scrolling handled by JS, not CSS, to avoid jank */
+    scroll-behavior: auto;
+  }
+
+  html.dark body {
+    @apply text-slate-200 bg-eco-dark;
+  }
+
+  /* Theme color transition only on intentional elements, not body-level */
+  .theme-transition {
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-eco-primary/40 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-eco-primary/70;
+  }
+
+  @media (max-width: 768px) {
+    ::-webkit-scrollbar { display: none; }
+    body {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }
+}
+
+@layer components {
+
+  /* ── Premium Glassmorphism (Antigravity) ── */
+  .premium-glass {
+    @apply bg-white/40 dark:bg-[#07101a]/40 border border-white/60 dark:border-white/10 rounded-3xl backdrop-blur-md;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .premium-glass:hover {
+    @apply bg-white/60 dark:bg-[#07101a]/60;
+    box-shadow: 0 20px 50px -15px rgba(0,255,170,0.15), inset 0 1px 0 rgba(255,255,255,0.4);
+    transform: translateY(-8px);
+  }
+
+  .premium-glass-deep {
+    @apply bg-white/20 dark:bg-[#07101a]/20 border border-white/30 dark:border-white/5 rounded-3xl backdrop-blur-md;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.15);
+  }
+
+  .glass-button {
+    @apply bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/10 rounded-xl px-5 py-2.5 font-semibold text-slate-800 dark:text-white;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .glass-button:hover {
+    @apply bg-white/50 dark:bg-white/15;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  }
+
+  /* ── Primary Button ──────────────────────────────────────
+     Shimmer uses pseudo-element with translateX (GPU-composited).
+     hover: only translateY(-2px) — no gradient-swap animation.
+  ─────────────────────────────────────────────────────────── */
+  .primary-button {
+    @apply relative overflow-hidden text-white rounded-xl px-6 py-3 font-bold;
+    background: linear-gradient(135deg, #10b981, #34d399);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Promote to own GPU layer once, not per-hover */
+    transform: translateZ(0);
+  }
+  .primary-button:hover {
+    transform: translateZ(0) translateY(-2px);
+    box-shadow: 0 8px 28px rgba(16, 185, 129, 0.45);
+  }
+  .primary-button:active {
+    transform: translateZ(0) translateY(0px);
+  }
+  /* Shimmer — only translateX, GPU composited */
+  .primary-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    animation: shimmerSlide 2.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* ── Tilt Card ───────────────────────────────────────────
+     Removed expensive rotateX+rotateY — use simple Y lift only.
+     3D matrix transforms cause full GPU re-composite on every frame.
+  ─────────────────────────────────────────────────────────── */
+  .tilt-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transform: translateZ(0); /* own composite layer */
+  }
+  .tilt-card:hover {
+    transform: translateZ(0) translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.10);
+  }
+
+  /* ── 3D helpers (only applied to specific elements) ── */
+  .perspective-1000 { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .overlay-bg {
+    @apply absolute inset-0 bg-white/60 dark:bg-black/80;
+  }
+}
+
+/* ── GPU layers for long-running animations only ──────────
+   Removed will-change completely to stop browser from 
+   crashing and running out of GPU memory on low-end devices.
+─────────────────────────────────────────────────────────── */
+.animate-float,
+.animate-float-slow {
+}
+
+/* One-shot animations: will-change auto after they finish */
+.animate-slide-up,
+.animate-fade-in,
+.animate-zoom-in,
+.animate-bounce-in,
+.animate-scale-up {
+  animation-fill-mode: forwards;
+}
+
+/* Custom shimmer keyframe using translateX (compositor-only) */
+@keyframes shimmerSlide {
+  0%   { transform: translateX(-100%); }
+  60%  { transform: translateX(200%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Utility: scale-up entrance */
+.animate-scale-up {
+  animation: scaleUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Decorative blobs — no will-change, they're static */
+.blob-decoration {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Accessibility ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
