@@ -279,42 +279,42 @@ const PlantTree = () => {
       </div>
 
       {/* RIGHT PANEL - IMMERSIVE VISUALS */}
-      <div className="hidden md:block w-1/2 lg:w-7/12 relative h-screen bg-black">
+      <div className="hidden md:block w-1/2 lg:w-7/12 relative h-screen bg-slate-100 dark:bg-black">
         <AnimatePresence mode="wait">
 
           {/* Tree Images for Step 1 & 3 & 4 */}
           {(step === 1 || step === 3 || step === 4) && (
             <motion.div key={`tree-${activeTree.id}`} variants={rightVariants} initial="hidden" animate="show" exit="exit" className="absolute inset-0">
-              <img src={activeTree.image} alt="" className="w-full h-full object-cover opacity-60 text-transparent" onError={(e) => e.target.style.display = 'none'} />
-              <div className={`absolute inset-0 bg-gradient-to-br ${activeTree.color} mix-blend-overlay opacity-30`}></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020804] via-[#020804]/40 to-transparent"></div>
+              <img src={activeTree.image} alt="" className="w-full h-full object-cover opacity-30 dark:opacity-60 text-transparent" onError={(e) => e.target.style.display = 'none'} />
+              <div className={`absolute inset-0 bg-gradient-to-br ${activeTree.color} mix-blend-overlay opacity-10 dark:opacity-30`}></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-100 via-slate-100/40 dark:from-[#020804] dark:via-[#020804]/40 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-eco-light dark:to-eco-dark"></div>
 
               <div className="absolute bottom-0 left-0 right-0 p-12 flex flex-col justify-end">
-                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="w-full backdrop-blur-md bg-[#020804]/85 border border-white/10 p-8 rounded-3xl shadow-2xl flex justify-between items-end text-white">
+                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="w-full backdrop-blur-md bg-white/85 dark:bg-[#020804]/85 border border-black/5 dark:border-white/10 p-8 rounded-3xl shadow-2xl flex justify-between items-end text-slate-900 dark:text-white">
 
                   <div className="max-w-md">
                     <h3 className="text-5xl font-black mb-3">{activeTree.name}</h3>
-                    <p className="text-white/60 leading-relaxed text-lg">{activeTree.desc}</p>
+                    <p className="text-slate-600 dark:text-white/60 leading-relaxed text-lg">{activeTree.desc}</p>
                   </div>
 
-                  <div className="flex items-center gap-8 bg-black/40 p-6 rounded-2xl border border-white/5">
+                  <div className="flex items-center gap-8 bg-black/5 dark:bg-black/40 p-6 rounded-2xl border border-black/5 dark:border-white/5">
                     <div className="text-left">
-                      <Wind className="text-emerald-400 mb-2" size={32} />
-                      <p className="text-3xl font-black">{activeTree.co2} <span className="text-sm font-normal text-white/40">kg/yil</span></p>
-                      <p className="text-xs uppercase tracking-widest text-white/40">CO2 Yutilishi</p>
+                      <Wind className="text-emerald-500 dark:text-emerald-400 mb-2" size={32} />
+                      <p className="text-3xl font-black">{activeTree.co2} <span className="text-sm font-normal text-slate-500 dark:text-white/40">kg/yil</span></p>
+                      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-white/40">CO2 Yutilishi</p>
                     </div>
-                    <div className="w-px h-16 bg-white/10"></div>
+                    <div className="w-px h-16 bg-black/10 dark:bg-white/10"></div>
                     <div className="text-left">
-                      <Activity className="text-rose-400 mb-2" size={32} />
-                      <p className="text-3xl font-black">{(activeTree.co2 * 5)} <span className="text-sm font-normal text-white/40">km</span></p>
-                      <p className="text-xs uppercase tracking-widest text-white/40">Avto zararini yopish</p>
+                      <Activity className="text-rose-500 dark:text-rose-400 mb-2" size={32} />
+                      <p className="text-3xl font-black">{(activeTree.co2 * 5)} <span className="text-sm font-normal text-slate-500 dark:text-white/40">km</span></p>
+                      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-white/40">Avto zararini yopish</p>
                     </div>
-                    <div className="w-px h-16 bg-white/10"></div>
+                    <div className="w-px h-16 bg-black/10 dark:bg-white/10"></div>
                     <div className="text-left">
-                      <Droplets className="text-blue-400 mb-2" size={32} />
-                      <p className="text-3xl font-black">{activeTree.oxygen} <span className="text-sm font-normal text-white/40">kg/yil</span></p>
-                      <p className="text-xs uppercase tracking-widest text-white/40">Sof Kislorod</p>
+                      <Droplets className="text-blue-500 dark:text-blue-400 mb-2" size={32} />
+                      <p className="text-3xl font-black">{activeTree.oxygen} <span className="text-sm font-normal text-slate-500 dark:text-white/40">kg/yil</span></p>
+                      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-white/40">Sof Kislorod</p>
                     </div>
                   </div>
 
@@ -326,24 +326,24 @@ const PlantTree = () => {
           {/* Region Maps/Images for Step 2 */}
           {step === 2 && (
             <motion.div key={`region-${activeRegion.id}`} variants={rightVariants} initial="hidden" animate="show" exit="exit" className="absolute inset-0">
-              <img src={activeRegion.image} alt={activeRegion.name} className="w-full h-full object-cover opacity-60" />
-              <div className="absolute inset-0 bg-cyan-900/20 mix-blend-overlay"></div>
+              <img src={activeRegion.image} alt={activeRegion.name} className="w-full h-full object-cover opacity-40 dark:opacity-60" />
+              <div className="absolute inset-0 bg-cyan-900/10 dark:bg-cyan-900/20 mix-blend-overlay"></div>
               <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-eco-light dark:to-eco-dark"></div>
 
               {/* Dynamic Radar/Map Marker Effect */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
                 <motion.div animate={{ scale: [1, 2.5], opacity: [0.8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }} className="absolute w-32 h-32 border border-cyan-400 rounded-full"></motion.div>
                 <motion.div animate={{ scale: [1, 1.8], opacity: [0.8, 0] }} transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeOut" }} className="absolute w-32 h-32 border border-cyan-400 rounded-full"></motion.div>
-                <div className="w-6 h-6 bg-cyan-400 rounded-full shadow-[0_0_30px_rgba(34,211,238,1)]"></div>
+                <div className="w-6 h-6 bg-cyan-500 dark:bg-cyan-400 rounded-full shadow-[0_0_30px_rgba(34,211,238,1)]"></div>
               </div>
 
               <div className="absolute bottom-16 right-16 text-right">
-                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="inline-block backdrop-blur-md bg-[#020804]/85 border border-white/10 p-8 rounded-3xl">
+                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="inline-block backdrop-blur-md bg-white/85 dark:bg-[#020804]/85 border border-black/5 dark:border-white/10 p-8 rounded-3xl">
                   <div className="flex items-center justify-end gap-3 mb-2">
-                    <Globe className="text-cyan-400" />
-                    <h3 className="text-4xl font-black text-cyan-400">{activeRegion.name}</h3>
+                    <Globe className="text-cyan-500 dark:text-cyan-400" />
+                    <h3 className="text-4xl font-black text-cyan-600 dark:text-cyan-400">{activeRegion.name}</h3>
                   </div>
-                  <p className="text-white/60 max-w-sm ml-auto leading-relaxed">{activeRegion.desc}</p>
+                  <p className="text-slate-600 dark:text-white/60 max-w-sm ml-auto leading-relaxed">{activeRegion.desc}</p>
                 </motion.div>
               </div>
             </motion.div>
