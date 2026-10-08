@@ -282,8 +282,31 @@ const PlantTree = () => {
       <div className="hidden md:block w-1/2 lg:w-7/12 relative h-screen bg-slate-100 dark:bg-black">
         <AnimatePresence mode="wait">
 
-          {/* Tree Images for Step 1 & 3 & 4 */}
-          {(step === 1 || step === 3 || step === 4) && (
+          {/* Conditional Rendering for Step 2 vs Tree views */}
+          {step === 2 ? (
+            <motion.div key={`region-${activeRegion.id}`} variants={rightVariants} initial="hidden" animate="show" exit="exit" className="absolute inset-0">
+              <img src={activeRegion.image} alt={activeRegion.name} className="w-full h-full object-cover opacity-40 dark:opacity-60" />
+              <div className="absolute inset-0 bg-cyan-900/10 dark:bg-cyan-900/20 mix-blend-overlay"></div>
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-eco-light dark:to-eco-dark"></div>
+
+              {/* Dynamic Radar/Map Marker Effect */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                <motion.div animate={{ scale: [1, 2.5], opacity: [0.8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }} className="absolute w-32 h-32 border border-cyan-400 rounded-full"></motion.div>
+                <motion.div animate={{ scale: [1, 1.8], opacity: [0.8, 0] }} transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeOut" }} className="absolute w-32 h-32 border border-cyan-400 rounded-full"></motion.div>
+                <div className="w-6 h-6 bg-cyan-500 dark:bg-cyan-400 rounded-full shadow-[0_0_30px_rgba(34,211,238,1)]"></div>
+              </div>
+
+              <div className="absolute bottom-16 right-16 text-right">
+                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="inline-block backdrop-blur-md bg-white/85 dark:bg-[#020804]/85 border border-black/5 dark:border-white/10 p-8 rounded-3xl">
+                  <div className="flex items-center justify-end gap-3 mb-2">
+                    <Globe className="text-cyan-500 dark:text-cyan-400" />
+                    <h3 className="text-4xl font-black text-cyan-600 dark:text-cyan-400">{activeRegion.name}</h3>
+                  </div>
+                  <p className="text-slate-600 dark:text-white/60 max-w-sm ml-auto leading-relaxed">{activeRegion.desc}</p>
+                </motion.div>
+              </div>
+            </motion.div>
+          ) : (step === 1 || step === 3 || step === 4) ? (
             <motion.div key={`tree-${activeTree.id}`} variants={rightVariants} initial="hidden" animate="show" exit="exit" className="absolute inset-0">
               <img src={activeTree.image} alt="" className="w-full h-full object-cover opacity-30 dark:opacity-60 text-transparent" onError={(e) => e.target.style.display = 'none'} />
               <div className={`absolute inset-0 bg-gradient-to-br ${activeTree.color} mix-blend-overlay opacity-10 dark:opacity-30`}></div>
@@ -321,33 +344,7 @@ const PlantTree = () => {
                 </motion.div>
               </div>
             </motion.div>
-          )}
-
-          {/* Region Maps/Images for Step 2 */}
-          {step === 2 && (
-            <motion.div key={`region-${activeRegion.id}`} variants={rightVariants} initial="hidden" animate="show" exit="exit" className="absolute inset-0">
-              <img src={activeRegion.image} alt={activeRegion.name} className="w-full h-full object-cover opacity-40 dark:opacity-60" />
-              <div className="absolute inset-0 bg-cyan-900/10 dark:bg-cyan-900/20 mix-blend-overlay"></div>
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-eco-light dark:to-eco-dark"></div>
-
-              {/* Dynamic Radar/Map Marker Effect */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-                <motion.div animate={{ scale: [1, 2.5], opacity: [0.8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }} className="absolute w-32 h-32 border border-cyan-400 rounded-full"></motion.div>
-                <motion.div animate={{ scale: [1, 1.8], opacity: [0.8, 0] }} transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeOut" }} className="absolute w-32 h-32 border border-cyan-400 rounded-full"></motion.div>
-                <div className="w-6 h-6 bg-cyan-500 dark:bg-cyan-400 rounded-full shadow-[0_0_30px_rgba(34,211,238,1)]"></div>
-              </div>
-
-              <div className="absolute bottom-16 right-16 text-right">
-                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="inline-block backdrop-blur-md bg-white/85 dark:bg-[#020804]/85 border border-black/5 dark:border-white/10 p-8 rounded-3xl">
-                  <div className="flex items-center justify-end gap-3 mb-2">
-                    <Globe className="text-cyan-500 dark:text-cyan-400" />
-                    <h3 className="text-4xl font-black text-cyan-600 dark:text-cyan-400">{activeRegion.name}</h3>
-                  </div>
-                  <p className="text-slate-600 dark:text-white/60 max-w-sm ml-auto leading-relaxed">{activeRegion.desc}</p>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
+          ) : null}
 
         </AnimatePresence>
       </div>
