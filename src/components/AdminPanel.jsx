@@ -931,7 +931,6 @@ const AdminPanel = ({ onExit }) => {
                     </div>
                   </div>
                 </div>
-                </div>
 
                 {/* User Add/Edit Modal */}
                 <AnimatePresence>
