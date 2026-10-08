@@ -95,26 +95,23 @@ const PlantTree = () => {
                   </p>
                 </div>
 
-                <div className="space-y-4 pt-4">
+                <div className="grid grid-cols-2 gap-4 pt-4">
                   {trees.map((tree, idx) => (
                     <button
                       key={tree.id}
                       onClick={() => setSelectedTree(idx)}
-                      className={`w-full text-left p-4 rounded-3xl transition-all duration-500 border relative overflow-hidden group flex items-center justify-between ${selectedTree === idx
-                          ? 'bg-white/10 border-white/20'
-                          : 'bg-transparent border-transparent hover:bg-white/5'
+                      className={`w-full text-center p-4 rounded-3xl transition-all duration-500 border relative overflow-hidden group flex flex-col items-center justify-center ${selectedTree === idx
+                          ? 'bg-white/10 border-white/20 shadow-xl'
+                          : 'bg-white/40 dark:bg-transparent border-black/5 dark:border-transparent hover:bg-white/60 dark:hover:bg-white/5'
                         }`}
                     >
                       {selectedTree === idx && (
-                        <motion.div layoutId="activeTreeBorder" className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.8)]" />
+                        <motion.div layoutId="activeTreeBorder" className="absolute left-0 top-0 right-0 h-1 bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.8)]" />
                       )}
-                      <div className="flex items-center gap-4 relative z-10 w-full">
-                        <img src={tree.image} alt={tree.name} className="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl object-cover shadow-lg border border-white/10 group-hover:scale-105 transition-transform duration-500" />
-                        <div className="flex-1">
-                          <h3 className={`text-xl lg:text-2xl font-bold transition-colors ${selectedTree === idx ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white'}`}>{tree.name}</h3>
-                          <p className="text-slate-500 dark:text-white/40 text-sm mt-1 font-mono">${tree.price} / dona</p>
-                        </div>
-                        <ChevronRight className={`transition-transform duration-500 ${selectedTree === idx ? 'text-emerald-500 translate-x-2' : 'text-white/20'}`} />
+                      <div className="relative z-10 w-full flex flex-col items-center">
+                        <img src={tree.image} alt={tree.name} className="w-16 h-16 lg:w-20 lg:h-20 mb-3 rounded-full object-cover shadow-lg border border-white/10 group-hover:scale-105 transition-transform duration-500" />
+                        <h3 className={`text-lg lg:text-xl font-bold transition-colors ${selectedTree === idx ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white'}`}>{tree.name}</h3>
+                        <p className="text-slate-500 dark:text-white/40 text-xs mt-1 font-mono">${tree.price} / dona</p>
                       </div>
                     </button>
                   ))}
@@ -137,29 +134,28 @@ const PlantTree = () => {
                   <p className="text-slate-600 dark:text-white/50 text-lg max-w-md font-light">Siz tanlagan "{activeTree.name}" aynan qayerda tabiat muvozanatini tiklashga yordam bersin?</p>
                 </div>
 
-                <div className="space-y-4 pt-4">
+                <div className="grid grid-cols-2 gap-4 pt-4">
                   {regions.map((region, idx) => (
                     <button
                       key={region.id}
                       onClick={() => setSelectedRegion(idx)}
-                      className={`w-full text-left p-4 rounded-3xl transition-all duration-500 border relative overflow-hidden group flex items-center justify-between ${selectedRegion === idx
-                          ? 'bg-white/10 border-white/20'
-                          : 'bg-transparent border-transparent hover:bg-white/5'
-                        }`}
+                      className={`w-full text-center p-4 rounded-3xl transition-all duration-500 border relative overflow-hidden group flex flex-col items-center justify-center ${selectedRegion === idx
+                          ? 'bg-white/10 border-white/20 shadow-xl'
+                          : 'bg-white/40 dark:bg-transparent border-black/5 dark:border-transparent hover:bg-white/60 dark:hover:bg-white/5'
+                        } ${idx === 2 ? 'col-span-2' : ''}`}
                     >
                       {selectedRegion === idx && (
-                        <motion.div layoutId="activeRegionBorder" className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.8)]" />
+                        <motion.div layoutId="activeRegionBorder" className="absolute left-0 top-0 right-0 h-1 bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.8)]" />
                       )}
-                      <div className="flex items-center gap-4 relative z-10 w-full">
-                        <img src={region.image} alt={region.name} className="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl object-cover shadow-lg border border-white/10 group-hover:scale-105 transition-transform duration-500" />
-                        <div className="flex-1">
-                          <h3 className={`text-xl lg:text-2xl font-bold transition-colors ${selectedRegion === idx ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white'}`}>{region.name}</h3>
-                          <div className="flex items-center gap-4 mt-2">
-                            <span className="text-xs font-mono px-2 py-1 bg-black/10 dark:bg-black/50 rounded text-rose-500 dark:text-rose-400">{region.risk}</span>
-                            <span className="text-xs font-mono text-slate-500 dark:text-white/40">{region.temp}</span>
+                      <div className={`relative z-10 w-full flex ${idx === 2 ? 'flex-row gap-6 text-left justify-center items-center' : 'flex-col items-center'}`}>
+                        <img src={region.image} alt={region.name} className={`w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover shadow-lg border border-white/10 group-hover:scale-105 transition-transform duration-500 ${idx === 2 ? '' : 'mb-3'}`} />
+                        <div>
+                          <h3 className={`text-lg lg:text-xl font-bold transition-colors ${selectedRegion === idx ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white'}`}>{region.name}</h3>
+                          <div className={`flex items-center gap-2 mt-2 ${idx === 2 ? '' : 'justify-center'}`}>
+                            <span className="text-[10px] font-mono px-2 py-0.5 bg-black/10 dark:bg-black/50 rounded text-rose-500 dark:text-rose-400">{region.risk}</span>
+                            <span className="text-[10px] font-mono text-slate-500 dark:text-white/40">{region.temp}</span>
                           </div>
                         </div>
-                        <MapPin className={`transition-transform duration-500 ${selectedRegion === idx ? 'text-cyan-500 scale-125' : 'text-slate-300 dark:text-white/20'}`} />
                       </div>
                     </button>
                   ))}
