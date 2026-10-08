@@ -93,7 +93,7 @@ const EcoAIChat = () => {
         {/* Header */}
         <div className="bg-gradient-to-r from-emerald-500/90 to-cyan-600/90 p-5 flex items-center justify-between text-white border-b border-white/20 relative overflow-hidden backdrop-blur-md">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 blur-2xl rounded-full"></div>
+          <div className="absolute -top-10 -right-10 w-32 h-32 bg-[radial-gradient(circle,rgba(255,255,255,0.1)_0%,transparent_70%)] pointer-events-none"></div>
           
           <div className="flex items-center gap-4 relative z-10">
             <div className="relative">

@@ -10,8 +10,7 @@
   }
 
   html {
-    /* Smooth scrolling handled by JS, not CSS, to avoid jank */
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
   }
 
   html.dark body {

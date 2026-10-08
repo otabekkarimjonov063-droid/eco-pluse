@@ -12,12 +12,13 @@ const PlantTree       = lazy(() => import('./components/PlantTree'));
 const EcoAIChat       = lazy(() => import('./components/EcoAIChat'));
 const Footer          = lazy(() => import('./components/Footer'));
 const AdminPanel      = lazy(() => import('./components/AdminPanel'));
+const EcoComments     = lazy(() => import('./components/EcoComments'));
 
 // Lightweight loading spinner shown while lazy chunks load
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-eco-light dark:bg-[#07101a]">
-    <div className="absolute top-0 right-0 w-[40vw] h-[40vh] bg-emerald-500/5 rounded-full blur-[80px]" />
-    <div className="absolute bottom-0 left-0 w-[40vw] h-[40vh] bg-cyan-500/5 rounded-full blur-[80px]" />
+    <div className="absolute top-0 right-0 w-[40vw] h-[40vh] bg-[radial-gradient(circle,rgba(16,185,129,0.05)_0%,transparent_70%)] pointer-events-none" />
+    <div className="absolute bottom-0 left-0 w-[40vw] h-[40vh] bg-[radial-gradient(circle,rgba(6,182,212,0.05)_0%,transparent_70%)] pointer-events-none" />
     
     <div className="flex flex-col items-center gap-6 relative z-10">
       <div className="relative w-20 h-20">
@@ -57,7 +58,7 @@ function App() {
   const closeLogin = useCallback(() => setIsLoginModalOpen(false), []);
 
   return (
-    <div className="min-h-screen relative flex bg-eco-light dark:bg-eco-dark overflow-x-hidden text-slate-800 dark:text-white">
+    <div className="min-h-screen relative flex bg-eco-light dark:bg-eco-dark overflow-x-hidden text-slate-800 dark:text-white selection:bg-emerald-500 selection:text-white">
 
       {activeTab === 'admin' ? (
         <Suspense fallback={<PageLoader />}>
@@ -85,7 +86,12 @@ function App() {
                 className="flex-1 w-full"
               >
                 <Suspense fallback={<PageLoader />}>
-                  {activeTab === 'home'       && <HeroSection setActiveTab={handleTabChange} />}
+                  {activeTab === 'home'       && (
+                    <>
+                      <HeroSection setActiveTab={handleTabChange} />
+                      <EcoComments />
+                    </>
+                  )}
                   {activeTab === 'dashboard'  && <GlobalDashboard />}
                   {activeTab === 'calculator' && <CarbonCalculator />}
                   {activeTab === 'projects'   && <EcoProjects />}
@@ -95,7 +101,7 @@ function App() {
             </AnimatePresence>
 
             <Suspense fallback={null}>
-              <Footer />
+              {activeTab !== 'plant' && <Footer />}
             </Suspense>
           </main>
 

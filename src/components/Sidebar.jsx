@@ -29,12 +29,12 @@ const Sidebar = ({ activeTab, setActiveTab, onOpenLogin }) => {
   return (
     <>
       {/* Desktop Sidebar (Antigravity Style) */}
-      <aside className="fixed left-6 top-6 bottom-6 w-72 rounded-3xl premium-glass-deep border border-white/40 dark:border-white/10 hidden lg:flex flex-col z-[9000] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.3)] transition-colors duration-500 overflow-hidden">
+      <aside className="fixed left-6 top-6 bottom-6 w-72 rounded-3xl bg-white/90 dark:bg-eco-dark/95 backdrop-blur-md border border-black/5 dark:border-white/10 hidden lg:flex flex-col z-[9000] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.3)] transition-colors duration-500 overflow-hidden">
         
         {/* Glow effect in background */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-[-1] rounded-3xl">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-500/20 blur-3xl rounded-full"></div>
-          <div className="absolute bottom-0 left-0 w-40 h-40 bg-cyan-500/20 blur-3xl rounded-full"></div>
+          <div className="absolute top-0 right-0 w-40 h-40 bg-[radial-gradient(circle,rgba(16,185,129,0.2)_0%,transparent_70%)] pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-40 h-40 bg-[radial-gradient(circle,rgba(6,182,212,0.2)_0%,transparent_70%)] pointer-events-none"></div>
         </div>
 
         {/* Logo */}

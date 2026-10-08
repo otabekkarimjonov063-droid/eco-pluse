@@ -18,7 +18,14 @@ export const translations = {
         users: '1M+ Faol foydalanuvchilar',
         co2: '500K Tonna CO2 tejalgan',
         projects: '1.2K+ Moliyalashtirilgan loyihalar'
-      }
+      },
+      live_impact: 'Jonli Ta\'sir',
+      live: 'Jonli',
+      co2_reduction: 'Global CO2 qisqarishi',
+      members: 'A\'zolar',
+      projects_count: 'Loyihalar',
+      tree: 'Daraxt',
+      planted_today: 'Bugun ekildi'
     },
     dashboard: {
       title: 'Global Ekologik Holat Paneli',
@@ -127,7 +134,14 @@ export const translations = {
         users: '1M+ Активных пользователей',
         co2: '500K Тонн CO2 сэкономлено',
         projects: '1.2K+ Профинансированных проектов'
-      }
+      },
+      live_impact: 'Живой Эффект',
+      live: 'Live',
+      co2_reduction: 'Глобальное снижение CO2',
+      members: 'Участники',
+      projects_count: 'Проекты',
+      tree: 'Деревьев',
+      planted_today: 'Посажено сегодня'
     },
     dashboard: {
       title: 'Глобальная Экологическая Панель',
@@ -236,7 +250,14 @@ export const translations = {
         users: '1M+ Active Users',
         co2: '500K Tons CO2 Saved',
         projects: '1.2K+ Funded Projects'
-      }
+      },
+      live_impact: 'Live Impact',
+      live: 'Live',
+      co2_reduction: 'Global CO2 reduction',
+      members: 'Members',
+      projects_count: 'Projects',
+      tree: 'Trees',
+      planted_today: 'Planted today'
     },
     dashboard: {
       title: 'Global Environmental Dashboard',

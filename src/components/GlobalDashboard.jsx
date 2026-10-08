@@ -10,10 +10,25 @@ import CountUp from './CountUp';
 
 // Initial Mock Data (used as fallback or default list)
 const generateCityData = () => [
-  { city: 'Toshkent', aqi: 110, co2: 410, wind: 15, humidity: 45, rating: 'O\'rtacha', color: 'text-yellow-500', bg: 'bg-yellow-500', trend: 'up', progress: 65 },
-  { city: 'London', aqi: 45, co2: 390, wind: 22, humidity: 75, rating: 'Yaxshi', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 25 },
-  { city: 'Tokio', aqi: 65, co2: 400, wind: 10, humidity: 60, rating: 'Yaxshi', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 40 },
-  { city: 'Nyu-York', aqi: 85, co2: 420, wind: 18, humidity: 55, rating: 'Qoniqarli', color: 'text-orange-500', bg: 'bg-orange-500', trend: 'up', progress: 55 },
+  { city: 'Toshkent, UZ', aqi: 110, co2: 410, wind: 15, humidity: 45, rating: 'O\'rtacha', color: 'text-yellow-500', bg: 'bg-yellow-500', trend: 'up', progress: 65 },
+  { city: 'London, UK', aqi: 45, co2: 390, wind: 22, humidity: 75, rating: 'Yaxshi', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 25 },
+  { city: 'Tokio, JP', aqi: 65, co2: 400, wind: 10, humidity: 60, rating: 'Yaxshi', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 40 },
+  { city: 'Nyu-York, US', aqi: 85, co2: 420, wind: 18, humidity: 55, rating: 'Qoniqarli', color: 'text-green-500', bg: 'bg-green-500', trend: 'up', progress: 55 },
+  { city: 'Dehli, IN', aqi: 210, co2: 520, wind: 5, humidity: 65, rating: 'Xavfli', color: 'text-red-500', bg: 'bg-red-500', trend: 'up', progress: 95 },
+  { city: 'Parij, FR', aqi: 50, co2: 385, wind: 12, humidity: 70, rating: 'A\'lo', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 30 },
+  { city: 'Pekin, CN', aqi: 155, co2: 480, wind: 8, humidity: 50, rating: 'Yomon', color: 'text-orange-500', bg: 'bg-orange-500', trend: 'up', progress: 80 },
+  { city: 'Sidney, AU', aqi: 35, co2: 380, wind: 25, humidity: 60, rating: 'A\'lo', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 15 },
+  { city: 'Moskva, RU', aqi: 75, co2: 415, wind: 14, humidity: 80, rating: 'Yaxshi', color: 'text-green-500', bg: 'bg-green-500', trend: 'up', progress: 45 },
+  { city: 'Dubay, AE', aqi: 120, co2: 430, wind: 18, humidity: 30, rating: 'O\'rtacha', color: 'text-yellow-500', bg: 'bg-yellow-500', trend: 'down', progress: 60 },
+  { city: 'Olmaota, KZ', aqi: 140, co2: 445, wind: 10, humidity: 55, rating: 'O\'rtacha', color: 'text-yellow-500', bg: 'bg-yellow-500', trend: 'up', progress: 70 },
+  { city: 'Seul, KR', aqi: 90, co2: 410, wind: 11, humidity: 65, rating: 'Qoniqarli', color: 'text-green-500', bg: 'bg-green-500', trend: 'down', progress: 50 },
+  { city: 'Berlin, DE', aqi: 40, co2: 388, wind: 16, humidity: 72, rating: 'A\'lo', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 20 },
+  { city: 'Rim, IT', aqi: 60, co2: 395, wind: 12, humidity: 68, rating: 'Yaxshi', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'up', progress: 35 },
+  { city: 'Istanbul, TR', aqi: 105, co2: 425, wind: 20, humidity: 60, rating: 'O\'rtacha', color: 'text-yellow-500', bg: 'bg-yellow-500', trend: 'up', progress: 65 },
+  { city: 'Qohira, EG', aqi: 170, co2: 460, wind: 8, humidity: 40, rating: 'Yomon', color: 'text-orange-500', bg: 'bg-orange-500', trend: 'up', progress: 85 },
+  { city: 'Singapur, SG', aqi: 55, co2: 390, wind: 14, humidity: 85, rating: 'Yaxshi', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 28 },
+  { city: 'Toronto, CA', aqi: 30, co2: 385, wind: 22, humidity: 60, rating: 'A\'lo', color: 'text-emerald-400', bg: 'bg-emerald-400', trend: 'down', progress: 10 },
+  { city: 'San-Paulu, BR', aqi: 115, co2: 435, wind: 12, humidity: 75, rating: 'O\'rtacha', color: 'text-yellow-500', bg: 'bg-yellow-500', trend: 'up', progress: 68 },
 ];
 
 const generateChartData = () => {
@@ -240,8 +255,8 @@ const GlobalDashboard = () => {
       {/* Deep Antigravity Background */}
       <div className="absolute inset-0 z-[-1] overflow-hidden">
         <div className="absolute inset-0 bg-eco-light dark:bg-[#07101a] transition-colors duration-700"></div>
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[80px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[80px]" />
+        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(16,185,129,0.05)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(6,182,212,0.05)_0%,transparent_70%)] pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -277,11 +292,11 @@ const GlobalDashboard = () => {
             )}
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500 flex items-center justify-center gap-3">
-            <Globe className="text-emerald-500 animate-spin-slow" size={40} /> Global Monitoring
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500 flex items-center justify-center gap-3 leading-[1.5] py-2">
+            <Globe className="text-emerald-500 animate-spin-slow" size={40} /> {t('dashboard', 'title')}
           </h1>
           <p className="text-lg opacity-70 max-w-2xl mx-auto font-medium">
-            Jonli AI analitikasi va butun dunyo bo'ylab havo sifati ko'rsatkichlari.
+            {t('dashboard', 'subtitle')}
           </p>
         </motion.div>
 
@@ -499,7 +514,7 @@ const GlobalDashboard = () => {
                 transition={{ duration: 0.4 }}
                 className="premium-glass p-6 sm:p-8 relative overflow-hidden"
               >
-                <div className={`absolute -right-20 -top-20 w-64 h-64 rounded-full blur-3xl opacity-20 ${activeCity.bg} animate-pulse-slow`}></div>
+                <div className={`absolute -right-20 -top-20 w-64 h-64 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2)_0%,transparent_70%)] animate-pulse-slow`}></div>
                 
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 relative z-10">
                   <div>
@@ -510,7 +525,7 @@ const GlobalDashboard = () => {
                     </p>
                   </div>
                   <div className={`px-5 py-3 rounded-2xl bg-opacity-10 dark:bg-opacity-10 border ${activeCity.color.replace('text-', 'border-')} ${activeCity.color} bg-current backdrop-blur-md`}>
-                    <div className="text-xs font-bold uppercase tracking-wider opacity-80 mb-1">Joriy Holat</div>
+                    <div className="text-xs font-bold uppercase tracking-wider opacity-80 mb-1">{t('dashboard', 'rating')}</div>
                     <div className="text-2xl font-extrabold">{activeCity.rating}</div>
                   </div>
                 </div>
@@ -518,14 +533,14 @@ const GlobalDashboard = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
                   <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm hover:-translate-y-1 transition-transform">
                     <Wind size={24} className="text-blue-400 mb-3" />
-                    <div className="text-xs font-bold opacity-60 uppercase mb-1">Shamol</div>
+                    <div className="text-xs font-bold opacity-60 uppercase mb-1">{t('dashboard', 'wind')}</div>
                     <div className="text-2xl font-bold flex items-baseline gap-1">
                       <CountUp value={activeCity.wind} duration={1} /> <span className="text-sm opacity-60 font-medium">km/h</span>
                     </div>
                   </div>
                   <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm hover:-translate-y-1 transition-transform">
                     <Droplets size={24} className="text-cyan-400 mb-3" />
-                    <div className="text-xs font-bold opacity-60 uppercase mb-1">Namlik</div>
+                    <div className="text-xs font-bold opacity-60 uppercase mb-1">{t('dashboard', 'humidity')}</div>
                     <div className="text-2xl font-bold flex items-baseline gap-1">
                       <CountUp value={activeCity.humidity} duration={1} /> <span className="text-sm opacity-60 font-medium">%</span>
                     </div>
@@ -533,14 +548,14 @@ const GlobalDashboard = () => {
                   <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm hover:-translate-y-1 transition-transform relative overflow-hidden">
                     <div className={`absolute inset-0 opacity-10 ${activeCity.bg} animate-pulse`}></div>
                     <Activity size={24} className={activeCity.color + ' mb-3'} />
-                    <div className="text-xs font-bold opacity-60 uppercase mb-1">AQI Index</div>
+                    <div className="text-xs font-bold opacity-60 uppercase mb-1">{t('dashboard', 'aqi')}</div>
                     <div className={`text-2xl font-bold flex items-baseline gap-1 ${activeCity.color}`}>
                       <CountUp value={activeCity.aqi} duration={1.5} />
                     </div>
                   </div>
                   <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm hover:-translate-y-1 transition-transform">
                     <CloudRain size={24} className="text-slate-500 mb-3" />
-                    <div className="text-xs font-bold opacity-60 uppercase mb-1">Karbon/PM</div>
+                    <div className="text-xs font-bold opacity-60 uppercase mb-1">{t('dashboard', 'co2')}</div>
                     <div className="text-2xl font-bold flex items-baseline gap-1">
                       <CountUp value={activeCity.co2} duration={1} /> <span className="text-sm opacity-60 font-medium">μg</span>
                     </div>
@@ -553,8 +568,7 @@ const GlobalDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="premium-glass p-6 flex flex-col h-[350px]">
                 <h3 className="font-bold text-lg mb-6 flex justify-between items-center">
-                  Havo tarkibi tarixi
-                  <span className="text-xs px-2 py-1 bg-black/5 dark:bg-white/10 rounded font-normal">Oylik</span>
+                  {t('dashboard', 'chart_title')}
                 </h3>
                 <div className="flex-1 w-full h-full min-h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
@@ -579,8 +593,7 @@ const GlobalDashboard = () => {
 
               <div className="premium-glass p-6 flex flex-col h-[350px]">
                 <h3 className="font-bold text-lg mb-6 flex justify-between items-center">
-                  O'rtacha AQI Index
-                  <span className="text-xs px-2 py-1 bg-black/5 dark:bg-white/10 rounded font-normal">Oylik</span>
+                  {t('dashboard', 'chart_aqi_title')}
                 </h3>
                 <div className="flex-1 w-full h-full min-h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">

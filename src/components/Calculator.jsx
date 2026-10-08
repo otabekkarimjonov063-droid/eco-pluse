@@ -29,7 +29,7 @@ const Calculator = () => {
         </div>
 
         <div className="glass-panel p-8 md:p-12 relative overflow-hidden">
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-eco-primary/10 rounded-full blur-3xl"></div>
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-[radial-gradient(circle,rgba(16,185,129,0.1)_0%,transparent_70%)] pointer-events-none"></div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
             <div className="space-y-8">

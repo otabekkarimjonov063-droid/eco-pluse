@@ -125,17 +125,17 @@ const HeroSection = ({ setActiveTab }) => {
               >
                 <div className="flex items-center justify-between mb-8">
                   <h3 className="font-bold text-xl flex items-center gap-3 text-slate-900 dark:text-white">
-                    <Activity className="text-emerald-500 animate-pulse-slow" /> Live Impact
+                    <Activity className="text-emerald-500 animate-pulse-slow" /> {t('hero', 'live_impact')}
                   </h3>
                   <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs font-bold rounded-full">
-                    Jonli
+                    {t('hero', 'live')}
                   </span>
                 </div>
 
                 <div className="space-y-6">
                   <div>
                     <div className="flex justify-between text-sm mb-3 font-semibold text-slate-800 dark:text-slate-200">
-                      <span className="opacity-80">Global CO2 qisqarishi</span>
+                      <span className="opacity-80">{t('hero', 'co2_reduction')}</span>
                       <span className="text-emerald-500 font-bold">+24.5%</span>
                     </div>
                     <div className="h-2 w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
@@ -155,13 +155,13 @@ const HeroSection = ({ setActiveTab }) => {
                       <div className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1 group-hover:text-emerald-500 transition-colors">
                         <CountUp value={1.5} decimals={1} duration={2} suffix="M+" />
                       </div>
-                      <div className="text-xs opacity-60 font-bold uppercase tracking-widest">A'zolar</div>
+                      <div className="text-xs opacity-60 font-bold uppercase tracking-widest">{t('hero', 'members')}</div>
                     </div>
                     <div className="p-4 rounded-2xl bg-white/30 dark:bg-black/30 border border-white/20 dark:border-white/5 text-center group cursor-default">
                       <div className="text-3xl font-extrabold text-emerald-500 mb-1 group-hover:scale-105 transition-transform">
                         <CountUp value={1.2} decimals={1} duration={2} suffix="K" />
                       </div>
-                      <div className="text-xs opacity-60 font-bold uppercase tracking-widest">Loyihalar</div>
+                      <div className="text-xs opacity-60 font-bold uppercase tracking-widest">{t('hero', 'projects_count')}</div>
                     </div>
                   </div>
                 </div>
@@ -179,9 +179,9 @@ const HeroSection = ({ setActiveTab }) => {
                 </div>
                 <div>
                   <div className="text-base font-bold text-slate-900 dark:text-white">
-                    <CountUp value={15000} duration={2.5} /> Daraxt
+                    <CountUp value={15000} duration={2.5} /> {t('hero', 'tree')}
                   </div>
-                  <div className="text-xs opacity-60 font-semibold uppercase tracking-wider">Bugun ekildi</div>
+                  <div className="text-xs opacity-60 font-semibold uppercase tracking-wider">{t('hero', 'planted_today')}</div>
                 </div>
               </motion.div>
 

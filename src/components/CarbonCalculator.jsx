@@ -17,6 +17,39 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
+const RangeSlider = ({ value, min, max, step, suffix, onChange, accentClass, colorClass, prefix = '' }) => {
+  const [localVal, setLocalVal] = useState(value);
+  
+  React.useEffect(() => {
+    setLocalVal(value);
+  }, [value]);
+
+  const handleChange = (e) => {
+    setLocalVal(e.target.value);
+  };
+  
+  const handleRelease = () => {
+    onChange(localVal);
+  };
+
+  return (
+    <>
+      <input 
+        type="range" min={min} max={max} step={step}
+        value={localVal} 
+        onChange={handleChange}
+        onMouseUp={handleRelease}
+        onTouchEnd={handleRelease}
+        onKeyUp={handleRelease}
+        className={`w-full ${accentClass} h-3 bg-black/10 dark:bg-white/10 rounded-full appearance-none cursor-pointer`}
+      />
+      <div className={`text-right text-3xl font-extrabold mt-4 ${colorClass}`}>
+        {prefix}{localVal} {suffix && <span className="text-lg font-medium opacity-60">{suffix}</span>}
+      </div>
+    </>
+  );
+};
+
 const CarbonCalculator = () => {
   const { t } = useLanguage();
   const [step, setStep] = useState(1);
@@ -85,12 +118,12 @@ const CarbonCalculator = () => {
         <motion.div 
           animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] right-[15%] w-[400px] h-[400px] bg-emerald-500/15 rounded-full blur-[100px]"
+          className="absolute top-[20%] right-[15%] w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(16,185,129,0.15)_0%,transparent_70%)] pointer-events-none"
         />
         <motion.div 
           animate={{ x: [0, -40, 0], y: [0, 30, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[20%] left-[15%] w-[400px] h-[400px] bg-cyan-500/15 rounded-full blur-[100px]"
+          className="absolute bottom-[20%] left-[15%] w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(6,182,212,0.15)_0%,transparent_70%)] pointer-events-none"
         />
       </div>
 
@@ -172,22 +205,20 @@ const CarbonCalculator = () => {
                     
                     <div className="bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-white/20 dark:border-white/5">
                       <label className="block font-bold mb-6 text-slate-800 dark:text-slate-200">{t('calculator', 'q_car')}</label>
-                      <input 
-                        type="range" min="0" max="1000" step="10"
-                        value={carKm} onChange={(e) => setCarKm(e.target.value)}
-                        className="w-full accent-blue-500 h-3 bg-black/10 dark:bg-white/10 rounded-full appearance-none cursor-pointer"
+                      <RangeSlider 
+                        min="0" max="1000" step="10" 
+                        value={carKm} onChange={setCarKm} 
+                        accentClass="accent-blue-500" colorClass="text-blue-500" suffix="km" 
                       />
-                      <div className="text-right text-3xl font-extrabold text-blue-500 mt-4">{carKm} <span className="text-lg font-medium opacity-60">km</span></div>
                     </div>
 
                     <div className="bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-white/20 dark:border-white/5">
                       <label className="block font-bold mb-6 text-slate-800 dark:text-slate-200">{t('calculator', 'q_flight')}</label>
-                      <input 
-                        type="range" min="0" max="20" step="1"
-                        value={flights} onChange={(e) => setFlights(e.target.value)}
-                        className="w-full accent-blue-500 h-3 bg-black/10 dark:bg-white/10 rounded-full appearance-none cursor-pointer"
+                      <RangeSlider 
+                        min="0" max="20" step="1" 
+                        value={flights} onChange={setFlights} 
+                        accentClass="accent-blue-500" colorClass="text-blue-500" suffix="marta" 
                       />
-                      <div className="text-right text-3xl font-extrabold text-blue-500 mt-4">{flights} <span className="text-lg font-medium opacity-60">marta</span></div>
                     </div>
                   </div>
                 )}
@@ -201,12 +232,11 @@ const CarbonCalculator = () => {
                     
                     <div className="bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-white/20 dark:border-white/5">
                       <label className="block font-bold mb-6 text-slate-800 dark:text-slate-200">{t('calculator', 'q_energy')}</label>
-                      <input 
-                        type="range" min="50" max="1000" step="10"
-                        value={energy} onChange={(e) => setEnergy(e.target.value)}
-                        className="w-full accent-yellow-500 h-3 bg-black/10 dark:bg-white/10 rounded-full appearance-none cursor-pointer"
+                      <RangeSlider 
+                        min="50" max="1000" step="10" 
+                        value={energy} onChange={setEnergy} 
+                        accentClass="accent-yellow-500" colorClass="text-yellow-500" suffix="kVt" 
                       />
-                      <div className="text-right text-3xl font-extrabold text-yellow-500 mt-4">{energy} <span className="text-lg font-medium opacity-60">kVt</span></div>
                     </div>
                   </div>
                 )}
@@ -220,12 +250,11 @@ const CarbonCalculator = () => {
                     
                     <div className="bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-white/20 dark:border-white/5">
                       <label className="block font-bold mb-6 text-slate-800 dark:text-slate-200">{t('calculator', 'q_meat')}</label>
-                      <input 
-                        type="range" min="0" max="21" step="1"
-                        value={meat} onChange={(e) => setMeat(e.target.value)}
-                        className="w-full accent-orange-500 h-3 bg-black/10 dark:bg-white/10 rounded-full appearance-none cursor-pointer"
+                      <RangeSlider 
+                        min="0" max="21" step="1" 
+                        value={meat} onChange={setMeat} 
+                        accentClass="accent-orange-500" colorClass="text-orange-500" suffix="marta" 
                       />
-                      <div className="text-right text-3xl font-extrabold text-orange-500 mt-4">{meat} <span className="text-lg font-medium opacity-60">marta</span></div>
                     </div>
                   </div>
                 )}
@@ -239,12 +268,11 @@ const CarbonCalculator = () => {
                     
                     <div className="bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-white/20 dark:border-white/5">
                       <label className="block font-bold mb-6 text-slate-800 dark:text-slate-200">{t('calculator', 'q_shopping')} ($)</label>
-                      <input 
-                        type="range" min="50" max="5000" step="50"
-                        value={shopping} onChange={(e) => setShopping(e.target.value)}
-                        className="w-full accent-purple-500 h-3 bg-black/10 dark:bg-white/10 rounded-full appearance-none cursor-pointer"
+                      <RangeSlider 
+                        min="50" max="5000" step="50" 
+                        value={shopping} onChange={setShopping} 
+                        accentClass="accent-purple-500" colorClass="text-purple-500" prefix="$" 
                       />
-                      <div className="text-right text-3xl font-extrabold text-purple-500 mt-4">${shopping}</div>
                     </div>
                   </div>
                 )}

@@ -11,7 +11,7 @@ export default {
         'eco-neon': '#00ffaa',
         'eco-dark': '#07101a',
         'eco-dark-lighter': '#0d2238',
-        'eco-light': '#f3fdf8',
+        'eco-light': '#f1f5f9',
         'eco-primary': '#10b981',
         'eco-secondary': '#0ea5e9',
         'eco-accent': '#84cc16'

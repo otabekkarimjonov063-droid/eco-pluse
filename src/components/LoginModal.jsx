@@ -356,8 +356,8 @@ const LoginModal = ({ isOpen, onClose, setActiveTab }) => {
       >
 
         {/* Decorative blobs — lightweight, pointer-events-none */}
-        <div className="absolute -top-24 -left-24 w-48 h-48 bg-eco-primary/10 rounded-full blur-[60px] pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-[60px] pointer-events-none" />
+        <div className="absolute -top-24 -left-24 w-48 h-48 bg-[radial-gradient(circle,rgba(16,185,129,0.1)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-[radial-gradient(circle,rgba(6,182,212,0.1)_0%,transparent_70%)] pointer-events-none" />
 
         {/* Close / Back button */}
         <button

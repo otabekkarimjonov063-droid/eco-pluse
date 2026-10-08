@@ -9,8 +9,8 @@ const Hero = () => {
     <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[20%] left-[10%] w-72 h-72 bg-eco-neon/20 rounded-full blur-[100px] animate-pulse-fast"></div>
-        <div className="absolute top-[40%] right-[10%] w-96 h-96 bg-cyan-500/20 rounded-full blur-[120px] animate-pulse-fast" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-[20%] left-[10%] w-72 h-72 bg-[radial-gradient(circle,rgba(16,185,129,0.15)_0%,transparent_70%)] pointer-events-none"></div>
+        <div className="absolute top-[40%] right-[10%] w-96 h-96 bg-[radial-gradient(circle,rgba(6,182,212,0.15)_0%,transparent_70%)] pointer-events-none"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center text-center">

@@ -66,6 +66,66 @@ const mockProjects = [
     target: 1500000,
     funded: 1500000,
     votes: 21000
+  },
+  {
+    id: 7,
+    title: 'Maktablar uchun Quyosh Panellari',
+    category: 'Energiya',
+    image: 'https://images.unsplash.com/photo-1509391366360-128c7c9e030b?auto=format&fit=crop&q=80&w=800',
+    desc: 'Qishloq hududlaridagi maktablarni 100% qayta tiklanuvchi energiya bilan ta\'minlash dasturi.',
+    target: 250000,
+    funded: 125000,
+    votes: 8400
+  },
+  {
+    id: 8,
+    title: 'Yovvoyi Tabiat Qo\'riqchi Dronlari',
+    category: 'O\'rmonlar',
+    image: 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&q=80&w=800',
+    desc: 'Brakonyerlikka qarshi kurashish va yovvoyi hayvonlar migratsiyasini kuzatish uchun sun\'iy intellektli dronlar tizimi.',
+    target: 400000,
+    funded: 310000,
+    votes: 14200
+  },
+  {
+    id: 9,
+    title: 'Aqlli Tomchilatib Sug\'orish',
+    category: 'Infratuzilma',
+    image: 'https://images.unsplash.com/photo-1530836369250-ef71a3fb9078?auto=format&fit=crop&q=80&w=800',
+    desc: 'Suv resurslarini 70% gacha tejash imkonini beruvchi sensorli tomchilatib sug\'orish texnologiyalarini joriy etish.',
+    target: 600000,
+    funded: 450000,
+    votes: 9500
+  },
+  {
+    id: 10,
+    title: 'Eko-Skuterlar Tarmog\'i',
+    category: 'Infratuzilma',
+    image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=800',
+    desc: 'Shaharlar havosini tozalash uchun qulay va arzon elektr skuterlar ijarasi tizimini yo\'lga qo\'yish.',
+    target: 850000,
+    funded: 220000,
+    votes: 16700
+  },
+  {
+    id: 11,
+    title: 'Tez Chiriydigan Bio-Plastik',
+    category: 'Qayta tiklanuvchi',
+    image: 'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80&w=800',
+    desc: 'Oziq-ovqat chiqindilaridan 30 kunda to\'liq chiriydigan yangi avlod bio-plastik idishlar ishlab chiqarish.',
+    target: 1200000,
+    funded: 980000,
+    votes: 27500
+  },
+  {
+    id: 12,
+    title: 'Sanoat Chiqindilarini Qayta ishlash',
+    category: 'Qayta tiklanuvchi',
+    image: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=800',
+    desc: 'Zaharli sanoat chiqindilarini xavfsiz neytrallash va ulardan qurilish materiallari olish mega-zavodi.',
+    target: 3000000,
+    funded: 3000000,
+    votes: 41000
   }
 ];
 
@@ -145,7 +205,7 @@ const EcoProjects = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-cyan-500 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-cyan-500 tracking-tight leading-[1.5] py-2">
             {t('projects', 'title')}
           </h1>
           <p className="text-lg opacity-70 max-w-2xl mx-auto font-medium mb-10">
