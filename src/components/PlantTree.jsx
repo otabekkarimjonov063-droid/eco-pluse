@@ -296,48 +296,48 @@ const PlantTree = () => {
                 <div className="w-6 h-6 bg-cyan-500 dark:bg-cyan-400 rounded-full shadow-[0_0_30px_rgba(34,211,238,1)]"></div>
               </div>
 
-              <div className="absolute bottom-16 right-16 text-right">
-                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="inline-block backdrop-blur-md bg-white/85 dark:bg-[#020804]/85 border border-black/5 dark:border-white/10 p-8 rounded-3xl">
+              <div className="absolute bottom-12 right-12 text-right">
+                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="inline-block backdrop-blur-xl bg-white/40 dark:bg-black/40 border border-white/50 dark:border-white/10 p-8 rounded-3xl shadow-2xl">
                   <div className="flex items-center justify-end gap-3 mb-2">
-                    <Globe className="text-cyan-500 dark:text-cyan-400" />
-                    <h3 className="text-4xl font-black text-cyan-600 dark:text-cyan-400">{activeRegion.name}</h3>
+                    <Globe className="text-cyan-600 dark:text-cyan-400" />
+                    <h3 className="text-3xl font-black text-cyan-800 dark:text-cyan-400">{activeRegion.name}</h3>
                   </div>
-                  <p className="text-slate-600 dark:text-white/60 max-w-sm ml-auto leading-relaxed">{activeRegion.desc}</p>
+                  <p className="text-slate-800 dark:text-white/80 max-w-sm ml-auto leading-relaxed font-medium">{activeRegion.desc}</p>
                 </motion.div>
               </div>
             </motion.div>
           ) : (step === 1 || step === 3 || step === 4) ? (
             <motion.div key={`tree-${activeTree.id}`} variants={rightVariants} initial="hidden" animate="show" exit="exit" className="absolute inset-0">
-              <img src={activeTree.image} alt="" className="w-full h-full object-cover opacity-30 dark:opacity-60 text-transparent" onError={(e) => e.target.style.display = 'none'} />
-              <div className={`absolute inset-0 bg-gradient-to-br ${activeTree.color} mix-blend-overlay opacity-10 dark:opacity-30`}></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-100 via-slate-100/40 dark:from-[#020804] dark:via-[#020804]/40 to-transparent"></div>
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-eco-light dark:to-eco-dark"></div>
+              <img src={activeTree.image} alt="" className="w-full h-full object-cover opacity-80 dark:opacity-70 text-transparent" onError={(e) => e.target.style.display = 'none'} />
+              <div className={`absolute inset-0 bg-gradient-to-br ${activeTree.color} mix-blend-overlay opacity-20 dark:opacity-40`}></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-100/50 via-slate-100/10 dark:from-[#020804]/80 dark:via-[#020804]/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-slate-100/80 dark:to-[#020804]/80"></div>
 
-              <div className="absolute bottom-0 left-0 right-0 p-12 flex flex-col justify-end">
-                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="w-full backdrop-blur-md bg-white/85 dark:bg-[#020804]/85 border border-black/5 dark:border-white/10 p-8 rounded-3xl shadow-2xl flex justify-between items-end text-slate-900 dark:text-white">
+              <div className="absolute bottom-12 right-12 flex flex-col items-end">
+                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="max-w-xl backdrop-blur-2xl bg-white/40 dark:bg-black/40 border border-white/50 dark:border-white/10 p-8 rounded-3xl shadow-2xl flex flex-col gap-6 text-slate-900 dark:text-white">
 
-                  <div className="max-w-md">
-                    <h3 className="text-5xl font-black mb-3">{activeTree.name}</h3>
-                    <p className="text-slate-600 dark:text-white/60 leading-relaxed text-lg">{activeTree.desc}</p>
+                  <div className="text-right">
+                    <h3 className="text-4xl font-black mb-2">{activeTree.name}</h3>
+                    <p className="text-slate-800 dark:text-white/80 leading-relaxed font-medium">{activeTree.desc}</p>
                   </div>
 
-                  <div className="flex items-center gap-8 bg-black/5 dark:bg-black/40 p-6 rounded-2xl border border-black/5 dark:border-white/5">
-                    <div className="text-left">
-                      <Wind className="text-emerald-500 dark:text-emerald-400 mb-2" size={32} />
-                      <p className="text-3xl font-black">{activeTree.co2} <span className="text-sm font-normal text-slate-500 dark:text-white/40">kg/yil</span></p>
-                      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-white/40">CO2 Yutilishi</p>
+                  <div className="flex items-center gap-6 bg-white/50 dark:bg-black/40 p-5 rounded-2xl border border-white/50 dark:border-white/5">
+                    <div className="text-center flex-1">
+                      <Wind className="text-emerald-600 dark:text-emerald-400 mb-2 mx-auto" size={28} />
+                      <p className="text-2xl font-black">{activeTree.co2}</p>
+                      <p className="text-[10px] uppercase tracking-widest text-slate-600 dark:text-white/60 mt-1">CO2 (kg/yil)</p>
                     </div>
-                    <div className="w-px h-16 bg-black/10 dark:bg-white/10"></div>
-                    <div className="text-left">
-                      <Activity className="text-rose-500 dark:text-rose-400 mb-2" size={32} />
-                      <p className="text-3xl font-black">{(activeTree.co2 * 5)} <span className="text-sm font-normal text-slate-500 dark:text-white/40">km</span></p>
-                      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-white/40">Avto zararini yopish</p>
+                    <div className="w-px h-12 bg-slate-400/30 dark:bg-white/10"></div>
+                    <div className="text-center flex-1">
+                      <Activity className="text-rose-600 dark:text-rose-400 mb-2 mx-auto" size={28} />
+                      <p className="text-2xl font-black">{(activeTree.co2 * 5)}</p>
+                      <p className="text-[10px] uppercase tracking-widest text-slate-600 dark:text-white/60 mt-1">Avto (km)</p>
                     </div>
-                    <div className="w-px h-16 bg-black/10 dark:bg-white/10"></div>
-                    <div className="text-left">
-                      <Droplets className="text-blue-500 dark:text-blue-400 mb-2" size={32} />
-                      <p className="text-3xl font-black">{activeTree.oxygen} <span className="text-sm font-normal text-slate-500 dark:text-white/40">kg/yil</span></p>
-                      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-white/40">Sof Kislorod</p>
+                    <div className="w-px h-12 bg-slate-400/30 dark:bg-white/10"></div>
+                    <div className="text-center flex-1">
+                      <Droplets className="text-blue-600 dark:text-blue-400 mb-2 mx-auto" size={28} />
+                      <p className="text-2xl font-black">{activeTree.oxygen}</p>
+                      <p className="text-[10px] uppercase tracking-widest text-slate-600 dark:text-white/60 mt-1">O2 (kg/yil)</p>
                     </div>
                   </div>
 
