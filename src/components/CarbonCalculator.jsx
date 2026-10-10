@@ -17,7 +17,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-const RangeSlider = ({ value, min, max, step, suffix, onChange, accentClass, colorClass, prefix = '' }) => {
+const RangeSlider = ({ value, min, max, step, suffix, onChange, theme = 'blue', prefix = '' }) => {
   const [localVal, setLocalVal] = useState(value);
   
   React.useEffect(() => {
@@ -32,21 +32,50 @@ const RangeSlider = ({ value, min, max, step, suffix, onChange, accentClass, col
     onChange(localVal);
   };
 
+  const percentage = ((localVal - min) / (max - min)) * 100;
+
+  const themes = {
+    blue: { text: 'text-blue-500', bg: 'bg-blue-500', border: 'border-blue-500' },
+    yellow: { text: 'text-yellow-500', bg: 'bg-yellow-500', border: 'border-yellow-500' },
+    orange: { text: 'text-orange-500', bg: 'bg-orange-500', border: 'border-orange-500' },
+    purple: { text: 'text-purple-500', bg: 'bg-purple-500', border: 'border-purple-500' }
+  };
+  const currentTheme = themes[theme] || themes.blue;
+
   return (
-    <>
-      <input 
-        type="range" min={min} max={max} step={step}
-        value={localVal} 
-        onChange={handleChange}
-        onMouseUp={handleRelease}
-        onTouchEnd={handleRelease}
-        onKeyUp={handleRelease}
-        className={`w-full ${accentClass} h-3 bg-black/10 dark:bg-white/10 rounded-full appearance-none cursor-pointer`}
-      />
-      <div className={`text-right text-3xl font-extrabold mt-4 ${colorClass}`}>
-        {prefix}{localVal} {suffix && <span className="text-lg font-medium opacity-60">{suffix}</span>}
+    <div className="relative">
+      <div className="relative h-8 flex items-center mb-4">
+        {/* Invisible Native Input for Functionality */}
+        <input 
+          type="range" min={min} max={max} step={step}
+          value={localVal} 
+          onChange={handleChange}
+          onMouseUp={handleRelease}
+          onTouchEnd={handleRelease}
+          onKeyUp={handleRelease}
+          className="w-full absolute z-20 opacity-0 cursor-pointer h-full"
+        />
+        {/* Custom Track Background */}
+        <div className="w-full h-3 bg-black/10 dark:bg-white/10 rounded-full relative overflow-hidden pointer-events-none">
+          {/* Custom Track Fill */}
+          <div 
+            className={`h-full ${currentTheme.bg} transition-all duration-75 ease-out`} 
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+        {/* Custom Thumb */}
+        <div 
+          className={`absolute w-7 h-7 bg-white dark:bg-[#13161A] rounded-full shadow-lg pointer-events-none border-[4px] ${currentTheme.border} transition-all duration-75 ease-out z-10 flex items-center justify-center`}
+          style={{ left: `calc(${percentage}% - 14px)` }}
+        >
+           <div className={`w-2 h-2 rounded-full ${currentTheme.bg}`}></div>
+        </div>
       </div>
-    </>
+      
+      <div className={`text-right text-4xl font-extrabold ${currentTheme.text} tracking-tight`}>
+        {prefix}{localVal} {suffix && <span className="text-xl font-medium opacity-60 tracking-normal">{suffix}</span>}
+      </div>
+    </div>
   );
 };
 
@@ -208,7 +237,7 @@ const CarbonCalculator = () => {
                       <RangeSlider 
                         min="0" max="1000" step="10" 
                         value={carKm} onChange={setCarKm} 
-                        accentClass="accent-blue-500" colorClass="text-blue-500" suffix="km" 
+                        theme="blue" suffix="km" 
                       />
                     </div>
 
@@ -217,7 +246,7 @@ const CarbonCalculator = () => {
                       <RangeSlider 
                         min="0" max="20" step="1" 
                         value={flights} onChange={setFlights} 
-                        accentClass="accent-blue-500" colorClass="text-blue-500" suffix="marta" 
+                        theme="blue" suffix="marta" 
                       />
                     </div>
                   </div>
@@ -235,7 +264,7 @@ const CarbonCalculator = () => {
                       <RangeSlider 
                         min="50" max="1000" step="10" 
                         value={energy} onChange={setEnergy} 
-                        accentClass="accent-yellow-500" colorClass="text-yellow-500" suffix="kVt" 
+                        theme="yellow" suffix="kVt" 
                       />
                     </div>
                   </div>
@@ -253,7 +282,7 @@ const CarbonCalculator = () => {
                       <RangeSlider 
                         min="0" max="21" step="1" 
                         value={meat} onChange={setMeat} 
-                        accentClass="accent-orange-500" colorClass="text-orange-500" suffix="marta" 
+                        theme="orange" suffix="marta" 
                       />
                     </div>
                   </div>
@@ -271,7 +300,7 @@ const CarbonCalculator = () => {
                       <RangeSlider 
                         min="50" max="5000" step="50" 
                         value={shopping} onChange={setShopping} 
-                        accentClass="accent-purple-500" colorClass="text-purple-500" prefix="$" 
+                        theme="purple" prefix="$" 
                       />
                     </div>
                   </div>
