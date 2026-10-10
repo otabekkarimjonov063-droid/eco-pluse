@@ -551,7 +551,7 @@ const AdminPanel = ({ onExit }) => {
               <button onClick={() => setIsNotifOpen(!isNotifOpen)} className="p-2 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors relative">
                 <Bell size={18} />
                 {notifications.some(n => !n.read) && (
-                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0D0F12]"></span>
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-[#0D0F12]"></span>
                 )}
               </button>
               
@@ -611,7 +611,7 @@ const AdminPanel = ({ onExit }) => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-3 w-56 bg-[#111827]/90 backdrop-blur-xl border border-slate-300 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 py-2"
+                    className="absolute right-0 mt-3 w-56 bg-white/90 dark:bg-[#111827]/90 backdrop-blur-xl border border-slate-300 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 py-2"
                   >
                     <div className="px-4 py-3 border-b border-slate-200 dark:border-white/5 mb-1">
                       <p className="text-sm font-bold text-slate-900 dark:text-white">Admin G'ofurov</p>
@@ -792,8 +792,8 @@ const AdminPanel = ({ onExit }) => {
                             <tr key={tx.id} className="hover:bg-slate-100 dark:bg-white/5 transition-colors group">
                               <td className="p-4 text-slate-400 dark:text-slate-500 dark:text-slate-400 font-mono text-xs">#{tx.id.slice(-6)}</td>
                               <td className="p-4 text-slate-400 dark:text-slate-500 dark:text-slate-400">{new Date(tx.date).toLocaleDateString()}</td>
-                              <td className="p-4 text-slate-200">{tx.project}</td>
-                              <td className="p-4 text-right text-slate-200 font-medium">${tx.amount}</td>
+                              <td className="p-4 text-slate-700 dark:text-slate-200">{tx.project}</td>
+                              <td className="p-4 text-right text-slate-700 dark:text-slate-200 font-medium">${tx.amount}</td>
                               <td className="p-4">
                                 <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-medium bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 uppercase tracking-wider">
                                   {tAdmin('status_success')}
@@ -832,10 +832,10 @@ const AdminPanel = ({ onExit }) => {
                         placeholder={tAdmin('search_users')} 
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-[#0A0F16] border border-slate-300 dark:border-white/10 text-sm text-slate-900 dark:text-white rounded-xl py-3 pl-11 pr-4 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all shadow-inner"
+                        className="w-full bg-slate-100 dark:bg-[#0A0F16] border border-slate-300 dark:border-white/10 text-sm text-slate-900 dark:text-white rounded-xl py-3 pl-11 pr-4 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all shadow-inner"
                       />
                     </div>
-                    <button className="px-4 py-3 bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-xl text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-white/5 transition-all flex items-center justify-center shadow-sm">
+                    <button className="px-4 py-3 bg-slate-100 dark:bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-xl text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/5 transition-all flex items-center justify-center shadow-sm">
                       <Filter size={18} />
                     </button>
                     <button onClick={openAddUserModal} className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] active:scale-95 flex items-center gap-2">
@@ -844,7 +844,7 @@ const AdminPanel = ({ onExit }) => {
                   </div>
                 </div>
 
-                <div className="bg-[#111827]/80 backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-2xl relative">
+                <div className="bg-white/80 dark:bg-[#111827]/80 backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-2xl relative">
                   {/* Subtle Top Glow */}
                   <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent opacity-50" />
                   
@@ -862,7 +862,7 @@ const AdminPanel = ({ onExit }) => {
                   
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm whitespace-nowrap">
-                      <thead className="bg-[#0A0F16] text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-white/5 uppercase tracking-widest">
+                      <thead className="bg-slate-50 dark:bg-[#0A0F16] text-xs text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-white/5 uppercase tracking-widest">
                         <tr>
                           <th className="p-5 w-14 text-center">
                             <button onClick={toggleAllUsers} className="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:text-white transition-colors">
@@ -936,7 +936,7 @@ const AdminPanel = ({ onExit }) => {
                   </div>
                   
                   {/* Pagination placeholder */}
-                  <div className="p-4 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500 font-medium bg-[#0A0F16]/50">
+                  <div className="p-4 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium bg-slate-50/50 dark:bg-[#0A0F16]/50">
                     <span>{tAdmin('showing')} 1 {tAdmin('to')} {users.length} {tAdmin('of')} {users.length} {tAdmin('results')}</span>
                     <div className="flex gap-1">
                       <button className="px-3 py-1.5 rounded-md hover:bg-slate-100 dark:bg-white/5 disabled:opacity-50" disabled>{tAdmin('prev')}</button>
@@ -964,7 +964,7 @@ const AdminPanel = ({ onExit }) => {
                   <p className="text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 font-medium">{tAdmin('audit_desc')}</p>
                 </div>
 
-                <div className="bg-[#111827]/80 backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-3xl overflow-hidden shadow-2xl relative p-6 md:p-10">
+                <div className="bg-white/80 dark:bg-[#111827]/80 backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-3xl overflow-hidden shadow-2xl relative p-6 md:p-10">
                   <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent opacity-50" />
                   
                   <div className="relative border-l-2 border-slate-300 dark:border-white/10 ml-4 md:ml-6 space-y-8 md:space-y-10">
@@ -974,7 +974,7 @@ const AdminPanel = ({ onExit }) => {
                       return (
                         <div key={log.id} className="relative pl-8 md:pl-12 group">
                           {/* Glowing Timeline Dot */}
-                          <div className={`absolute -left-[11px] top-4 w-5 h-5 rounded-full border-4 border-[#111827] shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-125 ${
+                          <div className={`absolute -left-[11px] top-4 w-5 h-5 rounded-full border-4 border-white dark:border-[#111827] shadow-md transition-transform duration-300 group-hover:scale-125 ${
                             log.type === 'create' ? 'bg-green-400 shadow-[0_0_15px_rgba(74,222,128,0.5)]' :
                             log.type === 'approve' ? 'bg-indigo-400 shadow-[0_0_15px_rgba(129,140,248,0.5)]' :
                             log.type === 'alert' ? 'bg-red-400 shadow-[0_0_15px_rgba(248,113,113,0.5)]' : 'bg-slate-400'
@@ -1034,7 +1034,7 @@ const AdminPanel = ({ onExit }) => {
                     ].map((perm, i) => (
                       <div key={i} className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm font-medium text-slate-200">{perm.title}</p>
+                          <p className="text-sm font-medium text-slate-700 dark:text-slate-200">{perm.title}</p>
                           <p className="text-xs text-slate-400 dark:text-slate-500">{perm.desc}</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -1272,25 +1272,25 @@ const AdminPanel = ({ onExit }) => {
           >
             <motion.div 
               initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
-              className="bg-[#111827] border border-slate-300 dark:border-white/10 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+              className="bg-white dark:bg-[#111827] border border-slate-300 dark:border-white/10 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
             >
-              <div className="flex justify-between items-center p-6 border-b border-slate-200 dark:border-white/5 bg-[#0A0F16]">
+              <div className="flex justify-between items-center p-6 border-b border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#0A0F16]">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">{editingUser ? 'Foydalanuvchini Tahrirlash' : 'Yangi Foydalanuvchi'}</h3>
                 <button onClick={() => setIsUserModalOpen(false)} className="text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"><X size={20} /></button>
               </div>
               <form onSubmit={saveUser} className="p-6 space-y-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase mb-2">Ism</label>
-                  <input required type="text" value={userFormData.name} onChange={(e) => setUserFormData({...userFormData, name: e.target.value})} className="w-full bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all" />
+                  <input required type="text" value={userFormData.name} onChange={(e) => setUserFormData({...userFormData, name: e.target.value})} className="w-full bg-slate-100 dark:bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase mb-2">Email</label>
-                  <input required type="email" value={userFormData.email} onChange={(e) => setUserFormData({...userFormData, email: e.target.value})} className="w-full bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all" />
+                  <input required type="email" value={userFormData.email} onChange={(e) => setUserFormData({...userFormData, email: e.target.value})} className="w-full bg-slate-100 dark:bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase mb-2">Rol</label>
-                    <select value={userFormData.role} onChange={(e) => setUserFormData({...userFormData, role: e.target.value})} className="w-full bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all">
+                    <select value={userFormData.role} onChange={(e) => setUserFormData({...userFormData, role: e.target.value})} className="w-full bg-slate-100 dark:bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all">
                       <option value="User">User</option>
                       <option value="Moderator">Moderator</option>
                       <option value="Admin">Admin</option>
@@ -1298,7 +1298,7 @@ const AdminPanel = ({ onExit }) => {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase mb-2">Holat</label>
-                    <select value={userFormData.status} onChange={(e) => setUserFormData({...userFormData, status: e.target.value})} className="w-full bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all">
+                    <select value={userFormData.status} onChange={(e) => setUserFormData({...userFormData, status: e.target.value})} className="w-full bg-slate-100 dark:bg-[#0A0F16] border border-slate-300 dark:border-white/10 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all">
                       <option value="Active">Active</option>
                       <option value="Blocked">Blocked</option>
                     </select>
