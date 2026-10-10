@@ -71,7 +71,7 @@ const mockProjects = [
     id: 7,
     title: 'Maktablar uchun Quyosh Panellari',
     category: 'Energiya',
-    image: 'https://images.unsplash.com/photo-1509391366360-128c7c9e030b?auto=format&fit=crop&q=80&w=800',
+    image: 'https://cdn.uza.uz/2023/02/28/11/04/Yrdo8WpKAvmcgaBiz7A6IXCSYE0jArMH_normal.jpg',
     desc: 'Qishloq hududlaridagi maktablarni 100% qayta tiklanuvchi energiya bilan ta\'minlash dasturi.',
     target: 250000,
     funded: 125000,
