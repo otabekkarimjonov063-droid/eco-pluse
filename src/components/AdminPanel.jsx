@@ -499,7 +499,7 @@ const AdminPanel = ({ onExit }) => {
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50 dark:bg-[#0D0F12]">
         
         {/* HEADER */}
-        <header className="h-16 border-b border-slate-200 dark:border-white/5 flex items-center justify-between px-6 bg-[#0D0F12]/80 backdrop-blur-sm shrink-0 z-40">
+        <header className="h-16 border-b border-slate-200 dark:border-white/5 flex items-center justify-between px-6 bg-white/80 dark:bg-[#0D0F12]/80 backdrop-blur-sm shrink-0 z-40">
           <div className="flex items-center gap-4 flex-1">
             <button 
               onClick={() => setIsCommandPaletteOpen(true)}
