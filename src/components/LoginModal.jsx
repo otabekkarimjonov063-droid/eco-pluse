@@ -4,6 +4,7 @@ import { X, Mail, Lock, AlertCircle, CheckCircle2, ArrowRight, User, ChevronLeft
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import { sendTelegramMessage } from '../utils/telegram';
+import { auth, googleProvider, signInWithPopup } from '../firebase';
 
 /* ─── SVGs ─────────────────────────────────────────────── */
 const GoogleIcon = () => (
@@ -294,6 +295,39 @@ const LoginModal = ({ isOpen, onClose, setActiveTab }) => {
     }, 1200);
   }, [oauthProvider, login, onClose, setActiveTab]);
 
+  const handleFirebaseGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      
+      const userData = {
+        name: user.displayName,
+        email: user.email,
+        avatar: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName)}&background=10b981&color=fff`,
+      };
+      
+      setIsLoading(false);
+      setSuccessMsg(`Google orqali muvaffaqiyatli kirdingiz!`);
+      
+      sendTelegramMessage(`🔐 <b>Yangi Avtorizatsiya (Firebase Google)</b>\n\nFoydalanuvchi: ${user.displayName}\nEmail: ${user.email}`);
+      
+      setTimeout(() => {
+        login(userData);
+        onClose();
+        if (setActiveTab) setActiveTab('dashboard');
+      }, 900);
+    } catch (err) {
+      setIsLoading(false);
+      console.error(err);
+      if (err.code === 'auth/invalid-api-key') {
+         setError("Firebase Config kiritilmagan. Iltimos src/firebase.js faylini to'ldiring.");
+      } else {
+         setError(err.message || "Google orqali kirishda xatolik yuz berdi");
+      }
+    }
+  };
+
   const validate = () => {
     if (!email) return 'Email kiritilishi shart';
     if (!/\S+@\S+\.\S+/.test(email)) return "Noto'g'ri email formati";
@@ -409,8 +443,10 @@ const LoginModal = ({ isOpen, onClose, setActiveTab }) => {
             {/* Social buttons */}
             <div className="space-y-3 mb-5">
               <button
-                onClick={() => setOauthProvider('Google')}
-                className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl hover:bg-gray-50 dark:hover:bg-white/10 transition-all font-semibold shadow-sm hover:shadow-md active:scale-95"
+                type="button"
+                onClick={handleFirebaseGoogleLogin}
+                disabled={isLoading}
+                className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl hover:bg-gray-50 dark:hover:bg-white/10 transition-all font-semibold shadow-sm hover:shadow-md active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <GoogleIcon />
                 {t('auth', 'google')}

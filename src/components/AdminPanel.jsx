@@ -206,7 +206,9 @@ const AdminPanel = ({ onExit }) => {
   };
 
   // Login State
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('adminLoggedIn') === 'true';
+  });
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
@@ -358,6 +360,7 @@ const AdminPanel = ({ onExit }) => {
     e.preventDefault();
     if (password === 'admin') {
       setIsLoggedIn(true);
+      localStorage.setItem('adminLoggedIn', 'true');
       setError(false);
       const { sendTelegramMessage } = await import('../utils/telegram.js');
       await sendTelegramMessage(`🔐 <b>Admin kirdi</b>\n🕒 Vaqt: ${new Date().toLocaleString('uz-UZ')}\n🌐 IP/Device: Tizim paneli`);
@@ -377,6 +380,7 @@ const AdminPanel = ({ onExit }) => {
 
   const handleLogout = async () => {
     setIsLoggedIn(false);
+    localStorage.removeItem('adminLoggedIn');
     const { sendTelegramMessage } = await import('../utils/telegram.js');
     await sendTelegramMessage(`🚪 <b>Admin chiqdi</b>\n🕒 Vaqt: ${new Date().toLocaleString('uz-UZ')}`);
   };
@@ -422,11 +426,11 @@ const AdminPanel = ({ onExit }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Maxfiy parolni kiriting (admin)"
-                  className={`w-full bg-transparent border-b-2 ${error ? 'border-red-500' : 'border-slate-300 dark:border-white/20'} text-white text-center text-lg px-4 py-3 outline-none focus:border-indigo-500 transition-colors placeholder-white/20`}
+                  className={`w-full bg-transparent border-b-2 ${error ? 'border-red-500' : 'border-slate-300 dark:border-white/20'} text-slate-900 dark:text-white text-center text-lg px-4 py-3 outline-none focus:border-indigo-500 transition-colors placeholder-slate-400 dark:placeholder-white/20`}
                 />
                 {error && <p className="text-red-600 dark:text-red-400 text-xs mt-2 text-center absolute -bottom-6 w-full">Noto'g'ri parol</p>}
               </div>
-              <button type="submit" className="w-full bg-white text-black hover:bg-indigo-500 hover:text-white font-bold py-4 rounded-full transition-all flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] mt-8">
+              <button type="submit" className="w-full bg-slate-900 dark:bg-white text-white dark:text-black hover:bg-indigo-500 hover:text-white font-bold py-4 rounded-full transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] mt-8">
                  Tizimga kirish
               </button>
             </form>
