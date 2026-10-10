@@ -91,7 +91,7 @@ const mockProjects = [
     id: 9,
     title: 'Aqlli Tomchilatib Sug\'orish',
     category: 'Infratuzilma',
-    image: 'https://images.unsplash.com/photo-1530836369250-ef71a3fb9078?auto=format&fit=crop&q=80&w=800',
+    image: 'https://ecdn6.globalso.com/upload/p/1685/image_product/2024-09/irr-1.jpg',
     desc: 'Suv resurslarini 70% gacha tejash imkonini beruvchi sensorli tomchilatib sug\'orish texnologiyalarini joriy etish.',
     target: 600000,
     funded: 450000,
