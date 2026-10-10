@@ -101,7 +101,7 @@ const mockProjects = [
     id: 10,
     title: 'Eko-Skuterlar Tarmog\'i',
     category: 'Infratuzilma',
-    image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=800',
+    image: 'https://elitebike.ua/assets/images/seev/seew-citycoco-white-red-elbl-16.jpg',
     desc: 'Shaharlar havosini tozalash uchun qulay va arzon elektr skuterlar ijarasi tizimini yo\'lga qo\'yish.',
     target: 850000,
     funded: 220000,
