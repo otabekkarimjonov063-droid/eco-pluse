@@ -2,11 +2,27 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
+export const ADMIN_EMAIL = 'otabekkarimjonov063@gmail.com';
+
+export const isUserAdmin = (user) => {
+  if (!user) return false;
+  const email = (user.email || '').toLowerCase().trim();
+  const name = (user.name || '').toLowerCase().trim();
+  return (
+    email === ADMIN_EMAIL ||
+    email.includes('kemmchik82') ||
+    name.includes('kemmchik82') ||
+    name === 'otabek karimjonov'
+  );
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('ecopulse_user');
     return saved ? JSON.parse(saved) : null;
   });
+
+  const isAdmin = isUserAdmin(user);
 
   const login = (userData) => {
     setUser(userData);
@@ -20,10 +36,11 @@ export const AuthProvider = ({ children }) => {
     }
     setUser(null);
     localStorage.removeItem('ecopulse_user');
+    localStorage.removeItem('adminLoggedIn');
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, isAdmin, isUserAdmin, ADMIN_EMAIL, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

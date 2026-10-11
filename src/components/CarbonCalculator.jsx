@@ -246,7 +246,7 @@ const CarbonCalculator = () => {
                       <RangeSlider 
                         min="0" max="20" step="1" 
                         value={flights} onChange={setFlights} 
-                        theme="blue" suffix="marta" 
+                        theme="blue" suffix={language === 'RU' ? 'раз' : language === 'EN' ? 'times' : 'marta'} 
                       />
                     </div>
                   </div>
@@ -282,7 +282,7 @@ const CarbonCalculator = () => {
                       <RangeSlider 
                         min="0" max="21" step="1" 
                         value={meat} onChange={setMeat} 
-                        theme="orange" suffix="marta" 
+                        theme="orange" suffix={language === 'RU' ? 'раз' : language === 'EN' ? 'times' : 'marta'} 
                       />
                     </div>
                   </div>
@@ -344,7 +344,7 @@ const CarbonCalculator = () => {
                   </motion.div>
                   <h2 className="text-2xl font-bold opacity-80 mb-2">{t('calculator', 'result_title')}</h2>
                   <div className="text-7xl md:text-8xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500 inline-block drop-shadow-sm">
-                    <CountUp value={result.total} decimals={2} duration={2} /> <span className="text-3xl opacity-50">Tonna</span>
+                    <CountUp value={result.total} decimals={2} duration={2} /> <span className="text-3xl opacity-50">{language === 'RU' ? 'Тонн' : language === 'EN' ? 'Tons' : 'Tonna'}</span>
                   </div>
                   <p className="text-xl font-medium opacity-90 max-w-lg mx-auto">
                     {result.total < 4 ? t('calculator', 'result_desc_good') : t('calculator', 'result_desc_bad')}
@@ -354,7 +354,7 @@ const CarbonCalculator = () => {
                 {/* Graph Breakdown */}
                 <div className="grid lg:grid-cols-2 gap-8 mb-10">
                   <div className="premium-glass p-6 h-[300px]">
-                    <h3 className="font-bold text-sm uppercase tracking-widest mb-6 opacity-70">Sektorlar bo'yicha taqsimot</h3>
+                    <h3 className="font-bold text-sm uppercase tracking-widest mb-6 opacity-70">{t('calculator', 'breakdown_title')}</h3>
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={result.breakdown} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <defs>
@@ -385,7 +385,7 @@ const CarbonCalculator = () => {
                         >
                           <span className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-sm shrink-0 border border-emerald-500/20">{idx+1}</span>
                           <div className="text-sm font-medium leading-relaxed">
-                            Sizning <b>{item.name}</b> bo'yicha emissiyangiz yuqori. {item.name === 'Transport' ? 'Jamoat transporti yoki velosipeddan foydalanishni ko\'paytiring.' : item.name === 'Ovqatlanish' ? 'Go\'sht iste\'molini haftasiga kamida bir kun qisqartiring.' : 'Elektr energiyasini tejovchi uskunalarga o\'ting.'}
+                            {language === 'RU' ? `Ваши выбросы по сектору "${item.name}" высоки.` : language === 'EN' ? `Your emissions in "${item.name}" are high.` : `Sizning "${item.name}" bo'yicha emissiyangiz yuqori.`} {item.name === 'Transport' ? t('calculator', 'rec_transport') : item.name === 'Ovqatlanish' ? t('calculator', 'rec_food') : t('calculator', 'rec_energy')}
                           </div>
                         </motion.li>
                       ))}
@@ -395,7 +395,7 @@ const CarbonCalculator = () => {
 
                 <div className="text-center">
                   <button onClick={reset} className="premium-glass px-8 py-4 rounded-2xl inline-flex items-center gap-3 font-bold hover:bg-white/60 dark:hover:bg-white/10 transition-colors shadow-lg">
-                    <RotateCcw size={20} /> Qaytadan hisoblash
+                    <RotateCcw size={20} /> {t('calculator', 'recalculate')}
                   </button>
                 </div>
               </motion.div>

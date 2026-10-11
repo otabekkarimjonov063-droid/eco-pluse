@@ -3,47 +3,68 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, Send, User, ThumbsUp, Star } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const EcoComments = () => {
-  const { language } = useLanguage();
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      name: 'Azizbek',
-      text: 'Juda zo\'r tashabbus! Men ham 5 ta eman daraxti ekdim. Jarayon juda oson va tushunarli.',
-      time: '2 soat oldin',
-      rating: 5,
-      likes: 12
+const initialMockComments = [
+  {
+    id: 1,
+    name: 'Azizbek',
+    text: {
+      UZ: "Juda zo'r tashabbus! Men ham 5 ta eman daraxti ekdim. Jarayon juda oson va tushunarli.",
+      RU: "Отличная инициатива! Я посадил 5 саженцев дуба. Процесс очень легкий и понятный.",
+      EN: "Such an inspiring initiative! I already planted 5 oak trees. The process is remarkably smooth."
     },
-    {
-      id: 2,
-      name: 'Malika',
-      text: 'Platforma dizayni ajoyib. Karta orqali to\'lov qilishda muammo bo\'lmadi. Rahmat sizlarga!',
-      time: '5 soat oldin',
-      rating: 5,
-      likes: 8
+    time: {
+      UZ: "2 soat oldin",
+      RU: "2 часа назад",
+      EN: "2 hours ago"
     },
-    {
-      id: 3,
-      name: 'Olimjon',
-      text: 'Tabiat uchun ajoyib loyiha. Tez orada kompaniyamiz nomidan ham qatnashamiz.',
-      time: '1 kun oldin',
-      rating: 4,
-      likes: 24
-    }
-  ]);
+    rating: 5,
+    likes: 12
+  },
+  {
+    id: 2,
+    name: 'Malika',
+    text: {
+      UZ: "Platforma dizayni ajoyib. Karta orqali to'lov qilishda muammo bo'lmadi. Rahmat sizlarga!",
+      RU: "Дизайн платформы потрясающий. Оплата картой прошла моментально. Спасибо вам!",
+      EN: "Stunning platform design. Instant card processing without any friction. Thank you!"
+    },
+    time: {
+      UZ: "5 soat oldin",
+      RU: "5 часов назад",
+      EN: "5 hours ago"
+    },
+    rating: 5,
+    likes: 8
+  },
+  {
+    id: 3,
+    name: 'Olimjon',
+    text: {
+      UZ: "Tabiat uchun ajoyib loyiha. Tez orada kompaniyamiz nomidan ham qatnashamiz.",
+      RU: "Замечательный проект для планеты. Скоро подключимся от имени нашей компании.",
+      EN: "A wonderful project for nature. We will be participating on behalf of our company soon."
+    },
+    time: {
+      UZ: "1 kun oldin",
+      RU: "1 день назад",
+      EN: "1 day ago"
+    },
+    rating: 4,
+    likes: 24
+  }
+];
 
+const EcoComments = () => {
+  const { language, t, tText } = useLanguage();
+  const [userComments, setUserComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [newName, setNewName] = useState('');
   const [hoveredStar, setHoveredStar] = useState(0);
   const [selectedStar, setSelectedStar] = useState(5);
+  const [likedIds, setLikedIds] = useState({});
 
-  const tLocal = (key) => {
-    const dict = {
-      UZ: { title: 'Fikr va Mulohazalar', subtitle: 'Foydalanuvchilarimizning loyiha haqidagi fikrlari', name: 'Ismingiz', comment: 'Fikringizni yozing...', send: 'Yuborish' },
-      RU: { title: 'Отзывы и комментарии', subtitle: 'Что думают наши пользователи о проекте', name: 'Ваше имя', comment: 'Напишите свой отзыв...', send: 'Отправить' },
-      EN: { title: 'Reviews & Comments', subtitle: 'What our users think about the project', name: 'Your name', comment: 'Write your feedback...', send: 'Send' }
-    };
-    return dict[language]?.[key] || dict['EN'][key];
+  const handleLike = (id) => {
+    setLikedIds(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
   const handleSubmit = (e) => {
@@ -54,16 +75,26 @@ const EcoComments = () => {
       id: Date.now(),
       name: newName,
       text: newComment,
-      time: 'Hozir',
+      time: t('comments', 'now'),
       rating: selectedStar,
       likes: 0
     };
 
-    setComments([comment, ...comments]);
+    setUserComments([comment, ...userComments]);
     setNewComment('');
     setNewName('');
     setSelectedStar(5);
   };
+
+  const allComments = [
+    ...userComments,
+    ...initialMockComments.map(c => ({
+      ...c,
+      displayComment: typeof c.text === 'object' ? tText(c.text) : c.text,
+      displayTime: typeof c.time === 'object' ? tText(c.time) : c.time,
+      currentLikes: c.likes + (likedIds[c.id] ? 1 : 0)
+    }))
+  ];
 
   return (
     <section className="py-24 relative overflow-hidden bg-eco-light dark:bg-[#0A0F16] transition-colors duration-500">
@@ -88,7 +119,7 @@ const EcoComments = () => {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 tracking-tight mb-4"
           >
-            {tLocal('title')}
+            {t('comments', 'title')}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -97,7 +128,7 @@ const EcoComments = () => {
             transition={{ delay: 0.2 }}
             className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium"
           >
-            {tLocal('subtitle')}
+            {t('comments', 'subtitle')}
           </motion.p>
         </div>
 
@@ -106,7 +137,7 @@ const EcoComments = () => {
           {/* Comments List */}
           <div className="lg:col-span-7 space-y-6">
             <AnimatePresence>
-              {comments.map((comment, index) => (
+              {allComments.map((comment, index) => (
                 <motion.div
                   key={comment.id}
                   initial={{ opacity: 0, x: -20 }}
@@ -121,7 +152,9 @@ const EcoComments = () => {
                       </div>
                       <div>
                         <h4 className="text-slate-900 dark:text-white font-bold text-lg">{comment.name}</h4>
-                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{comment.time}</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          {comment.displayTime || comment.time}
+                        </span>
                       </div>
                     </div>
                     <div className="flex gap-1">
@@ -132,15 +165,28 @@ const EcoComments = () => {
                   </div>
                   
                   <p className="text-slate-700 dark:text-slate-300 leading-relaxed font-medium mb-6">
-                    {comment.text}
+                    {comment.displayComment || comment.text}
                   </p>
                   
                   <div className="flex items-center gap-4 border-t border-slate-200 dark:border-white/5 pt-4">
-                    <button className="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group-hover:text-slate-600 dark:group-hover:text-slate-400">
-                      <ThumbsUp size={16} /> {comment.likes}
+                    <button 
+                      onClick={() => handleLike(comment.id)}
+                      className={`flex items-center gap-2 text-xs font-bold transition-colors ${
+                        likedIds[comment.id] 
+                          ? 'text-emerald-500' 
+                          : 'text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400'
+                      }`}
+                    >
+                      <ThumbsUp size={16} className={likedIds[comment.id] ? "fill-emerald-500" : ""} /> 
+                      {comment.currentLikes !== undefined ? comment.currentLikes : comment.likes}
                     </button>
-                    <button className="text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
-                      Javob berish
+                    <button 
+                      onClick={() => {
+                        setNewComment(`@${comment.name} `);
+                      }}
+                      className="text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+                    >
+                      {t('comments', 'reply')}
                     </button>
                   </div>
                 </motion.div>
@@ -159,7 +205,7 @@ const EcoComments = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent pointer-events-none" />
               
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 relative z-10 flex items-center gap-3">
-                Izoh qoldirish
+                {t('comments', 'leave_comment')}
               </h3>
 
               <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
@@ -190,7 +236,7 @@ const EcoComments = () => {
                     required
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
-                    placeholder={tLocal('name')}
+                    placeholder={t('comments', 'name')}
                     className="w-full bg-slate-50 dark:bg-[#0A0F16] border border-slate-200 dark:border-white/10 rounded-xl px-12 py-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-medium"
                   />
                 </div>
@@ -200,7 +246,7 @@ const EcoComments = () => {
                     required
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    placeholder={tLocal('comment')}
+                    placeholder={t('comments', 'comment')}
                     rows="4"
                     className="w-full bg-slate-50 dark:bg-[#0A0F16] border border-slate-200 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-medium resize-none"
                   ></textarea>
@@ -210,7 +256,7 @@ const EcoComments = () => {
                   type="submit"
                   className="w-full py-4 px-6 bg-emerald-500 hover:bg-emerald-400 text-white dark:text-[#0A0F16] rounded-xl font-bold text-lg transition-all active:scale-[0.98] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)]"
                 >
-                  {tLocal('send')} <Send size={20} />
+                  {t('comments', 'send')} <Send size={20} />
                 </button>
               </form>
             </div>

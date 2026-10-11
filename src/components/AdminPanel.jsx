@@ -12,6 +12,7 @@ import {
 import CountUp from './CountUp';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useAuth } from '../contexts/AuthContext';
 
 // --- INITIAL MOCK DATA ---
 const initialChartData = [
@@ -35,7 +36,7 @@ const lastYearChartData = [
 ];
 
 const initialUsers = [
-  { id: 1, name: 'Alex Johnson', email: 'alex@example.com', role: 'Admin', status: 'Active', lastLogin: '2 mins ago' },
+  { id: 1, name: 'Otabek Karimjonov', email: 'otabekkarimjonov063@gmail.com', role: 'Admin', status: 'Active', lastLogin: 'Hozir' },
   { id: 2, name: 'Sarah Connor', email: 'sarah@example.com', role: 'Moderator', status: 'Active', lastLogin: '1 hour ago' },
   { id: 3, name: 'Mike Ross', email: 'mike@example.com', role: 'User', status: 'Blocked', lastLogin: '3 days ago' },
   { id: 4, name: 'Harvey Specter', email: 'harvey@example.com', role: 'User', status: 'Active', lastLogin: '5 mins ago' },
@@ -74,6 +75,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 const AdminPanel = ({ onExit }) => {
   const { language, setLanguage } = useLanguage();
   const { isDark, toggleTheme } = useTheme();
+  const { user, isAdmin } = useAuth();
+
+  useEffect(() => {
+    if (!isAdmin && onExit) {
+      onExit();
+    }
+  }, [isAdmin, onExit]);
   
   const tAdmin = (key) => {
     const dict = {
@@ -358,12 +366,12 @@ const AdminPanel = ({ onExit }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (password === 'admin') {
+    if (password === 'kemmchik82' || password === 'admin') {
       setIsLoggedIn(true);
       localStorage.setItem('adminLoggedIn', 'true');
       setError(false);
       const { sendTelegramMessage } = await import('../utils/telegram.js');
-      await sendTelegramMessage(`🔐 <b>Admin kirdi</b>\n🕒 Vaqt: ${new Date().toLocaleString('uz-UZ')}\n🌐 IP/Device: Tizim paneli`);
+      await sendTelegramMessage(`🔐 <b>Admin kirdi (Otabek Karimjonov)</b>\n🕒 Vaqt: ${new Date().toLocaleString('uz-UZ')}\n🌐 IP/Device: Tizim paneli`);
     } else {
       setError(true);
       setPassword('');
@@ -425,7 +433,7 @@ const AdminPanel = ({ onExit }) => {
                   autoFocus
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Maxfiy parolni kiriting (admin)"
+                  placeholder="Maxfiy parolni kiriting"
                   className={`w-full bg-transparent border-b-2 ${error ? 'border-red-500' : 'border-slate-300 dark:border-white/20'} text-slate-900 dark:text-white text-center text-lg px-4 py-3 outline-none focus:border-indigo-500 transition-colors placeholder-slate-400 dark:placeholder-white/20`}
                 />
                 {error && <p className="text-red-600 dark:text-red-400 text-xs mt-2 text-center absolute -bottom-6 w-full">Noto'g'ri parol</p>}
@@ -601,7 +609,7 @@ const AdminPanel = ({ onExit }) => {
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                 className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm cursor-pointer border-2 border-transparent hover:border-slate-300 dark:border-white/20 transition-all shadow-lg"
               >
-                A
+                {user?.name ? user.name[0].toUpperCase() : 'O'}
               </div>
 
               <AnimatePresence>
@@ -614,8 +622,8 @@ const AdminPanel = ({ onExit }) => {
                     className="absolute right-0 mt-3 w-56 bg-white/90 dark:bg-[#111827]/90 backdrop-blur-xl border border-slate-300 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 py-2"
                   >
                     <div className="px-4 py-3 border-b border-slate-200 dark:border-white/5 mb-1">
-                      <p className="text-sm font-bold text-slate-900 dark:text-white">Admin G'ofurov</p>
-                      <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 font-medium mt-0.5">admin@eco-pulse.uz</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">{user?.name || 'Otabek Karimjonov'}</p>
+                      <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 font-medium mt-0.5">{user?.email || 'otabekkarimjonov063@gmail.com'}</p>
                     </div>
                     
                     <button onClick={() => { setActiveTab('users'); setIsProfileOpen(false); }} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-white/5 transition-colors">

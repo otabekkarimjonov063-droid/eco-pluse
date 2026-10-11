@@ -1,7 +1,8 @@
-import React, { useState, useCallback, lazy, Suspense } from 'react';
+import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Sidebar from './components/Sidebar';
 import LoginModal from './components/LoginModal';
+import { useAuth } from './contexts/AuthContext';
 
 // Lazy load heavy page components — only load when first visited
 const HeroSection     = lazy(() => import('./components/HeroSection'));
@@ -46,13 +47,21 @@ const PageLoader = () => (
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const { isAdmin } = useAuth();
+
+  useEffect(() => {
+    if (activeTab === 'admin' && !isAdmin) {
+      setActiveTab('home');
+    }
+  }, [activeTab, isAdmin]);
 
   const handleTabChange = useCallback((tab) => {
+    if (tab === 'admin' && !isAdmin) return; // Block unauthorized access to admin tab
     if (tab === activeTab) return; // ignore same-tab clicks
     setActiveTab(tab);
     // Native smooth scroll — no React re-render
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeTab]);
+  }, [activeTab, isAdmin]);
 
   const openLogin  = useCallback(() => setIsLoginModalOpen(true),  []);
   const closeLogin = useCallback(() => setIsLoginModalOpen(false), []);
@@ -60,7 +69,7 @@ function App() {
   return (
     <div className="min-h-screen relative flex bg-eco-light dark:bg-eco-dark overflow-x-hidden text-slate-800 dark:text-white selection:bg-emerald-500 selection:text-white">
 
-      {activeTab === 'admin' ? (
+      {activeTab === 'admin' && isAdmin ? (
         <Suspense fallback={<PageLoader />}>
           <AdminPanel onExit={() => handleTabChange('home')} />
         </Suspense>

@@ -12,7 +12,7 @@ import Logo from './Logo';
 const Sidebar = ({ activeTab, setActiveTab, onOpenLogin }) => {
   const { isDark, toggleTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
-  const { user, logout } = useAuth();
+  const { user, isAdmin, logout } = useAuth();
   
   const [isLangOpen, setIsLangOpen] = useState(false);
 
@@ -22,6 +22,7 @@ const Sidebar = ({ activeTab, setActiveTab, onOpenLogin }) => {
     { id: 'calculator', name: t('navbar', 'calculator'), icon: <Calculator size={20} /> },
     { id: 'projects', name: t('navbar', 'projects'), icon: <GalleryVerticalEnd size={20} /> },
     { id: 'plant', name: t('navbar', 'plant'), icon: <TreePine size={20} /> },
+    ...(isAdmin ? [{ id: 'admin', name: 'Admin Panel', icon: <ShieldAlert size={20} /> }] : []),
   ];
 
   const langs = ['UZ', 'RU', 'EN'];
@@ -44,7 +45,7 @@ const Sidebar = ({ activeTab, setActiveTab, onOpenLogin }) => {
 
         {/* Navigation Tabs */}
         <div className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-2 relative z-10">
-          <div className="text-xs font-bold uppercase tracking-widest opacity-50 mb-4 ml-2 text-slate-800 dark:text-white">Menyu</div>
+          <div className="text-xs font-bold uppercase tracking-widest opacity-50 mb-4 ml-2 text-slate-800 dark:text-white">{t('navbar', 'menu')}</div>
           {navLinks.map((link) => (
             <button
               key={link.id}
@@ -86,7 +87,12 @@ const Sidebar = ({ activeTab, setActiveTab, onOpenLogin }) => {
                   className="w-10 h-10 rounded-full object-cover border-2 border-emerald-500 shadow-lg"
                 />
                 <div className="flex-1 overflow-hidden">
-                  <p className="text-sm font-bold truncate text-slate-900 dark:text-white">{user.name}</p>
+                  <div className="flex items-center gap-1.5">
+                    <p className="text-sm font-bold truncate text-slate-900 dark:text-white">{user.name}</p>
+                    {isAdmin && (
+                      <span className="px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider rounded bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30 shrink-0">Admin</span>
+                    )}
+                  </div>
                   <button onClick={logout} className="text-xs text-red-500 font-semibold hover:underline flex items-center gap-1 mt-0.5">
                     <LogOut size={12} /> {t('navbar', 'logout')}
                   </button>
@@ -103,14 +109,20 @@ const Sidebar = ({ activeTab, setActiveTab, onOpenLogin }) => {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Admin Panel Toggle */}
-            <button 
-              onClick={() => setActiveTab('admin')} 
-              className="flex-1 p-3 flex items-center justify-center premium-glass rounded-xl hover:bg-red-500/10 dark:hover:bg-red-500/20 transition-all text-slate-700 dark:text-red-400 group"
-              title="Admin Panel"
-            >
-              <ShieldAlert size={20} className="group-hover:scale-110 transition-transform" />
-            </button>
+            {/* Admin Panel Toggle - Only visible when logged in as admin */}
+            {isAdmin && (
+              <button 
+                onClick={() => setActiveTab('admin')} 
+                className={`flex-1 p-3 flex items-center justify-center premium-glass rounded-xl hover:bg-red-500/10 dark:hover:bg-red-500/20 transition-all text-red-500 dark:text-red-400 group relative border border-red-500/20 shadow-sm ${activeTab === 'admin' ? 'ring-2 ring-red-500/50 bg-red-500/10' : ''}`}
+                title="Admin Panel"
+              >
+                <ShieldAlert size={20} className="group-hover:scale-110 transition-transform" />
+                <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                </span>
+              </button>
+            )}
 
             {/* Theme Toggle */}
             <button 

@@ -39,9 +39,9 @@ const HeroSection = ({ setActiveTab }) => {
         </motion.div>
       </AnimatePresence>
       
-      {/* Premium Dark Overlay */}
-      <div className="absolute inset-0 bg-white/30 dark:bg-[#07101a]/80 transition-colors duration-700"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-eco-light via-white/40 to-transparent dark:from-[#07101a] dark:via-[#07101a]/60 transition-colors duration-700"></div>
+      {/* Premium Ambient Overlay - Soft & Soothing in Light Mode */}
+      <div className="absolute inset-0 bg-slate-900/10 dark:bg-[#07101a]/80 transition-colors duration-700"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-eco-light via-eco-light/50 to-transparent dark:from-[#07101a] dark:via-[#07101a]/60 transition-colors duration-700"></div>
 
       {/* Floating Animated Particles (GPU-Accelerated) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">

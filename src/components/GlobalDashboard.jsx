@@ -68,8 +68,112 @@ const itemVariants = {
   show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 15 } }
 };
 
+const getRatingStyle = (rating, color) => {
+  const r = (rating || '').toLowerCase();
+  const c = (color || '').toLowerCase();
+
+  if (r.includes("a'lo") || r.includes('alo') || c.includes('emerald')) {
+    return {
+      badge: 'bg-emerald-500/10 dark:bg-emerald-500/20 border-emerald-500/30',
+      label: 'text-emerald-700/80 dark:text-emerald-300/80',
+      value: 'text-emerald-700 dark:text-emerald-300',
+      chip: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30',
+      dot: 'bg-emerald-500',
+      border: 'border-emerald-500',
+      bgLight: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+    };
+  }
+  if (r.includes('yaxshi') || (c.includes('green') && !c.includes('emerald'))) {
+    return {
+      badge: 'bg-green-500/10 dark:bg-green-500/20 border-green-500/30',
+      label: 'text-green-700/80 dark:text-green-300/80',
+      value: 'text-green-700 dark:text-green-300',
+      chip: 'bg-green-500/10 dark:bg-green-500/20 text-green-700 dark:text-green-300 border border-green-500/30',
+      dot: 'bg-green-500',
+      border: 'border-green-500',
+      bgLight: 'bg-green-500/20 text-green-600 dark:text-green-400',
+    };
+  }
+  if (r.includes('qoniqarli') || c.includes('teal')) {
+    return {
+      badge: 'bg-teal-500/10 dark:bg-teal-500/20 border-teal-500/30',
+      label: 'text-teal-700/80 dark:text-teal-300/80',
+      value: 'text-teal-700 dark:text-teal-300',
+      chip: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-700 dark:text-teal-300 border border-teal-500/30',
+      dot: 'bg-teal-500',
+      border: 'border-teal-500',
+      bgLight: 'bg-teal-500/20 text-teal-600 dark:text-teal-400',
+    };
+  }
+  if (r.includes("o'rtacha") || r.includes('ortacha') || c.includes('yellow')) {
+    return {
+      badge: 'bg-amber-500/10 dark:bg-yellow-500/20 border-amber-500/30',
+      label: 'text-amber-800/80 dark:text-yellow-300/80',
+      value: 'text-amber-800 dark:text-yellow-300',
+      chip: 'bg-amber-500/10 dark:bg-yellow-500/20 text-amber-800 dark:text-yellow-300 border border-amber-500/30',
+      dot: 'bg-amber-500',
+      border: 'border-amber-500',
+      bgLight: 'bg-yellow-500/20 text-yellow-600 dark:text-yellow-400',
+    };
+  }
+  if (r.includes('yomon') || c.includes('orange')) {
+    return {
+      badge: 'bg-orange-500/10 dark:bg-orange-500/20 border-orange-500/30',
+      label: 'text-orange-800/80 dark:text-orange-300/80',
+      value: 'text-orange-800 dark:text-orange-300',
+      chip: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-800 dark:text-orange-300 border border-orange-500/30',
+      dot: 'bg-orange-500',
+      border: 'border-orange-500',
+      bgLight: 'bg-orange-500/20 text-orange-600 dark:text-orange-400',
+    };
+  }
+  if (r.includes('xavfli') || c.includes('red')) {
+    return {
+      badge: 'bg-rose-500/10 dark:bg-red-500/20 border-rose-500/30',
+      label: 'text-rose-800/80 dark:text-rose-300/80',
+      value: 'text-rose-800 dark:text-rose-300',
+      chip: 'bg-rose-500/10 dark:bg-red-500/20 text-rose-800 dark:text-rose-300 border border-rose-500/30',
+      dot: 'bg-rose-500',
+      border: 'border-red-500',
+      bgLight: 'bg-red-500/20 text-red-600 dark:text-red-400',
+    };
+  }
+  return {
+    badge: 'bg-emerald-500/10 dark:bg-emerald-500/20 border-emerald-500/30',
+    label: 'text-emerald-700/80 dark:text-emerald-300/80',
+    value: 'text-emerald-700 dark:text-emerald-300',
+    chip: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30',
+    dot: 'bg-emerald-500',
+    border: 'border-emerald-500',
+    bgLight: 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+  };
+};
+
+const getRatingText = (rating, lang) => {
+  const r = (rating || '').toLowerCase();
+  if (r.includes('alo') || r.includes("a'lo") || r.includes('excellent') || r.includes('отлич')) {
+    return lang === 'RU' ? 'Отлично' : lang === 'EN' ? 'Excellent' : "A'lo";
+  }
+  if (r.includes('yaxshi') || r.includes('good') || r.includes('хорош')) {
+    return lang === 'RU' ? 'Хорошо' : lang === 'EN' ? 'Good' : 'Yaxshi';
+  }
+  if (r.includes('qoniqarli') || r.includes('satisfactory') || r.includes('удовл')) {
+    return lang === 'RU' ? 'Удовлетворительно' : lang === 'EN' ? 'Satisfactory' : 'Qoniqarli';
+  }
+  if (r.includes('ortacha') || r.includes("o'rtacha") || r.includes('moderate') || r.includes('средн')) {
+    return lang === 'RU' ? 'Средне' : lang === 'EN' ? 'Moderate' : "O'rtacha";
+  }
+  if (r.includes('yomon') || r.includes('poor') || r.includes('плох')) {
+    return lang === 'RU' ? 'Плохо' : lang === 'EN' ? 'Poor' : 'Yomon';
+  }
+  if (r.includes('xavfli') || r.includes('dangerous') || r.includes('опасн')) {
+    return lang === 'RU' ? 'Опасно' : lang === 'EN' ? 'Dangerous' : 'Xavfli';
+  }
+  return rating || '';
+};
+
 const GlobalDashboard = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [cities, setCities] = useState(generateCityData());
   const [chartData] = useState(generateChartData());
   const [activeCityName, setActiveCityName] = useState(cities[0].city);
@@ -96,15 +200,29 @@ const GlobalDashboard = () => {
 
   // Determine styling based on AQI
   const getAqiConfig = (aqi) => {
-    if (aqi <= 50) return { rating: 'A\'lo', color: 'text-emerald-400', bg: 'bg-emerald-400', progress: 15 };
+    if (aqi <= 50) return { rating: "A'lo", color: 'text-emerald-400', bg: 'bg-emerald-400', progress: 15 };
     if (aqi <= 100) return { rating: 'Yaxshi', color: 'text-green-500', bg: 'bg-green-500', progress: 35 };
-    if (aqi <= 150) return { rating: 'O\'rtacha', color: 'text-yellow-500', bg: 'bg-yellow-500', progress: 60 };
+    if (aqi <= 150) return { rating: "O'rtacha", color: 'text-yellow-500', bg: 'bg-yellow-500', progress: 60 };
     if (aqi <= 200) return { rating: 'Yomon', color: 'text-orange-500', bg: 'bg-orange-500', progress: 85 };
     return { rating: 'Xavfli', color: 'text-red-500', bg: 'bg-red-500', progress: 100 };
   };
 
   // Fallback AI generation (if API key missing or error)
   const getFallbackRecommendation = (aqi, city) => {
+    if (language === 'RU') {
+      if (aqi <= 50) return `Отлично! В городе ${city} очень чистый воздух. Идеальное время для спорта на открытом воздухе.`;
+      if (aqi <= 100) return `Качество воздуха в городе ${city} удовлетворительное. Можно безопасно гулять.`;
+      if (aqi <= 150) return `Внимание: в городе ${city} легкое загрязнение. Рекомендуется ограничить время на открытом воздухе.`;
+      if (aqi <= 200) return `Опасно! В ${city} показатель AQI ${aqi}. Рекомендуется надевать защитную маску N95.`;
+      return `Критический уровень! В ${city} воздух загрязнен. Закройте окна и оставайтесь дома.`;
+    }
+    if (language === 'EN') {
+      if (aqi <= 50) return `Excellent! The air quality in ${city} is pristine. Ideal time for outdoor activities.`;
+      if (aqi <= 100) return `Air quality in ${city} is satisfactory. Safe for daily outdoor movement.`;
+      if (aqi <= 150) return `Notice: ${city} has moderate pollution. Sensitive groups should wear protective masks.`;
+      if (aqi <= 200) return `Warning! AQI in ${city} reached ${aqi}. N95 mask is strongly advised outdoors.`;
+      return `Critical alert! Air pollution in ${city} is hazardous. Close windows and remain indoors.`;
+    }
     if (aqi <= 50) return `Ajoyib! ${city}da havo juda toza. Ochiq havoda sport bilan shug'ullanish uchun ideal vaqt.`;
     if (aqi <= 100) return `${city}da havo sifati qoniqarli. Tashqarida bemalol sayr qilishingiz mumkin.`;
     if (aqi <= 150) return `Diqqat: ${city}da havo biroz ifloslangan. Nafas olish yo'llarida muammosi borlar uzoq vaqt ko'chada qolmasin.`;
@@ -314,7 +432,7 @@ const GlobalDashboard = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 disabled={!isOnline}
-                placeholder={isOnline ? "Shahringizni kiriting (Masalan: Tashkent, London)..." : "Internetga ulanish yo'q..."}
+                placeholder={isOnline ? t('dashboard', 'search_placeholder') : t('dashboard', 'no_connection')}
                 className="flex-1 bg-transparent border-none outline-none text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 font-medium disabled:opacity-50"
               />
               <button 
@@ -322,7 +440,7 @@ const GlobalDashboard = () => {
                 disabled={isLoading || !searchQuery.trim() || !isOnline}
                 className={`px-6 py-2 rounded-full font-bold transition-colors flex items-center gap-2 disabled:opacity-50 ${isOnline ? 'bg-emerald-500 hover:bg-emerald-400 text-white' : 'bg-slate-500 text-white'}`}
               >
-                {isLoading ? <Loader2 size={18} className="animate-spin" /> : 'Tahlil qilish'}
+                {isLoading ? <Loader2 size={18} className="animate-spin" /> : t('dashboard', 'analyze_btn')}
               </button>
             </div>
           </form>
@@ -335,11 +453,11 @@ const GlobalDashboard = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className={`premium-glass p-6 rounded-3xl border-l-4 ${activeCity.color.replace('text-', 'border-')} relative overflow-hidden shadow-2xl`}
+                className={`premium-glass p-6 rounded-3xl border-l-4 ${getRatingStyle(activeCity.rating, activeCity.color).border} relative overflow-hidden shadow-2xl`}
               >
                 <div className={`absolute right-0 top-0 w-32 h-32 ${activeCity.bg} opacity-10 blur-2xl rounded-full`}></div>
                 <div className="flex items-start gap-4 relative z-10">
-                  <div className={`p-3 rounded-2xl ${activeCity.bg} bg-opacity-20 text-current ${activeCity.color}`}>
+                  <div className={`p-3 rounded-2xl ${getRatingStyle(activeCity.rating, activeCity.color).bgLight}`}>
                     <Bot size={28} />
                   </div>
                   <div className="flex-1">
@@ -469,7 +587,7 @@ const GlobalDashboard = () => {
                   >
                     <div className="flex justify-between items-center mb-3">
                       <h4 className="font-bold text-lg">{city.city}</h4>
-                      <span className={`text-xs font-bold px-2 py-1 rounded-md bg-opacity-20 dark:bg-opacity-20 ${city.color} bg-current`}>
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-md transition-colors ${getRatingStyle(city.rating, city.color).chip}`}>
                         {city.rating}
                       </span>
                     </div>
@@ -518,15 +636,20 @@ const GlobalDashboard = () => {
                 
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 relative z-10">
                   <div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold mb-1">{activeCity.city} <span className="text-lg font-normal opacity-50">/ Jonli Ma'lumot</span></h2>
+                    <h2 className="text-3xl sm:text-4xl font-extrabold mb-1">{activeCity.city} <span className="text-lg font-normal opacity-50">/ {t('dashboard', 'live_data')}</span></h2>
                     <p className="text-sm font-semibold opacity-70 flex items-center gap-2">
                       <span className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></span>
-                      {isOnline ? "Jonli translatsiya (Real-time)" : "Oflayn rejim (Keshlangan)"}
+                      {isOnline ? t('dashboard', 'live_stream') : t('dashboard', 'offline_mode')}
                     </p>
                   </div>
-                  <div className={`px-5 py-3 rounded-2xl bg-opacity-10 dark:bg-opacity-10 border ${activeCity.color.replace('text-', 'border-')} ${activeCity.color} bg-current backdrop-blur-md`}>
-                    <div className="text-xs font-bold uppercase tracking-wider opacity-80 mb-1">{t('dashboard', 'rating')}</div>
-                    <div className="text-2xl font-extrabold">{activeCity.rating}</div>
+                  <div className={`px-5 py-3 rounded-2xl border backdrop-blur-md shadow-sm transition-all ${getRatingStyle(activeCity.rating, activeCity.color).badge}`}>
+                    <div className={`text-xs font-bold uppercase tracking-wider mb-1 ${getRatingStyle(activeCity.rating, activeCity.color).label}`}>
+                      {t('dashboard', 'rating')}
+                    </div>
+                    <div className={`text-2xl font-extrabold flex items-center gap-2 ${getRatingStyle(activeCity.rating, activeCity.color).value}`}>
+                      <span className={`w-2.5 h-2.5 rounded-full ${getRatingStyle(activeCity.rating, activeCity.color).dot} animate-pulse`}></span>
+                      {getRatingText(activeCity.rating, language)}
+                    </div>
                   </div>
                 </div>
 

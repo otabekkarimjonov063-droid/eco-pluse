@@ -51,19 +51,19 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-bold text-lg mb-6 uppercase tracking-wider">Aloqa</h4>
+            <h4 className="font-bold text-lg mb-6 uppercase tracking-wider">{t('footer', 'contact')}</h4>
             <ul className="space-y-4 text-sm opacity-80">
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="text-eco-primary shrink-0 mt-0.5" />
-                <span>100084, Toshkent shahri, Amir Temur shoh ko'chasi, 107-B</span>
+                <span>{t('footer', 'address')}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-eco-primary shrink-0" />
-                <span>+998 71 200-00-00</span>
+                <span>{t('footer', 'phone')}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-eco-primary shrink-0" />
-                <span>info@ecopulse.uz</span>
+                <span>{t('footer', 'email')}</span>
               </li>
             </ul>
           </div>
@@ -72,7 +72,7 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-lg mb-6 uppercase tracking-wider">{t('footer', 'newsletter')}</h4>
             <p className="text-sm opacity-70 mb-4">
-              Eng so'nggi ekologik yangiliklar va loyihalar haqida xabardor bo'ling.
+              {t('footer', 'newsletter_desc')}
             </p>
             <form className="relative" onSubmit={(e) => e.preventDefault()}>
               <input 
@@ -83,6 +83,7 @@ const Footer = () => {
               <button 
                 type="submit"
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-eco-primary text-white rounded-lg hover:bg-emerald-600 transition-colors"
+                title={t('footer', 'subscribe')}
               >
                 <Send size={16} className="transform translate-x-[1px] translate-y-[1px]" />
               </button>
@@ -95,9 +96,9 @@ const Footer = () => {
         <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm opacity-60">
           <p>{t('footer', 'rights')}</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-eco-primary transition-colors">Maxfiylik siyosati</a>
-            <a href="#" className="hover:text-eco-primary transition-colors">Foydalanish shartlari</a>
-            <a href="#" className="hover:text-eco-primary transition-colors">FAQ</a>
+            <a href="#privacy" onClick={(e) => e.preventDefault()} className="hover:text-eco-primary transition-colors">{t('footer', 'privacy')}</a>
+            <a href="#terms" onClick={(e) => e.preventDefault()} className="hover:text-eco-primary transition-colors">{t('footer', 'terms')}</a>
+            <a href="#faq" onClick={(e) => e.preventDefault()} className="hover:text-eco-primary transition-colors">{t('footer', 'faq')}</a>
           </div>
         </div>
       </div>

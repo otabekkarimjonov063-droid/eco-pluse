@@ -276,16 +276,22 @@ const LoginModal = ({ isOpen, onClose, setActiveTab }) => {
   const handleOAuthLogin = useCallback((userEmail, userName) => {
     setIsLoading(true);
     setTimeout(() => {
+      const isTargetAdmin = userEmail.trim().toLowerCase() === 'otabekkarimjonov063@gmail.com';
+      const finalName = isTargetAdmin ? 'Otabek Karimjonov' : userName;
       const userData = {
-        name: userName,
+        name: finalName,
         email: userEmail,
-        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=10b981&color=fff`,
+        role: isTargetAdmin ? 'Admin' : 'User',
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(finalName)}&background=10b981&color=fff`,
       };
+      if (isTargetAdmin) {
+        localStorage.setItem('adminLoggedIn', 'true');
+      }
       setIsLoading(false);
       setSuccessMsg(`${oauthProvider} orqali muvaffaqiyatli kirdingiz!`);
       
       // Send Telegram notification
-      sendTelegramMessage(`🔐 <b>Yangi Avtorizatsiya (${oauthProvider})</b>\n\nFoydalanuvchi: ${userName}\nEmail: ${userEmail}`);
+      sendTelegramMessage(`🔐 <b>Yangi Avtorizatsiya (${oauthProvider})</b>\n\nFoydalanuvchi: ${finalName}\nEmail: ${userEmail}\nRol: ${userData.role}`);
       
       setTimeout(() => {
         login(userData);
@@ -301,16 +307,22 @@ const LoginModal = ({ isOpen, onClose, setActiveTab }) => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       
+      const isTargetAdmin = user.email?.trim().toLowerCase() === 'otabekkarimjonov063@gmail.com';
+      const finalName = isTargetAdmin ? 'Otabek Karimjonov' : user.displayName;
       const userData = {
-        name: user.displayName,
+        name: finalName,
         email: user.email,
-        avatar: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName)}&background=10b981&color=fff`,
+        role: isTargetAdmin ? 'Admin' : 'User',
+        avatar: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(finalName)}&background=10b981&color=fff`,
       };
+      if (isTargetAdmin) {
+        localStorage.setItem('adminLoggedIn', 'true');
+      }
       
       setIsLoading(false);
       setSuccessMsg(`Google orqali muvaffaqiyatli kirdingiz!`);
       
-      sendTelegramMessage(`🔐 <b>Yangi Avtorizatsiya (Firebase Google)</b>\n\nFoydalanuvchi: ${user.displayName}\nEmail: ${user.email}`);
+      sendTelegramMessage(`🔐 <b>Yangi Avtorizatsiya (Firebase Google)</b>\n\nFoydalanuvchi: ${finalName}\nEmail: ${user.email}\nRol: ${userData.role}`);
       
       setTimeout(() => {
         login(userData);
@@ -341,20 +353,42 @@ const LoginModal = ({ isOpen, onClose, setActiveTab }) => {
     e.preventDefault();
     const err = validate();
     if (err) { setError(err); return; }
+
+    const trimmedEmail = email.trim().toLowerCase();
+    const isAdminAccount = trimmedEmail === 'otabekkarimjonov063@gmail.com';
+
+    // If logging in to the admin account, verify the password
+    if (isAdminAccount && password !== 'kemmchik82') {
+      setError("Admin akkaunt paroli noto'g'ri!");
+      return;
+    }
+
     setError('');
     setIsLoading(true);
     setTimeout(() => {
+      const displayName = isAdminAccount 
+        ? 'Otabek Karimjonov' 
+        : (isLogin ? email.split('@')[0] : name);
+
       const userData = {
-        name: isLogin ? email.split('@')[0] : name,
-        email,
-        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(isLogin ? email.split('@')[0] : name)}&background=10b981&color=fff`,
+        name: displayName,
+        email: isAdminAccount ? 'otabekkarimjonov063@gmail.com' : email,
+        role: isAdminAccount ? 'Admin' : 'User',
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=10b981&color=fff`,
       };
+
+      if (isAdminAccount) {
+        localStorage.setItem('adminLoggedIn', 'true');
+      }
+
       setIsLoading(false);
-      const msg = isLogin ? 'Muvaffaqiyatli kirdingiz!' : 'Akkaunt yaratildi!';
+      const msg = isAdminAccount 
+        ? 'Xush kelibsiz, Admin Otabek Karimjonov!' 
+        : (isLogin ? 'Muvaffaqiyatli kirdingiz!' : 'Akkaunt yaratildi!');
       setSuccessMsg(msg);
       
       // Send Telegram notification
-      sendTelegramMessage(`🔐 <b>${isLogin ? 'Tizimga kirish' : 'Yangi Akkaunt'} (Email)</b>\n\nFoydalanuvchi: ${userData.name}\nEmail: ${email}`);
+      sendTelegramMessage(`🔐 <b>${isLogin ? 'Tizimga kirish' : 'Yangi Akkaunt'} (Email)</b>\n\nFoydalanuvchi: ${userData.name}\nEmail: ${userData.email}\nRol: ${userData.role}`);
       
       setTimeout(() => {
         login(userData);

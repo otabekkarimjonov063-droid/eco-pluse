@@ -163,15 +163,15 @@ const PaymentModal = ({ isOpen, onClose, project, onFund }) => {
               {/* Card Details */}
               <div className="space-y-4 pt-4 border-t border-black/10 dark:border-white/10">
                 <div>
-                  <label className="block text-xs font-bold mb-2 uppercase opacity-70">Karta raqami</label>
+                  <label className="block text-xs font-bold mb-2 uppercase text-slate-700 dark:text-white/80">Karta raqami</label>
                   <div className="relative group">
-                    <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 opacity-40 group-focus-within:opacity-100 group-focus-within:text-eco-primary" size={18} />
+                    <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 opacity-50 group-focus-within:opacity-100 group-focus-within:text-eco-primary" size={18} />
                     <input 
                       type="text" 
                       value={cardNumber}
                       onChange={handleCardNumber}
                       placeholder="0000 0000 0000 0000"
-                      className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl py-3 pl-10 pr-4 outline-none focus:border-eco-primary font-mono"
+                      className="w-full bg-slate-100/70 dark:bg-white/5 border border-slate-300 dark:border-white/20 rounded-xl py-3 pl-10 pr-4 outline-none focus:border-eco-primary font-mono text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/40 font-bold tracking-wider"
                       required
                     />
                     {/* Visa/MC icons */}
@@ -183,24 +183,24 @@ const PaymentModal = ({ isOpen, onClose, project, onFund }) => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold mb-2 uppercase opacity-70">Amal Qilishi</label>
+                    <label className="block text-xs font-bold mb-2 uppercase text-slate-700 dark:text-white/80">Amal Qilishi</label>
                     <input 
                       type="text" 
                       value={expiry}
                       onChange={handleExpiry}
                       placeholder="MM/YY"
-                      className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl py-3 px-4 outline-none focus:border-eco-primary font-mono"
+                      className="w-full bg-slate-100/70 dark:bg-white/5 border border-slate-300 dark:border-white/20 rounded-xl py-3 px-4 outline-none focus:border-eco-primary font-mono text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/40 font-bold tracking-wider"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold mb-2 uppercase opacity-70">CVV</label>
+                    <label className="block text-xs font-bold mb-2 uppercase text-slate-700 dark:text-white/80">CVV</label>
                     <input 
                       type="password" 
                       value={cvv}
                       onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
                       placeholder="•••"
-                      className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl py-3 px-4 outline-none focus:border-eco-primary font-mono tracking-widest"
+                      className="w-full bg-slate-100/70 dark:bg-white/5 border border-slate-300 dark:border-white/20 rounded-xl py-3 px-4 outline-none focus:border-eco-primary font-mono tracking-widest text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/40 font-bold"
                       required
                     />
                   </div>
