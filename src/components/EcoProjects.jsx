@@ -142,7 +142,29 @@ const itemVariants = {
 
 const EcoProjects = () => {
   const { t, tText } = useLanguage();
-  const [projects, setProjects] = useState(mockProjects);
+  const [projects, setProjects] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('ecopulse_projects'));
+      if (saved && Array.isArray(saved) && saved.length > 0) {
+        return mockProjects.map(mp => {
+          const found = saved.find(s => s.id === mp.id);
+          return found ? { ...mp, votes: found.votes, funded: found.funded } : mp;
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return mockProjects;
+  });
+
+  const [userVotedIds, setUserVotedIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('ecopulse_user_votes')) || {};
+    } catch {
+      return {};
+    }
+  });
+
   const [selectedFilterKey, setSelectedFilterKey] = useState('all');
   
   // Payment Modal states
@@ -154,12 +176,27 @@ const EcoProjects = () => {
     : projects.filter(p => p.categoryKey === selectedFilterKey);
 
   const handleVote = (id) => {
-    setProjects(projects.map(p => {
+    const isVoted = !!userVotedIds[id];
+    const newVoted = { ...userVotedIds, [id]: !isVoted };
+    setUserVotedIds(newVoted);
+    try {
+      localStorage.setItem('ecopulse_user_votes', JSON.stringify(newVoted));
+    } catch (e) {
+      console.error(e);
+    }
+
+    const updated = projects.map(p => {
       if (p.id === id) {
-        return { ...p, votes: p.votes + 1 };
+        return { ...p, votes: isVoted ? Math.max(0, p.votes - 1) : p.votes + 1 };
       }
       return p;
-    }));
+    });
+    setProjects(updated);
+    try {
+      localStorage.setItem('ecopulse_projects', JSON.stringify(updated.map(p => ({ id: p.id, votes: p.votes, funded: p.funded }))));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleOpenPayment = (project) => {
@@ -171,12 +208,18 @@ const EcoProjects = () => {
   };
 
   const handleFundSuccess = (id, amount) => {
-    setProjects(projects.map(p => {
+    const updated = projects.map(p => {
       if (p.id === id) {
         return { ...p, funded: p.funded + amount };
       }
       return p;
-    }));
+    });
+    setProjects(updated);
+    try {
+      localStorage.setItem('ecopulse_projects', JSON.stringify(updated.map(p => ({ id: p.id, votes: p.votes, funded: p.funded }))));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -335,7 +378,7 @@ const EcoProjects = () => {
                         className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/30 border border-transparent flex items-center gap-2 group/vote transition-all"
                         title={t('projects', 'vote')}
                       >
-                        <Heart size={18} className="group-hover/vote:fill-rose-500 transition-all" /> 
+                        <Heart size={18} className={`${userVotedIds[project.id] ? 'fill-rose-500 text-rose-500' : ''} group-hover/vote:fill-rose-500 transition-all`} /> 
                         <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
                           <CountUp value={project.votes} duration={1} />
                         </span>

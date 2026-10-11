@@ -116,8 +116,37 @@ const PlantTree = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      setOrderId(`ECO-${Math.random().toString(36).substr(2, 6).toUpperCase()}`);
+      const generatedId = `ECO-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+      setOrderId(generatedId);
       setStep(4);
+
+      // Save order to localStorage
+      try {
+        const newTransaction = {
+          id: generatedId,
+          user: cardData.name || 'Foydalanuvchi',
+          amount: totalAmount,
+          type: `${tText(activeTree.name)} (${quantity}x)`,
+          date: new Date().toLocaleDateString('uz-UZ'),
+          status: 'Muvaffaqiyatli',
+          region: tText(activeRegion.name)
+        };
+        const existing = JSON.parse(localStorage.getItem('eco_transactions') || '[]');
+        localStorage.setItem('eco_transactions', JSON.stringify([newTransaction, ...existing]));
+
+        const existingTrees = JSON.parse(localStorage.getItem('ecopulse_planted_trees') || '[]');
+        const treeRecord = {
+          orderId: generatedId,
+          treeName: tText(activeTree.name),
+          region: tText(activeRegion.name),
+          quantity,
+          amount: totalAmount,
+          date: new Date().toISOString()
+        };
+        localStorage.setItem('ecopulse_planted_trees', JSON.stringify([treeRecord, ...existingTrees]));
+      } catch (err) {
+        console.error(err);
+      }
     }, 1500);
   };
 
@@ -493,39 +522,38 @@ const PlantTree = () => {
               exit="exit" 
               className="w-full h-full max-h-[88vh] rounded-[2.5rem] p-[3px] bg-gradient-to-tr from-cyan-400 via-teal-400 to-blue-500 shadow-[0_25px_60px_-15px_rgba(6,182,212,0.35)] ring-2 ring-cyan-400/30 flex flex-col"
             >
-              <div className="relative w-full h-full rounded-[2.35rem] overflow-hidden bg-slate-950 flex flex-col justify-between">
+              <div className="relative w-full h-full rounded-[2.35rem] overflow-hidden bg-slate-100 dark:bg-slate-950 flex flex-col justify-between">
                 <img 
                   src={activeRegion.image} 
                   alt="" 
-                  className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 opacity-80" 
+                  className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 opacity-90 dark:opacity-80" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/30 to-transparent"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/50 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent dark:from-slate-950/95 dark:via-slate-950/30"></div>
 
                 {/* Top Badge */}
                 <div className="relative z-20 p-6 flex justify-between items-center">
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl bg-slate-950/70 border border-cyan-400/40 shadow-lg text-xs font-bold text-cyan-300">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl bg-white/90 dark:bg-slate-950/70 border border-cyan-500/40 dark:border-cyan-400/40 shadow-lg text-xs font-bold text-cyan-800 dark:text-cyan-300">
+                    <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
                     <span>{t('plant', 'step2')}</span>
                   </div>
-                  <div className="px-3.5 py-1.5 rounded-full backdrop-blur-xl bg-slate-950/70 border border-white/20 text-xs font-mono font-bold text-white">
+                  <div className="px-3.5 py-1.5 rounded-full backdrop-blur-xl bg-white/90 dark:bg-slate-950/70 border border-slate-200/80 dark:border-white/20 text-xs font-mono font-bold text-slate-800 dark:text-white shadow-sm">
                     {activeRegion.temp}
                   </div>
                 </div>
 
-                {/* Bottom Card */}
+                {/* Bottom Card - Light Mode & Dark Mode Adaptive */}
                 <div className="relative z-20 p-6 sm:p-8">
-                  <div className="backdrop-blur-2xl bg-slate-950/80 border border-white/15 p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-4 text-white">
+                  <div className="backdrop-blur-2xl bg-white/90 dark:bg-slate-950/85 border border-white/80 dark:border-white/15 p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-4 text-slate-900 dark:text-white">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2.5">
-                        <Globe className="text-cyan-400" size={26} />
-                        <h3 className="text-2xl sm:text-3xl font-black text-cyan-300">{tText(activeRegion.name)}</h3>
+                        <Globe className="text-cyan-600 dark:text-cyan-400" size={26} />
+                        <h3 className="text-2xl sm:text-3xl font-black text-cyan-700 dark:text-cyan-300">{tText(activeRegion.name)}</h3>
                       </div>
-                      <span className="text-xs font-bold px-3 py-1 bg-rose-500/20 text-rose-300 rounded-full border border-rose-500/30">
+                      <span className="text-xs font-bold px-3 py-1 bg-rose-500/10 text-rose-600 dark:bg-rose-500/20 dark:text-rose-300 rounded-full border border-rose-500/30">
                         {tText(activeRegion.risk)}
                       </span>
                     </div>
-                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">
+                    <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed font-medium">
                       {tText(activeRegion.desc)}
                     </p>
                   </div>
@@ -541,45 +569,44 @@ const PlantTree = () => {
               exit="exit" 
               className="w-full h-full max-h-[88vh] rounded-[2.5rem] p-[3px] bg-gradient-to-tr from-emerald-400 via-teal-400 to-cyan-500 shadow-[0_25px_60px_-15px_rgba(16,185,129,0.35)] ring-2 ring-emerald-400/30 flex flex-col"
             >
-              <div className="relative w-full h-full rounded-[2.35rem] overflow-hidden bg-slate-950 flex flex-col justify-between">
+              <div className="relative w-full h-full rounded-[2.35rem] overflow-hidden bg-slate-100 dark:bg-slate-950 flex flex-col justify-between">
                 <img 
                   src={activeTree.image} 
                   alt="" 
-                  className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 opacity-85" 
+                  className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 opacity-95 dark:opacity-85" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/30 to-transparent"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/50 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent dark:from-slate-950/95 dark:via-slate-950/30"></div>
 
                 {/* Top Badge */}
                 <div className="relative z-20 p-6 flex justify-between items-center">
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl bg-slate-950/70 border border-emerald-400/40 shadow-lg text-xs font-bold text-emerald-300">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl bg-white/90 dark:bg-slate-950/70 border border-emerald-500/40 dark:border-emerald-400/40 shadow-lg text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span>{t('plant', 'step1')}</span>
                   </div>
-                  <div className="px-3.5 py-1.5 rounded-full backdrop-blur-xl bg-slate-950/70 border border-white/20 text-xs font-mono font-bold text-emerald-300">
+                  <div className="px-3.5 py-1.5 rounded-full backdrop-blur-xl bg-white/90 dark:bg-slate-950/70 border border-slate-200/80 dark:border-white/20 text-xs font-mono font-bold text-emerald-700 dark:text-emerald-300 shadow-sm">
                     ${activeTree.price}
                   </div>
                 </div>
 
-                {/* Bottom Card */}
+                {/* Bottom Card - Light Mode & Dark Mode Adaptive */}
                 <div className="relative z-20 p-6 sm:p-8">
-                  <div className="backdrop-blur-2xl bg-slate-950/80 border border-white/15 p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-5 text-white">
+                  <div className="backdrop-blur-2xl bg-white/90 dark:bg-slate-950/85 border border-white/80 dark:border-white/15 p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-5 text-slate-900 dark:text-white">
                     <div>
-                      <h3 className="text-3xl sm:text-4xl font-black mb-2 text-emerald-400">{tText(activeTree.name)}</h3>
-                      <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">{tText(activeTree.desc)}</p>
+                      <h3 className="text-3xl sm:text-4xl font-black mb-2 text-emerald-600 dark:text-emerald-400">{tText(activeTree.name)}</h3>
+                      <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed font-medium">{tText(activeTree.desc)}</p>
                     </div>
 
-                    <div className="flex items-center gap-4 sm:gap-6 bg-white/10 p-4 rounded-2xl border border-white/10">
+                    <div className="flex items-center gap-4 sm:gap-6 bg-slate-100/90 dark:bg-white/10 p-4 rounded-2xl border border-slate-200/80 dark:border-white/10">
                       <div className="text-center flex-1">
-                        <Wind className="text-emerald-400 mb-1 mx-auto" size={24} />
-                        <p className="text-xl sm:text-2xl font-black text-white">{activeTree.co2}</p>
-                        <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">CO2 (kg/yr)</p>
+                        <Wind className="text-emerald-600 dark:text-emerald-400 mb-1 mx-auto" size={24} />
+                        <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{activeTree.co2}</p>
+                        <p className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold mt-0.5">CO2 (kg/yr)</p>
                       </div>
-                      <div className="w-px h-10 bg-white/20"></div>
+                      <div className="w-px h-10 bg-slate-300/80 dark:bg-white/20"></div>
                       <div className="text-center flex-1">
-                        <Droplets className="text-cyan-400 mb-1 mx-auto" size={24} />
-                        <p className="text-xl sm:text-2xl font-black text-white">{activeTree.oxygen}</p>
-                        <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-0.5">O2 (kg/yr)</p>
+                        <Droplets className="text-cyan-600 dark:text-cyan-400 mb-1 mx-auto" size={24} />
+                        <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{activeTree.oxygen}</p>
+                        <p className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold mt-0.5">O2 (kg/yr)</p>
                       </div>
                     </div>
                   </div>

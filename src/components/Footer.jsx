@@ -3,8 +3,15 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { Send, Mail, MapPin, Phone, Globe, MessageCircle, Video, Code } from 'lucide-react';
 import Logo from './Logo';
 
-const Footer = () => {
+const Footer = ({ setActiveTab }) => {
   const { t } = useLanguage();
+
+  const handleNav = (e, tab) => {
+    if (setActiveTab) {
+      e.preventDefault();
+      setActiveTab(tab);
+    }
+  };
 
   return (
     <footer className="relative mt-20 pt-20 pb-10 overflow-hidden bg-white/80 dark:bg-eco-dark-lighter/80 border-t border-black/5 dark:border-white/10">
@@ -42,10 +49,10 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-lg mb-6 uppercase tracking-wider">{t('footer', 'links')}</h4>
             <ul className="space-y-4 text-sm opacity-80">
-              <li><a href="/" className="hover:text-eco-primary transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-eco-primary"></div> {t('navbar', 'home')}</a></li>
-              <li><a href="/dashboard" className="hover:text-eco-primary transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-eco-primary"></div> {t('navbar', 'dashboard')}</a></li>
-              <li><a href="/calculator" className="hover:text-eco-primary transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-eco-primary"></div> {t('navbar', 'calculator')}</a></li>
-              <li><a href="/projects" className="hover:text-eco-primary transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-eco-primary"></div> {t('navbar', 'projects')}</a></li>
+              <li><a href="/" onClick={(e) => handleNav(e, 'home')} className="hover:text-eco-primary transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-eco-primary"></div> {t('navbar', 'home')}</a></li>
+              <li><a href="/dashboard" onClick={(e) => handleNav(e, 'dashboard')} className="hover:text-eco-primary transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-eco-primary"></div> {t('navbar', 'dashboard')}</a></li>
+              <li><a href="/calculator" onClick={(e) => handleNav(e, 'calculator')} className="hover:text-eco-primary transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-eco-primary"></div> {t('navbar', 'calculator')}</a></li>
+              <li><a href="/projects" onClick={(e) => handleNav(e, 'projects')} className="hover:text-eco-primary transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-eco-primary"></div> {t('navbar', 'projects')}</a></li>
             </ul>
           </div>
 

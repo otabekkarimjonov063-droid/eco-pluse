@@ -45,13 +45,21 @@ const PageLoader = () => (
 );
 
 function App() {
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState(() => {
+    const path = window.location.pathname.replace(/^\/+/, '').split('/')[0];
+    const validTabs = ['home', 'dashboard', 'calculator', 'projects', 'plant', 'admin'];
+    if (validTabs.includes(path)) return path;
+    const saved = localStorage.getItem('ecopulse_active_tab');
+    if (saved && validTabs.includes(saved)) return saved;
+    return 'home';
+  });
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { isAdmin } = useAuth();
 
   useEffect(() => {
     if (activeTab === 'admin' && !isAdmin) {
       setActiveTab('home');
+      localStorage.setItem('ecopulse_active_tab', 'home');
     }
   }, [activeTab, isAdmin]);
 
@@ -59,9 +67,22 @@ function App() {
     if (tab === 'admin' && !isAdmin) return; // Block unauthorized access to admin tab
     if (tab === activeTab) return; // ignore same-tab clicks
     setActiveTab(tab);
+    localStorage.setItem('ecopulse_active_tab', tab);
+    window.history.pushState(null, '', tab === 'home' ? '/' : `/${tab}`);
     // Native smooth scroll — no React re-render
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab, isAdmin]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.replace(/^\/+/, '').split('/')[0];
+      const validTabs = ['home', 'dashboard', 'calculator', 'projects', 'plant', 'admin'];
+      const nextTab = validTabs.includes(path) ? path : 'home';
+      setActiveTab(nextTab);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const openLogin  = useCallback(() => setIsLoginModalOpen(true),  []);
   const closeLogin = useCallback(() => setIsLoginModalOpen(false), []);
@@ -110,7 +131,7 @@ function App() {
             </AnimatePresence>
 
             <Suspense fallback={null}>
-              {activeTab !== 'plant' && <Footer />}
+              {activeTab !== 'plant' && <Footer setActiveTab={handleTabChange} />}
             </Suspense>
           </main>
 

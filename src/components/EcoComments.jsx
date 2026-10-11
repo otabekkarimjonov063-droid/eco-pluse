@@ -56,15 +56,35 @@ const initialMockComments = [
 
 const EcoComments = () => {
   const { language, t, tText } = useLanguage();
-  const [userComments, setUserComments] = useState([]);
+  const [userComments, setUserComments] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('ecopulse_user_comments')) || [];
+    } catch {
+      return [];
+    }
+  });
   const [newComment, setNewComment] = useState('');
   const [newName, setNewName] = useState('');
   const [hoveredStar, setHoveredStar] = useState(0);
   const [selectedStar, setSelectedStar] = useState(5);
-  const [likedIds, setLikedIds] = useState({});
+  const [likedIds, setLikedIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('ecopulse_liked_comments')) || {};
+    } catch {
+      return {};
+    }
+  });
 
   const handleLike = (id) => {
-    setLikedIds(prev => ({ ...prev, [id]: !prev[id] }));
+    setLikedIds(prev => {
+      const updated = { ...prev, [id]: !prev[id] };
+      try {
+        localStorage.setItem('ecopulse_liked_comments', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
   };
 
   const handleSubmit = (e) => {
@@ -73,14 +93,20 @@ const EcoComments = () => {
 
     const comment = {
       id: Date.now(),
-      name: newName,
-      text: newComment,
-      time: t('comments', 'now'),
+      name: newName.trim(),
+      text: newComment.trim(),
+      time: t('comments', 'now') || 'Hozirgina',
       rating: selectedStar,
       likes: 0
     };
 
-    setUserComments([comment, ...userComments]);
+    const updated = [comment, ...userComments];
+    setUserComments(updated);
+    try {
+      localStorage.setItem('ecopulse_user_comments', JSON.stringify(updated));
+    } catch (e) {
+      console.error(e);
+    }
     setNewComment('');
     setNewName('');
     setSelectedStar(5);

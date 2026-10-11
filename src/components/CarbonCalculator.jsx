@@ -25,11 +25,9 @@ const RangeSlider = ({ value, min, max, step, suffix, onChange, theme = 'blue', 
   }, [value]);
 
   const handleChange = (e) => {
-    setLocalVal(e.target.value);
-  };
-  
-  const handleRelease = () => {
-    onChange(localVal);
+    const val = Number(e.target.value);
+    setLocalVal(val);
+    onChange(val);
   };
 
   const percentage = ((localVal - min) / (max - min)) * 100;
@@ -45,14 +43,11 @@ const RangeSlider = ({ value, min, max, step, suffix, onChange, theme = 'blue', 
   return (
     <div className="relative">
       <div className="relative h-8 flex items-center mb-4">
-        {/* Invisible Native Input for Functionality */}
+        {/* Native Input for Functionality */}
         <input 
           type="range" min={min} max={max} step={step}
           value={localVal} 
           onChange={handleChange}
-          onMouseUp={handleRelease}
-          onTouchEnd={handleRelease}
-          onKeyUp={handleRelease}
           className="w-full absolute z-20 opacity-0 cursor-pointer h-full"
         />
         {/* Custom Track Background */}
@@ -80,18 +75,39 @@ const RangeSlider = ({ value, min, max, step, suffix, onChange, theme = 'blue', 
 };
 
 const CarbonCalculator = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  const savedCalc = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('ecopulse_calc_data')) || null;
+    } catch {
+      return null;
+    }
+  })();
+
   const [step, setStep] = useState(1);
-  const [isCalculated, setIsCalculated] = useState(false);
+  const [isCalculated, setIsCalculated] = useState(savedCalc ? Boolean(savedCalc.isCalculated) : false);
   
   // States for all inputs
-  const [carKm, setCarKm] = useState(50);
-  const [flights, setFlights] = useState(1);
-  const [energy, setEnergy] = useState(250);
-  const [meat, setMeat] = useState(4);
-  const [shopping, setShopping] = useState(500);
+  const [carKm, setCarKm] = useState(savedCalc?.inputs?.carKm ?? 50);
+  const [flights, setFlights] = useState(savedCalc?.inputs?.flights ?? 1);
+  const [energy, setEnergy] = useState(savedCalc?.inputs?.energy ?? 250);
+  const [meat, setMeat] = useState(savedCalc?.inputs?.meat ?? 4);
+  const [shopping, setShopping] = useState(savedCalc?.inputs?.shopping ?? 500);
 
-  const [result, setResult] = useState({ total: 0, breakdown: [] });
+  const [result, setResult] = useState(savedCalc?.result ?? { total: 0, breakdown: [] });
+
+  React.useEffect(() => {
+    try {
+      const prev = JSON.parse(localStorage.getItem('ecopulse_calc_data')) || {};
+      localStorage.setItem('ecopulse_calc_data', JSON.stringify({
+        ...prev,
+        inputs: { carKm, flights, energy, meat, shopping }
+      }));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [carKm, flights, energy, meat, shopping]);
 
   const steps = [
     { num: 1, title: t('calculator', 'step1'), icon: <Car size={24} />, color: 'text-blue-500', shadow: 'shadow-blue-500/40' },
@@ -109,7 +125,7 @@ const CarbonCalculator = () => {
     
     const total = transportCO2 + energyCO2 + foodCO2 + shoppingCO2;
     
-    setResult({
+    const newResult = {
       total: Number(total.toFixed(2)),
       breakdown: [
         { name: t('calculator', 'step1'), value: parseFloat(transportCO2.toFixed(2)), fullTarget: 2 },
@@ -117,9 +133,20 @@ const CarbonCalculator = () => {
         { name: t('calculator', 'step3'), value: parseFloat(foodCO2.toFixed(2)), fullTarget: 1 },
         { name: t('calculator', 'step4'), value: parseFloat(shoppingCO2.toFixed(2)), fullTarget: 0.5 },
       ]
-    });
-    
+    };
+
+    setResult(newResult);
     setIsCalculated(true);
+
+    try {
+      localStorage.setItem('ecopulse_calc_data', JSON.stringify({
+        inputs: { carKm, flights, energy, meat, shopping },
+        result: newResult,
+        isCalculated: true
+      }));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleNext = () => {
@@ -134,6 +161,15 @@ const CarbonCalculator = () => {
   const reset = () => {
     setStep(1);
     setIsCalculated(false);
+    try {
+      const prev = JSON.parse(localStorage.getItem('ecopulse_calc_data')) || {};
+      localStorage.setItem('ecopulse_calc_data', JSON.stringify({
+        ...prev,
+        isCalculated: false
+      }));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
