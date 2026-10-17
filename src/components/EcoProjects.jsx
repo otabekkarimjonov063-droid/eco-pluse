@@ -4,6 +4,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { Heart, Share2, ArrowRight } from 'lucide-react';
 import PaymentModal from './PaymentModal';
 import CountUp from './CountUp';
+import GlassCard from './GlassCard';
+import VideoBackdrop from './VideoBackdrop';
 
 const mockProjects = [
   {
@@ -131,13 +133,13 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.08 }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 15 } }
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } }
 };
 
 const EcoProjects = () => {
@@ -223,67 +225,49 @@ const EcoProjects = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-6 relative overflow-hidden">
-      {/* Deep Antigravity Background */}
-      <div className="absolute inset-0 z-[-1] overflow-hidden fixed bg-eco-light dark:bg-[radial-gradient(ellipse_at_center,_rgba(16,185,129,0.15)_0%,_#07101a_70%)] transition-colors duration-700">
-        <motion.div 
-          animate={{ x: [0, -40, 0], y: [0, 50, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          style={{ willChange: 'transform' }}
-          className="absolute top-[10%] right-[5%] w-[500px] h-[500px] bg-[radial-gradient(circle,_rgba(16,185,129,0.08)_0%,_transparent_70%)] rounded-full pointer-events-none"
-        />
-        <motion.div 
-          animate={{ x: [0, 40, 0], y: [0, -50, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          style={{ willChange: 'transform' }}
-          className="absolute bottom-[10%] left-[5%] w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(6,182,212,0.08)_0%,_transparent_70%)] rounded-full pointer-events-none"
-        />
-      </div>
+    <div className="min-h-screen pt-20 pb-20 px-6 relative overflow-hidden">
+      {/* Dynamic Looping Video Background */}
+      <VideoBackdrop 
+        src="/videos/sunlight.mp4" 
+        poster="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=1600" 
+        opacity={0.25} 
+      />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header */}
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-12"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10"
         >
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-cyan-500 tracking-tight leading-[1.5] py-2">
+          <h1 className="font-display text-4xl md:text-5xl font-light mb-3 text-bone tracking-tight py-1">
             {t('projects', 'title')}
           </h1>
-          <p className="text-lg opacity-70 max-w-2xl mx-auto font-medium mb-10">
+          <p className="text-base text-mist max-w-xl mx-auto font-normal mb-8">
             {t('projects', 'subtitle')}
           </p>
 
           {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-3">
-            <AnimatePresence>
-              {categoryKeys.map((catKey) => {
-                const isSelected = selectedFilterKey === catKey;
-                const label = t('projects', catKey);
-                return (
-                  <button
-                    key={catKey}
-                    onClick={() => setSelectedFilterKey(catKey)}
-                    className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 relative overflow-hidden backdrop-blur-md border ${
-                      isSelected 
-                        ? 'text-white border-transparent shadow-[0_0_20px_rgba(16,185,129,0.3)]' 
-                        : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-black/10 dark:hover:bg-white/10 hover:border-emerald-500/30 hover:-translate-y-0.5 hover:shadow-lg'
-                    }`}
-                  >
-                    {isSelected && (
-                      <motion.div 
-                        layoutId="filterActive"
-                        className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-500 -z-10 rounded-full"
-                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      />
-                    )}
-                    <span className="relative z-10">{label}</span>
-                  </button>
-                );
-              })}
-            </AnimatePresence>
+          <div className="flex flex-wrap justify-center gap-2">
+            {categoryKeys.map((catKey) => {
+              const isSelected = selectedFilterKey === catKey;
+              const label = t('projects', catKey);
+              return (
+                <button
+                  key={catKey}
+                  onClick={() => setSelectedFilterKey(catKey)}
+                  className={`rounded-full px-4 py-1.5 text-xs font-mono transition-all border cursor-pointer ${
+                    isSelected 
+                      ? 'bg-signal text-ink border-signal font-semibold shadow-sm' 
+                      : 'bg-white/[0.03] border-white/[0.08] text-mist hover:text-bone hover:border-white/20'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -292,7 +276,7 @@ const EcoProjects = () => {
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence>
             {filteredProjects.map((project) => {
@@ -303,27 +287,29 @@ const EcoProjects = () => {
               const categoryLabel = t('projects', project.categoryKey);
 
               return (
-                <motion.div
+                <GlassCard
+                  tone={isCompleted ? "raised" : "base"}
+                  as={motion.div}
                   key={project.id}
                   variants={itemVariants}
                   layout
-                  className="premium-glass overflow-hidden flex flex-col group border border-black/5 dark:border-white/10 rounded-3xl hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500"
+                  className="overflow-hidden flex flex-col group transition-all duration-300"
                 >
                   {/* Image Section */}
-                  <div className="relative h-60 overflow-hidden bg-black/20">
+                  <div className="relative h-48 overflow-hidden bg-black/40">
                     <img 
                       src={project.image} 
                       alt={displayTitle} 
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 opacity-80 group-hover:opacity-95" 
                     />
-                    <div className="absolute top-4 left-4 z-20">
-                      <span className="px-4 py-1.5 bg-white/90 dark:bg-black/80 backdrop-blur-md text-xs font-bold rounded-full text-emerald-600 dark:text-emerald-400 shadow-lg">
+                    <div className="absolute top-3 left-3 z-20">
+                      <span className="px-2.5 py-0.5 bg-moss/90 backdrop-blur-md text-[10px] font-mono text-signal rounded-md border border-signal/20">
                         {categoryLabel}
                       </span>
                     </div>
                     {isCompleted && (
-                      <div className="absolute top-4 right-4 z-20">
-                        <span className="px-4 py-1.5 bg-emerald-500 text-white text-xs font-bold rounded-full shadow-lg shadow-emerald-500/30 animate-pulse">
+                      <div className="absolute top-3 right-3 z-20">
+                        <span className="px-2.5 py-0.5 bg-signal text-ink text-[10px] font-mono font-semibold rounded-md">
                           100% {t('projects', 'funded')}
                         </span>
                       </div>
@@ -331,55 +317,53 @@ const EcoProjects = () => {
                   </div>
 
                   {/* Content Section */}
-                  <div className="p-6 flex flex-col flex-1">
-                    <h3 className="text-xl font-bold mb-3 line-clamp-1 text-slate-900 dark:text-white group-hover:text-emerald-500 transition-colors">
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-display text-lg font-light mb-2 line-clamp-1 text-bone group-hover:text-signal transition-colors">
                       {displayTitle}
                     </h3>
-                    <p className="text-sm opacity-70 mb-6 line-clamp-2 flex-1">
+                    <p className="text-xs text-mist mb-5 line-clamp-2 leading-relaxed flex-1">
                       {displayDesc}
                     </p>
                     
                     {/* Progress Bar */}
-                    <div className="mb-6 shrink-0">
-                      <div className="flex justify-between text-xs font-bold mb-2">
-                        <span className="text-emerald-500">
-                          $<CountUp value={project.funded} duration={1.5} /> {t('projects', 'funded')}
+                    <div className="mb-5 shrink-0">
+                      <div className="flex justify-between text-xs font-mono mb-1.5">
+                        <span className="text-signal font-medium tabular-nums">
+                          $<CountUp value={project.funded} duration={1.2} /> {t('projects', 'funded')}
                         </span>
-                        <span className="opacity-60">{t('projects', 'target')} ${project.target.toLocaleString()}</span>
+                        <span className="text-mist text-[11px] tabular-nums">${project.target.toLocaleString()}</span>
                       </div>
-                      <div className="w-full h-2.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden shadow-inner">
+                      <div className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${Math.min(100, progress)}%` }}
-                          transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
-                          className={`h-full rounded-full relative ${isCompleted ? 'bg-emerald-500' : 'bg-gradient-to-r from-emerald-500 to-cyan-500'}`}
-                        >
-                          <div className="absolute inset-0 bg-white/20 animate-shimmer"></div>
-                        </motion.div>
+                          transition={{ duration: 1.2, ease: "easeOut" }}
+                          className="h-full bg-signal rounded-full"
+                        />
                       </div>
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-3 pt-5 border-t border-black/5 dark:border-white/5 shrink-0">
+                    <div className="flex items-center gap-2 pt-4 border-t border-white/[0.06] shrink-0">
                       <button 
                         onClick={() => handleOpenPayment(project)}
-                        className={`flex-1 py-3 rounded-2xl text-sm font-bold transition-all flex justify-center items-center gap-2 ${
+                        className={`flex-1 rounded-full py-2.5 px-4 text-xs font-medium transition-all flex justify-center items-center gap-1.5 cursor-pointer ${
                           isCompleted 
-                            ? 'bg-black/5 dark:bg-white/5 opacity-50 cursor-not-allowed text-slate-400' 
-                            : 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5'
+                            ? 'bg-white/[0.04] opacity-50 cursor-not-allowed text-mist' 
+                            : 'bg-bone text-ink hover:bg-white'
                         }`}
                         disabled={isCompleted}
                       >
                         {isCompleted ? t('projects', 'completed') : t('projects', 'fund')}
-                        {!isCompleted && <ArrowRight size={16} />}
+                        {!isCompleted && <ArrowRight size={14} />}
                       </button>
                       <button 
                         onClick={() => handleVote(project.id)}
-                        className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/30 border border-transparent flex items-center gap-2 group/vote transition-all"
+                        className="p-2 rounded-xl bg-white/[0.03] text-mist hover:text-rose-400 border border-white/[0.06] flex items-center gap-1.5 transition cursor-pointer"
                         title={t('projects', 'vote')}
                       >
-                        <Heart size={18} className={`${userVotedIds[project.id] ? 'fill-rose-500 text-rose-500' : ''} group-hover/vote:fill-rose-500 transition-all`} /> 
-                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                        <Heart size={14} className={userVotedIds[project.id] ? 'fill-rose-500 text-rose-500' : ''} /> 
+                        <span className="text-xs font-mono tabular-nums">
                           <CountUp value={project.votes} duration={1} />
                         </span>
                       </button>
@@ -389,14 +373,14 @@ const EcoProjects = () => {
                             navigator.share({ title: displayTitle, text: displayDesc, url: window.location.href });
                           }
                         }}
-                        className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 text-slate-500 hover:text-emerald-500 hover:bg-emerald-500/10 border border-transparent transition-all"
+                        className="p-2 rounded-xl bg-white/[0.03] text-mist hover:text-bone border border-white/[0.06] transition cursor-pointer"
                         aria-label="Share"
                       >
-                        <Share2 size={18} />
+                        <Share2 size={14} />
                       </button>
                     </div>
                   </div>
-                </motion.div>
+                </GlassCard>
               );
             })}
           </AnimatePresence>

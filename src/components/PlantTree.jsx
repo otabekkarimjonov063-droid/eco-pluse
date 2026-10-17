@@ -3,8 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import {
   Plus, Minus, CheckCircle, Leaf,
-  ChevronRight, Activity, Globe, ArrowRight, ShieldCheck, Download, Wind, Droplets
+  ChevronRight, Activity, Globe, ArrowRight, ShieldCheck, Download, Wind, Droplets,
+  Rotate3D, Image as ImageIcon
 } from 'lucide-react';
+import Tree3D from './Tree3D';
+import GlassCard from './GlassCard';
+import VideoBackdrop from './VideoBackdrop';
 
 const PlantTree = () => {
   const { language, t, tText } = useLanguage();
@@ -12,6 +16,7 @@ const PlantTree = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedRegion, setSelectedRegion] = useState(0);
   const [step, setStep] = useState(1); // 1: Tree, 2: Region, 3: Impact/Pay, 4: Success
+  const [viewMode, setViewMode] = useState('3d'); // '3d' or 'photo'
   const [isLoading, setIsLoading] = useState(false);
   const [orderId, setOrderId] = useState('');
 
@@ -163,48 +168,58 @@ const PlantTree = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-2rem)] lg:min-h-screen bg-eco-light dark:bg-eco-dark text-slate-900 dark:text-white flex flex-col md:flex-row overflow-hidden font-['Inter'] relative lg:rounded-l-[3rem] lg:border-l border-white/5 shadow-2xl transition-colors duration-500">
+    <div className="min-h-[calc(100vh-2rem)] lg:min-h-screen bg-transparent text-zinc-900 dark:text-zinc-100 flex flex-col md:flex-row overflow-hidden font-sans relative lg:border-l border-black/[0.08] dark:border-white/[0.08] transition-colors duration-300">
+      {/* Dynamic Looping Video Background */}
+      <VideoBackdrop 
+        src="/videos/growth.mp4" 
+        poster="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=1600" 
+        opacity={0.3} 
+      />
 
       {/* LEFT PANEL - CONTROLS */}
-      <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-32 pb-12 px-6 lg:px-14 min-h-screen overflow-y-auto relative backdrop-blur-[2px] bg-eco-light/80 dark:bg-eco-dark/80 md:bg-transparent md:bg-gradient-to-r md:from-eco-light md:via-eco-light/90 dark:md:from-eco-dark dark:md:via-eco-dark/90 md:to-transparent border-r border-black/5 dark:border-white/5">
+      <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-24 pb-12 px-6 lg:px-12 min-h-screen overflow-y-auto relative backdrop-blur-xl bg-white/80 dark:bg-[#0c0d12]/85 border-r border-black/[0.08] dark:border-white/[0.08] transition-colors duration-300">
 
         {/* Step Indicator */}
-        <div className="absolute top-10 left-6 lg:left-14 flex items-center gap-3">
+        <div className="absolute top-8 left-6 lg:left-12 flex items-center gap-2">
           {[1, 2, 3, 4].map((s) => (
             <div key={s} className="flex items-center gap-2">
-              <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold font-mono transition-all duration-500 ${
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs transition-all duration-300 ${
                 step === s 
-                  ? 'bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.5)] scale-110' 
+                  ? 'bg-emerald-500 text-black font-semibold' 
                   : step > s 
-                    ? 'border-2 border-emerald-500 text-emerald-500 bg-emerald-500/10' 
-                    : 'border border-black/10 dark:border-white/10 text-slate-400 dark:text-white/30'
+                    ? 'border border-emerald-500/50 text-emerald-500 bg-emerald-500/10' 
+                    : 'border border-black/[0.08] dark:border-white/[0.08] text-zinc-400'
               }`}>
-                {step > s ? <CheckCircle size={16} /> : `0${s}`}
+                {step > s ? <CheckCircle size={13} /> : `0${s}`}
               </div>
-              {s !== 4 && <div className={`w-6 h-[2px] transition-all duration-500 ${step > s ? 'bg-emerald-500' : 'bg-black/10 dark:bg-white/10'}`}></div>}
+              {s !== 4 && <div className={`w-5 h-[1px] transition-all duration-300 ${step > s ? 'bg-emerald-500/50' : 'bg-black/10 dark:bg-white/10'}`}></div>}
             </div>
           ))}
         </div>
 
-        <div className="pt-20 pb-8 flex flex-col justify-center">
+        <div className="pt-14 pb-8 flex flex-col justify-center">
           
-          {/* Mobile Preview Showcase with Premium Glowing Border */}
-          <div className="md:hidden mb-8 rounded-3xl p-1 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-500 shadow-xl ring-2 ring-emerald-500/20">
-            <div className="relative h-48 rounded-[1.35rem] overflow-hidden">
-              <img 
-                src={step === 2 ? activeRegion.image : activeTree.image} 
-                alt="" 
-                className="w-full h-full object-cover transition-all duration-500" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-              <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end text-white">
+          {/* Mobile Preview Showcase */}
+          <div className="md:hidden mb-6 rounded-2xl overflow-hidden border border-black/[0.08] dark:border-white/[0.08] bg-zinc-900">
+            <div className="relative h-60 overflow-hidden bg-[#08090a]">
+              {step !== 2 && viewMode === '3d' ? (
+                <Tree3D treeType={activeTree.id} quantity={quantity} />
+              ) : (
+                <img 
+                  src={step === 2 ? activeRegion.image : activeTree.image} 
+                  alt="" 
+                  className="w-full h-full object-cover" 
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end text-white pointer-events-none">
                 <div>
-                  <div className="text-xs uppercase font-bold text-emerald-400 tracking-wider">
+                  <div className="text-[10px] uppercase font-mono text-emerald-400 tracking-wider">
                     {step === 2 ? t('plant', 'step2') : t('plant', 'step1')}
                   </div>
-                  <div className="text-lg font-black">{step === 2 ? tText(activeRegion.name) : tText(activeTree.name)}</div>
+                  <div className="text-base font-semibold">{step === 2 ? tText(activeRegion.name) : tText(activeTree.name)}</div>
                 </div>
-                <span className="font-mono font-bold text-sm bg-black/60 px-2.5 py-1 rounded-lg border border-white/20">
+                <span className="font-mono text-xs bg-black/60 px-2.5 py-1 rounded-md border border-white/20">
                   {step === 2 ? activeRegion.temp : `$${activeTree.price}`}
                 </span>
               </div>
@@ -217,64 +232,60 @@ const PlantTree = () => {
             {step === 1 && (
               <motion.div key="step1" variants={leftVariants} initial="hidden" animate="show" exit="exit" className="space-y-6">
                 <div>
-                  <h1 className="text-4xl lg:text-6xl font-black mb-3 tracking-tight text-slate-900 dark:text-white">
+                  <h1 className="font-display text-3xl lg:text-4xl font-light mb-2 tracking-tight text-bone">
                     {t('plant', 'headline').split('.')[0]}. <br />
-                    <span className="text-emerald-500 dark:text-emerald-400">{t('plant', 'headline').split('.')[1] || ''}</span>
+                    <span className="text-signal italic">{t('plant', 'headline').split('.')[1] || ''}</span>
                   </h1>
-                  <p className="text-slate-600 dark:text-white/60 text-base max-w-md font-medium leading-relaxed">
+                  <p className="text-mist text-sm max-w-md font-normal leading-relaxed">
                     {t('plant', 'subheadline')}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 pt-2">
+                <div className="grid grid-cols-2 gap-3 pt-1">
                   {trees.map((tree, idx) => {
                     const isSelected = selectedTree === idx;
                     const displayTreeName = tText(tree.name);
                     return (
-                      <button
+                      <GlassCard
                         key={tree.id}
+                        tone={isSelected ? "raised" : "base"}
+                        as="button"
                         onClick={() => setSelectedTree(idx)}
-                        className={`w-full text-center p-4 rounded-3xl transition-all duration-500 border relative overflow-hidden group flex flex-col items-center justify-center ${
-                          isSelected
-                            ? 'bg-emerald-500/10 dark:bg-white/10 border-emerald-500 shadow-xl shadow-emerald-500/10'
-                            : 'bg-slate-100/80 dark:bg-black/20 border-slate-300/60 dark:border-white/5 hover:bg-white dark:hover:bg-white/10'
+                        className={`w-full text-center p-3 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition ${
+                          isSelected ? 'border-signal/50' : ''
                         }`}
                       >
-                        {isSelected && (
-                          <motion.div layoutId="activeTreeBorder" className="absolute left-0 top-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 shadow-[0_0_20px_rgba(16,185,129,0.8)]" />
-                        )}
                         <div className="relative z-10 w-full flex flex-col items-center">
-                          {/* Image with stunning luxury border and glow */}
-                          <div className={`p-1.5 rounded-2xl transition-all duration-300 mb-3 border-2 ${
+                          <div className={`p-1 rounded-xl transition-all duration-200 mb-2 border ${
                             isSelected 
-                              ? 'border-emerald-500 bg-gradient-to-tr from-emerald-500/30 to-teal-400/30 shadow-[0_0_20px_rgba(16,185,129,0.5)] scale-105 ring-2 ring-emerald-400/40' 
-                              : 'border-slate-300 dark:border-white/10 bg-white/70 dark:bg-white/5 group-hover:scale-105 group-hover:border-emerald-400/60 group-hover:shadow-md'
+                              ? 'border-signal/60 bg-signal/10' 
+                              : 'border-white/[0.08] bg-white/[0.02]'
                           }`}>
                             <img 
                               src={tree.image} 
                               alt={displayTreeName} 
-                              className="w-16 h-16 lg:w-20 lg:h-20 rounded-xl object-cover shadow-inner" 
+                              className="w-16 h-16 rounded-lg object-cover" 
                             />
                           </div>
 
-                          <h3 className={`text-base lg:text-lg font-bold transition-colors ${isSelected ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-800 dark:text-white/80'}`}>
+                          <h3 className={`text-sm font-medium transition-colors ${isSelected ? 'text-signal' : 'text-bone'}`}>
                             {displayTreeName}
                           </h3>
-                          <p className="text-slate-500 dark:text-white/50 text-xs mt-1 font-mono font-semibold">
+                          <p className="text-mist text-[11px] mt-0.5 font-mono tabular-nums">
                             ${tree.price} / {t('plant', 'per_tree')}
                           </p>
                         </div>
-                      </button>
+                      </GlassCard>
                     );
                   })}
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2">
                   <button 
                     onClick={() => setStep(2)} 
-                    className="w-full py-4 primary-button text-lg font-bold rounded-2xl flex justify-center items-center gap-3 shadow-lg shadow-emerald-500/30 active:scale-95"
+                    className="w-full py-3 rounded-full bg-bone text-ink hover:bg-white text-sm font-medium flex justify-center items-center gap-2 transition cursor-pointer"
                   >
-                    {t('plant', 'continue_btn')} <ArrowRight size={20} />
+                    {t('plant', 'continue_btn')} <ArrowRight size={16} />
                   </button>
                 </div>
               </motion.div>
@@ -290,15 +301,15 @@ const PlantTree = () => {
                   >
                     <ChevronRight className="rotate-180" size={16} /> {t('plant', 'back_btn')}
                   </button>
-                  <h2 className="text-4xl lg:text-5xl font-black mb-3 tracking-tight text-slate-900 dark:text-white">
+                  <h2 className="text-3xl sm:text-4xl font-serif font-normal tracking-tight mb-2 text-slate-900 dark:text-white">
                     {t('plant', 'select_region')}
                   </h2>
-                  <p className="text-slate-600 dark:text-white/60 text-base max-w-md font-medium">
+                  <p className="text-slate-500 dark:text-zinc-400 text-sm max-w-md">
                     {tText(activeTree.name)}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-3.5 pt-2">
+                <div className="grid grid-cols-1 gap-2.5 pt-2">
                   {regions.map((region, idx) => {
                     const isSelected = selectedRegion === idx;
                     const displayRegionName = tText(region.name);
@@ -309,41 +320,40 @@ const PlantTree = () => {
                       <button
                         key={region.id}
                         onClick={() => setSelectedRegion(idx)}
-                        className={`w-full text-left p-4 rounded-3xl transition-all duration-500 border relative overflow-hidden group flex items-center gap-4 ${
+                        className={`w-full text-left p-3.5 rounded-2xl transition-all duration-200 border relative overflow-hidden group flex items-center gap-3.5 ${
                           isSelected
-                            ? 'bg-cyan-500/10 dark:bg-white/10 border-cyan-500 shadow-xl shadow-cyan-500/10'
-                            : 'bg-slate-100/80 dark:bg-black/20 border-slate-300/60 dark:border-white/5 hover:bg-white dark:hover:bg-white/10'
+                            ? 'bg-emerald-500/[0.06] border-emerald-500/50'
+                            : 'bg-white/40 dark:bg-white/[0.02] border-black/[0.06] dark:border-white/[0.06] hover:border-black/20 dark:hover:border-white/20'
                         }`}
                       >
                         {isSelected && (
-                          <motion.div layoutId="activeRegionBorder" className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-cyan-400 to-blue-500" />
+                          <motion.div layoutId="activeRegionBorder" className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500" />
                         )}
                         
-                        {/* Region image with sleek luxury border ring */}
-                        <div className={`p-1.5 rounded-2xl transition-all shrink-0 border-2 ${
+                        <div className={`p-1 rounded-xl transition-all shrink-0 border ${
                           isSelected 
-                            ? 'border-cyan-500 bg-gradient-to-tr from-cyan-500/30 to-blue-500/30 shadow-[0_0_20px_rgba(6,182,212,0.5)] scale-105 ring-2 ring-cyan-400/40' 
-                            : 'border-slate-300 dark:border-white/10 bg-white/70 dark:bg-white/5 group-hover:border-cyan-400/60 group-hover:shadow-md'
+                            ? 'border-emerald-500/40 bg-emerald-500/10' 
+                            : 'border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02]'
                         }`}>
                           <img 
                             src={region.image} 
                             alt={displayRegionName} 
-                            className="w-16 h-16 rounded-xl object-cover" 
+                            className="w-14 h-14 rounded-lg object-cover" 
                           />
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <h3 className={`text-base font-bold transition-colors ${isSelected ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-900 dark:text-white'}`}>
+                          <h3 className={`text-sm font-medium transition-colors ${isSelected ? 'text-emerald-500' : 'text-slate-900 dark:text-white'}`}>
                             {displayRegionName}
                           </h3>
-                          <p className="text-xs text-slate-500 dark:text-white/60 truncate mt-0.5">
+                          <p className="text-xs text-slate-500 dark:text-zinc-400 truncate mt-0.5">
                             {displayDesc}
                           </p>
-                          <div className="flex items-center gap-2 mt-2">
-                            <span className="text-[10px] font-bold px-2 py-0.5 bg-rose-500/10 text-rose-500 rounded-md">
+                          <div className="flex items-center gap-2 mt-1.5">
+                            <span className="text-[10px] font-mono px-2 py-0.5 bg-rose-500/10 text-rose-400 rounded-md">
                               {displayRisk}
                             </span>
-                            <span className="text-[10px] font-mono text-slate-400">
+                            <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
                               {region.temp}
                             </span>
                           </div>
@@ -353,12 +363,12 @@ const PlantTree = () => {
                   })}
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2">
                   <button 
                     onClick={() => setStep(3)} 
-                    className="w-full py-4 primary-button text-lg font-bold rounded-2xl flex justify-center items-center gap-3 shadow-lg shadow-cyan-500/30 active:scale-95"
+                    className="w-full py-3 primary-button text-sm font-semibold rounded-xl flex justify-center items-center gap-2"
                   >
-                    {t('plant', 'continue_btn')} <ArrowRight size={20} />
+                    {t('plant', 'continue_btn')} <ArrowRight size={16} />
                   </button>
                 </div>
               </motion.div>
@@ -370,42 +380,42 @@ const PlantTree = () => {
                 <div>
                   <button 
                     onClick={() => setStep(2)} 
-                    className="text-slate-500 dark:text-white/50 hover:text-slate-900 dark:hover:text-white flex items-center gap-2 mb-4 font-bold transition-colors text-sm"
+                    className="text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-2 mb-4 font-medium transition-colors text-xs"
                   >
-                    <ChevronRight className="rotate-180" size={16} /> {t('plant', 'back_btn')}
+                    <ChevronRight className="rotate-180" size={14} /> {t('plant', 'back_btn')}
                   </button>
-                  <h2 className="text-3xl font-black mb-2 text-slate-900 dark:text-white">
+                  <h2 className="text-3xl sm:text-4xl font-serif font-normal tracking-tight mb-2 text-slate-900 dark:text-white">
                     {t('plant', 'step3')}
                   </h2>
-                  <p className="text-sm opacity-70">
+                  <p className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
                     {tText(activeTree.name)} • {tText(activeRegion.name)}
                   </p>
                 </div>
 
                 {/* Quantity selector */}
-                <div className="p-4 bg-white/70 dark:bg-black/30 rounded-2xl border border-black/5 dark:border-white/10 flex items-center justify-between">
-                  <span className="font-bold text-sm text-slate-800 dark:text-white">{t('plant', 'quantity')}</span>
-                  <div className="flex items-center gap-4">
+                <div className="p-4 bg-white/40 dark:bg-white/[0.03] rounded-2xl border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
+                  <span className="font-medium text-sm text-slate-800 dark:text-white/80">{t('plant', 'quantity')}</span>
+                  <div className="flex items-center gap-3">
                     <button 
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-9 h-9 rounded-xl bg-slate-200 dark:bg-white/10 flex items-center justify-center font-bold text-slate-800 dark:text-white hover:bg-emerald-500 hover:text-white transition-colors"
+                      className="w-8 h-8 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-800 dark:text-white hover:border-emerald-500/50 hover:text-emerald-500 transition-colors"
                     >
-                      <Minus size={16} />
+                      <Minus size={14} />
                     </button>
-                    <span className="text-xl font-black w-8 text-center text-slate-900 dark:text-white">{quantity}</span>
+                    <span className="text-base font-mono font-semibold w-8 text-center text-slate-900 dark:text-white">{quantity}</span>
                     <button 
                       onClick={() => setQuantity(quantity + 1)}
-                      className="w-9 h-9 rounded-xl bg-slate-200 dark:bg-white/10 flex items-center justify-center font-bold text-slate-800 dark:text-white hover:bg-emerald-500 hover:text-white transition-colors"
+                      className="w-8 h-8 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-800 dark:text-white hover:border-emerald-500/50 hover:text-emerald-500 transition-colors"
                     >
-                      <Plus size={16} />
+                      <Plus size={14} />
                     </button>
                   </div>
                 </div>
 
                 {/* Total box */}
-                <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-between">
-                  <span className="font-bold text-emerald-800 dark:text-emerald-300">{t('plant', 'total_amount')}</span>
-                  <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">${totalAmount}</span>
+                <div className="p-4 bg-emerald-500/[0.06] border border-emerald-500/20 rounded-2xl flex items-center justify-between">
+                  <span className="font-medium text-sm text-emerald-600 dark:text-emerald-400">{t('plant', 'total_amount')}</span>
+                  <span className="text-2xl font-mono font-bold text-emerald-500">${totalAmount}</span>
                 </div>
 
                 {/* Card input */}
@@ -417,7 +427,7 @@ const PlantTree = () => {
                       value={cardData.name}
                       onChange={(e) => setCardData({ ...cardData, name: e.target.value.toUpperCase() })}
                       placeholder="NAME ON CARD" 
-                      className="w-full bg-slate-100 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-xl font-bold text-slate-900 dark:text-white outline-none focus:border-emerald-500 transition-all text-sm uppercase" 
+                      className="w-full bg-white/40 dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] p-3 rounded-xl font-medium text-slate-900 dark:text-white outline-none focus:border-emerald-500/50 transition-all text-xs tracking-wider uppercase" 
                     />
                   </div>
                   <div>
@@ -432,7 +442,7 @@ const PlantTree = () => {
                       }}
                       placeholder="8600 0000 0000 0000" 
                       maxLength="19" 
-                      className="w-full bg-slate-100 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-xl font-mono font-bold text-slate-900 dark:text-white outline-none focus:border-emerald-500 transition-all text-sm" 
+                      className="w-full bg-white/40 dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] p-3 rounded-xl font-mono text-slate-900 dark:text-white outline-none focus:border-emerald-500/50 transition-all text-xs" 
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
@@ -447,7 +457,7 @@ const PlantTree = () => {
                       }}
                       placeholder="MM/YY" 
                       maxLength="5" 
-                      className="w-full bg-slate-100 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-xl font-mono text-slate-900 dark:text-white outline-none focus:border-emerald-500 text-sm" 
+                      className="w-full bg-white/40 dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] p-3 rounded-xl font-mono text-slate-900 dark:text-white outline-none focus:border-emerald-500/50 text-xs" 
                     />
                     <input 
                       type="password" 
@@ -456,14 +466,14 @@ const PlantTree = () => {
                       onChange={(e) => setCardData({ ...cardData, cvv: e.target.value.slice(0, 4) })}
                       placeholder="CVV" 
                       maxLength="4" 
-                      className="w-full bg-slate-100 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-xl font-mono text-slate-900 dark:text-white outline-none focus:border-emerald-500 text-sm" 
+                      className="w-full bg-white/40 dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] p-3 rounded-xl font-mono text-slate-900 dark:text-white outline-none focus:border-emerald-500/50 text-xs" 
                     />
                   </div>
 
                   <button 
                     type="submit" 
                     disabled={isLoading}
-                    className="w-full py-4 primary-button text-lg font-bold rounded-2xl flex justify-center items-center gap-3 shadow-lg shadow-emerald-500/30 active:scale-95 disabled:opacity-50 mt-4"
+                    className="w-full py-3.5 primary-button text-sm font-semibold rounded-xl flex justify-center items-center gap-2 mt-4 disabled:opacity-50"
                   >
                     {isLoading ? '...' : t('plant', 'pay_btn')}
                   </button>
@@ -474,31 +484,31 @@ const PlantTree = () => {
             {/* STEP 4: SUCCESS */}
             {step === 4 && (
               <motion.div key="step4" variants={leftVariants} initial="hidden" animate="show" exit="exit" className="text-center space-y-6 my-auto py-8">
-                <div className="w-20 h-20 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-xl shadow-emerald-500/30 animate-bounce">
-                  <CheckCircle size={44} />
+                <div className="w-14 h-14 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto border border-emerald-500/20">
+                  <CheckCircle size={28} />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-black mb-2 text-slate-900 dark:text-white">
+                  <h2 className="text-3xl font-serif font-normal tracking-tight mb-2 text-slate-900 dark:text-white">
                     {t('plant', 'order_placed')}
                   </h2>
-                  <p className="text-sm opacity-70 max-w-sm mx-auto">
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
                     {t('plant', 'order_desc')}
                   </p>
-                  <div className="mt-4 inline-block px-4 py-2 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono font-bold text-sm rounded-xl border border-emerald-500/30">
+                  <div className="mt-4 inline-block px-3.5 py-1.5 bg-emerald-500/[0.08] text-emerald-500 font-mono text-xs rounded-lg border border-emerald-500/20">
                     ID: {orderId}
                   </div>
                 </div>
 
-                <div className="pt-4 flex flex-col gap-3 max-w-sm mx-auto">
+                <div className="pt-4 flex flex-col gap-2.5 max-w-sm mx-auto">
                   <button 
                     onClick={() => window.print()}
-                    className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg transition-all"
+                    className="w-full py-3 primary-button text-sm font-semibold rounded-xl flex items-center justify-center gap-2"
                   >
-                    <Download size={18} /> {t('plant', 'download_cert')}
+                    <Download size={16} /> {t('plant', 'download_cert')}
                   </button>
                   <button 
                     onClick={() => { setStep(1); setQuantity(1); }}
-                    className="w-full py-3.5 bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-slate-800 dark:text-white rounded-xl font-bold transition-all"
+                    className="w-full py-3 glass-button text-sm font-medium rounded-xl text-zinc-700 dark:text-zinc-300"
                   >
                     {t('plant', 'close')}
                   </button>
@@ -510,109 +520,147 @@ const PlantTree = () => {
         </div>
       </div>
 
-      {/* RIGHT PANEL - IMMERSIVE VISUALS WITH LUXURY GLOWING BORDER */}
+      {/* RIGHT PANEL - IMMERSIVE VISUALS WITH RESTRAINED GLASS CARD */}
       <div className="hidden md:flex w-1/2 lg:w-7/12 sticky top-0 h-screen p-6 lg:p-10 flex-col justify-center items-center overflow-hidden">
         <AnimatePresence mode="wait">
           {step === 2 ? (
-            <motion.div 
+            <GlassCard 
+              tone="feature"
               key={`region-${activeRegion.id}`} 
+              as={motion.div}
               variants={rightVariants} 
               initial="hidden" 
               animate="show" 
               exit="exit" 
-              className="w-full h-full max-h-[88vh] rounded-[2.5rem] p-[3px] bg-gradient-to-tr from-cyan-400 via-teal-400 to-blue-500 shadow-[0_25px_60px_-15px_rgba(6,182,212,0.35)] ring-2 ring-cyan-400/30 flex flex-col"
+              className="w-full h-full max-h-[88vh] rounded-3xl overflow-hidden flex flex-col"
             >
-              <div className="relative w-full h-full rounded-[2.35rem] overflow-hidden bg-slate-100 dark:bg-slate-950 flex flex-col justify-between">
+              <div className="relative w-full h-full rounded-3xl overflow-hidden flex flex-col justify-between">
                 <img 
                   src={activeRegion.image} 
                   alt="" 
-                  className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 opacity-90 dark:opacity-80" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-85" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent dark:from-slate-950/95 dark:via-slate-950/30"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
 
                 {/* Top Badge */}
                 <div className="relative z-20 p-6 flex justify-between items-center">
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl bg-white/90 dark:bg-slate-950/70 border border-cyan-500/40 dark:border-cyan-400/40 shadow-lg text-xs font-bold text-cyan-800 dark:text-cyan-300">
-                    <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-mist">
+                    <span className="w-1.5 h-1.5 rounded-full bg-signal" />
                     <span>{t('plant', 'step2')}</span>
                   </div>
-                  <div className="px-3.5 py-1.5 rounded-full backdrop-blur-xl bg-white/90 dark:bg-slate-950/70 border border-slate-200/80 dark:border-white/20 text-xs font-mono font-bold text-slate-800 dark:text-white shadow-sm">
+                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-bone tabular-nums">
                     {activeRegion.temp}
                   </div>
                 </div>
 
-                {/* Bottom Card - Light Mode & Dark Mode Adaptive */}
+                {/* Bottom Card */}
                 <div className="relative z-20 p-6 sm:p-8">
-                  <div className="backdrop-blur-2xl bg-white/90 dark:bg-slate-950/85 border border-white/80 dark:border-white/15 p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-4 text-slate-900 dark:text-white">
+                  <div className="backdrop-blur-xl bg-moss/80 border border-white/10 p-6 rounded-2xl flex flex-col gap-3 text-bone">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2.5">
-                        <Globe className="text-cyan-600 dark:text-cyan-400" size={26} />
-                        <h3 className="text-2xl sm:text-3xl font-black text-cyan-700 dark:text-cyan-300">{tText(activeRegion.name)}</h3>
+                        <Globe className="text-signal" size={20} />
+                        <h3 className="text-2xl font-display font-light text-bone">{tText(activeRegion.name)}</h3>
                       </div>
-                      <span className="text-xs font-bold px-3 py-1 bg-rose-500/10 text-rose-600 dark:bg-rose-500/20 dark:text-rose-300 rounded-full border border-rose-500/30">
+                      <span className="text-[11px] font-mono px-2.5 py-0.5 bg-rose-500/10 text-rose-300 rounded-md border border-rose-500/20">
                         {tText(activeRegion.risk)}
                       </span>
                     </div>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed font-medium">
+                    <p className="text-mist text-sm leading-relaxed">
                       {tText(activeRegion.desc)}
                     </p>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </GlassCard>
           ) : (
-            <motion.div 
+            <GlassCard 
+              tone="feature"
               key={`tree-${activeTree.id}`} 
+              as={motion.div}
               variants={rightVariants} 
               initial="hidden" 
               animate="show" 
               exit="exit" 
-              className="w-full h-full max-h-[88vh] rounded-[2.5rem] p-[3px] bg-gradient-to-tr from-emerald-400 via-teal-400 to-cyan-500 shadow-[0_25px_60px_-15px_rgba(16,185,129,0.35)] ring-2 ring-emerald-400/30 flex flex-col"
+              className="w-full h-full max-h-[88vh] rounded-3xl overflow-hidden flex flex-col"
             >
-              <div className="relative w-full h-full rounded-[2.35rem] overflow-hidden bg-slate-100 dark:bg-slate-950 flex flex-col justify-between">
-                <img 
-                  src={activeTree.image} 
-                  alt="" 
-                  className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 opacity-95 dark:opacity-85" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent dark:from-slate-950/95 dark:via-slate-950/30"></div>
+              <div className="relative w-full h-full rounded-3xl overflow-hidden flex flex-col justify-between">
+                
+                {/* 3D vs Photo View */}
+                {viewMode === '3d' ? (
+                  <div className="absolute inset-0 w-full h-full">
+                    <Tree3D treeType={activeTree.id} quantity={quantity} />
+                  </div>
+                ) : (
+                  <>
+                    <img 
+                      src={activeTree.image} 
+                      alt="" 
+                      className="absolute inset-0 w-full h-full object-cover opacity-85" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
+                  </>
+                )}
 
-                {/* Top Badge */}
-                <div className="relative z-20 p-6 flex justify-between items-center">
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl bg-white/90 dark:bg-slate-950/70 border border-emerald-500/40 dark:border-emerald-400/40 shadow-lg text-xs font-bold text-emerald-800 dark:text-emerald-300">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                {/* Top Badge & 3D / Photo Mode Switcher */}
+                <div className="relative z-20 p-6 flex justify-between items-center pointer-events-auto">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-mist">
+                    <span className="w-1.5 h-1.5 rounded-full bg-signal" />
                     <span>{t('plant', 'step1')}</span>
                   </div>
-                  <div className="px-3.5 py-1.5 rounded-full backdrop-blur-xl bg-white/90 dark:bg-slate-950/70 border border-slate-200/80 dark:border-white/20 text-xs font-mono font-bold text-emerald-700 dark:text-emerald-300 shadow-sm">
+
+                  {/* 3D / Photo Switcher Pill */}
+                  <div className="flex items-center gap-1 p-1 rounded-full bg-moss/80 backdrop-blur-md border border-white/10">
+                    <button
+                      type="button"
+                      onClick={() => setViewMode('3d')}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
+                        viewMode === '3d'
+                          ? 'bg-white/15 text-bone'
+                          : 'text-mist hover:text-bone'
+                      }`}
+                    >
+                      <Rotate3D size={13} className={viewMode === '3d' ? 'animate-spin-slow' : ''} /> 3D
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setViewMode('photo')}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
+                        viewMode === 'photo'
+                          ? 'bg-white/15 text-bone'
+                          : 'text-mist hover:text-bone'
+                      }`}
+                    >
+                      <ImageIcon size={13} /> Photo
+                    </button>
+                  </div>
+
+                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-signal tabular-nums">
                     ${activeTree.price}
                   </div>
                 </div>
 
-                {/* Bottom Card - Light Mode & Dark Mode Adaptive */}
-                <div className="relative z-20 p-6 sm:p-8">
-                  <div className="backdrop-blur-2xl bg-white/90 dark:bg-slate-950/85 border border-white/80 dark:border-white/15 p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-5 text-slate-900 dark:text-white">
+                {/* Bottom Card */}
+                <div className="relative z-20 p-5 sm:p-6 pointer-events-none mt-auto">
+                  <div className="backdrop-blur-xl bg-white/85 dark:bg-moss/85 border border-black/[0.08] dark:border-white/10 p-5 rounded-2xl flex flex-col gap-3 text-bone shadow-xl pointer-events-auto">
                     <div>
-                      <h3 className="text-3xl sm:text-4xl font-black mb-2 text-emerald-600 dark:text-emerald-400">{tText(activeTree.name)}</h3>
-                      <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed font-medium">{tText(activeTree.desc)}</p>
+                      <h3 className="text-2xl font-display font-light tracking-tight mb-0.5 text-bone">{tText(activeTree.name)}</h3>
+                      <p className="text-mist text-xs leading-relaxed">{tText(activeTree.desc)}</p>
                     </div>
 
-                    <div className="flex items-center gap-4 sm:gap-6 bg-slate-100/90 dark:bg-white/10 p-4 rounded-2xl border border-slate-200/80 dark:border-white/10">
-                      <div className="text-center flex-1">
-                        <Wind className="text-emerald-600 dark:text-emerald-400 mb-1 mx-auto" size={24} />
-                        <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{activeTree.co2}</p>
-                        <p className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold mt-0.5">CO2 (kg/yr)</p>
+                    <div className="grid grid-cols-2 gap-3 bg-black/[0.03] dark:bg-white/[0.04] p-2.5 rounded-xl border border-black/[0.06] dark:border-white/[0.08]">
+                      <div className="text-center">
+                        <p className="text-[11px] font-mono uppercase tracking-wider text-mist">CO2 (kg/yr)</p>
+                        <p className="text-lg font-display font-light text-signal mt-0.5 tabular-nums">{activeTree.co2}</p>
                       </div>
-                      <div className="w-px h-10 bg-slate-300/80 dark:bg-white/20"></div>
-                      <div className="text-center flex-1">
-                        <Droplets className="text-cyan-600 dark:text-cyan-400 mb-1 mx-auto" size={24} />
-                        <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{activeTree.oxygen}</p>
-                        <p className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold mt-0.5">O2 (kg/yr)</p>
+                      <div className="text-center border-l border-black/[0.08] dark:border-white/10">
+                        <p className="text-[11px] font-mono uppercase tracking-wider text-mist">O2 (kg/yr)</p>
+                        <p className="text-lg font-display font-light text-signal mt-0.5 tabular-nums">{activeTree.oxygen}</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </GlassCard>
           )}
         </AnimatePresence>
       </div>

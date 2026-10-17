@@ -244,49 +244,45 @@ const EcoAIChat = () => {
       <AnimatePresence>
         {!isOpen && (
           <motion.button 
-            initial={{ scale: 0.5, opacity: 0 }}
+            initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            transition={{ type: "spring", bounce: 0.5 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-24 lg:bottom-10 right-6 p-4 rounded-[1.5rem] bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-[0_10px_30px_-5px_rgba(16,185,129,0.5)] z-40 group flex hover:-translate-y-1 transition-all"
+            className="fixed bottom-20 lg:bottom-6 right-5 lg:right-6 h-11 px-3.5 sm:px-4 rounded-full bg-moss/90 border border-white/[0.08] text-bone hover:border-signal/40 backdrop-blur-xl shadow-lg z-40 group flex items-center gap-2 transition-all font-sans"
             aria-label="Eco-AI Chat"
           >
-            <MessageSquare size={26} className="group-hover:animate-pulse" />
-            <span className="absolute -top-2 -right-2 w-4 h-4 bg-rose-500 border-2 border-white dark:border-[#07101a] rounded-full animate-pulse-fast"></span>
+            <MessageSquare size={16} className="text-signal group-hover:scale-105 transition-transform" />
+            <span className="text-xs font-mono font-medium hidden sm:inline text-bone">AI Chat</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Advanced Chat Widget */}
+      {/* Restrained 2026 Chat Widget */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
-            initial={{ scale: 0.8, opacity: 0, originX: 1, originY: 1 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ type: "spring", bounce: 0.3, duration: 0.4 }}
-            className="fixed bottom-24 lg:bottom-10 right-4 sm:right-6 sm:w-[420px] w-[calc(100vw-2rem)] h-[650px] max-h-[75vh] lg:max-h-[80vh] premium-glass-deep rounded-3xl flex flex-col z-50 overflow-hidden border border-emerald-500/20 shadow-[0_20px_50px_-20px_rgba(16,185,129,0.3)] bg-white/95 dark:bg-[#07101a]/95 backdrop-blur-xl"
+            initial={{ scale: 0.95, opacity: 0, y: 10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 10 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 sm:w-[400px] w-[calc(100vw-2rem)] h-[580px] max-h-[75vh] rounded-2xl flex flex-col z-50 overflow-hidden border border-white/[0.08] shadow-2xl bg-ink/95 backdrop-blur-2xl text-bone font-sans"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-emerald-500/90 to-cyan-600/90 p-5 flex items-center justify-between text-white border-b border-white/20 relative overflow-hidden backdrop-blur-md">
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-              
-              <div className="flex items-center gap-4 relative z-10">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center border border-white/30 backdrop-blur-sm shadow-inner">
-                    <Bot size={26} className="text-white drop-shadow-md" />
-                  </div>
-                  <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-400 border-2 border-[#009b83] rounded-full animate-pulse"></span>
+            <div className="bg-moss/80 p-4 flex items-center justify-between border-b border-white/[0.08] text-bone">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-signal/10 text-signal border border-signal/20 flex items-center justify-center">
+                  <Bot size={18} />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-lg flex items-center gap-1.5 tracking-wide">
-                    Eco-AI <Sparkles size={16} className="text-yellow-300 animate-pulse" />
+                  <h3 className="font-display font-light text-base flex items-center gap-1.5 text-bone">
+                    Eco-AI <span className="w-1.5 h-1.5 rounded-full bg-signal" />
                   </h3>
-                  <p className="text-[11px] font-medium opacity-90 uppercase tracking-widest mt-0.5">{assistantSubtitle}</p>
+                  <p className="text-[10px] font-mono text-mist uppercase tracking-wider">{assistantSubtitle}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-1 relative z-10">
+              <div className="flex items-center gap-1">
                 <button 
                   onClick={() => {
                     const initial = [{ id: 'initial', text: t('chat', 'greeting'), isUser: false }];
@@ -297,39 +293,39 @@ const EcoAIChat = () => {
                       console.error(e);
                     }
                   }} 
-                  className="hover:bg-white/20 p-2 rounded-xl transition-colors text-white/80 hover:text-white"
+                  className="p-1.5 rounded-lg text-mist hover:text-bone hover:bg-white/[0.05] transition-colors"
                   title={language === 'RU' ? 'Очистить чат' : language === 'EN' ? 'Clear chat' : 'Chatni tozalash'}
                 >
-                  <RotateCcw size={18} />
+                  <RotateCcw size={15} />
                 </button>
                 <button 
                   onClick={() => setIsOpen(false)} 
-                  className="hover:bg-white/20 p-2 rounded-xl transition-colors text-white"
+                  className="p-1.5 rounded-lg text-mist hover:text-bone hover:bg-white/[0.05] transition-colors"
                   aria-label="Close Chat"
                 >
-                  <X size={22} />
+                  <X size={17} />
                 </button>
               </div>
             </div>
 
             {/* Chat Area */}
-            <div className="flex-1 p-5 overflow-y-auto bg-transparent custom-scrollbar scroll-smooth flex flex-col gap-4 relative z-10">
-              <div className="text-center text-[10px] opacity-50 font-bold mb-1 uppercase tracking-widest text-slate-800 dark:text-white">
+            <div className="flex-1 p-4 overflow-y-auto custom-scrollbar flex flex-col gap-3">
+              <div className="text-center text-[10px] font-mono uppercase tracking-widest text-mist/60 mb-1">
                 {todayText}
               </div>
 
               {messages.map((msg) => (
                 <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   key={msg.id} 
                   className={`flex flex-col max-w-[85%] ${msg.isUser ? 'self-end items-end' : 'self-start items-start'}`}
                 >
                   <div 
-                    className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm font-medium ${
+                    className={`p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed ${
                       msg.isUser 
-                        ? 'bg-gradient-to-br from-emerald-500 to-cyan-500 text-white rounded-tr-sm shadow-emerald-500/20' 
-                        : 'bg-slate-100 dark:bg-white/10 border border-black/5 dark:border-white/10 text-slate-800 dark:text-slate-100 rounded-tl-sm'
+                        ? 'bg-signal text-ink font-medium rounded-tr-sm' 
+                        : 'bg-moss/70 border border-white/[0.08] text-bone rounded-tl-sm'
                     }`}
                   >
                     {msg.text}
@@ -338,22 +334,22 @@ const EcoAIChat = () => {
               ))}
 
               {isTyping && (
-                <div className="self-start flex items-center gap-1.5 p-3.5 bg-slate-100 dark:bg-white/10 rounded-2xl rounded-tl-sm border border-black/5 dark:border-white/10">
-                  <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"></span>
-                  <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></span>
-                  <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></span>
+                <div className="self-start flex items-center gap-1.5 p-3 bg-moss/70 rounded-xl rounded-tl-sm border border-white/[0.08]">
+                  <span className="w-1.5 h-1.5 bg-signal rounded-full animate-bounce"></span>
+                  <span className="w-1.5 h-1.5 bg-signal rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></span>
+                  <span className="w-1.5 h-1.5 bg-signal rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></span>
                 </div>
               )}
               <div ref={messagesEndRef} />
             </div>
 
             {/* Quick Replies */}
-            <div className="px-5 py-2.5 overflow-x-auto flex gap-2 no-scrollbar relative z-10 border-t border-black/5 dark:border-white/5 bg-slate-50/50 dark:bg-black/20">
+            <div className="px-4 py-2 overflow-x-auto flex gap-1.5 no-scrollbar border-t border-white/[0.06] bg-moss/30">
               {quickReplies.map((reply, i) => (
                 <button
                   key={i}
                   onClick={() => handleSend(reply)}
-                  className="whitespace-nowrap px-4 py-2 bg-white dark:bg-white/5 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/20 hover:bg-emerald-500 hover:text-white transition-all shadow-sm shrink-0"
+                  className="whitespace-nowrap px-3 py-1.5 bg-moss/50 text-mist text-xs rounded-lg border border-white/[0.08] hover:border-signal/40 hover:text-signal transition-all shrink-0 font-medium font-sans"
                 >
                   {reply}
                 </button>
@@ -361,7 +357,7 @@ const EcoAIChat = () => {
             </div>
 
             {/* Input Bar */}
-            <div className="p-4 border-t border-black/10 dark:border-white/10 relative z-10 bg-white dark:bg-[#07101a]">
+            <div className="p-3 border-t border-white/[0.08] bg-moss/80">
               <form 
                 onSubmit={(e) => { e.preventDefault(); handleSend(); }}
                 className="relative flex items-center"
@@ -371,15 +367,15 @@ const EcoAIChat = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder={t('chat', 'placeholder')}
-                  className="w-full bg-slate-100 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl py-3 pl-4 pr-12 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors font-medium"
+                  className="w-full bg-ink/60 border border-white/[0.08] rounded-xl py-2.5 pl-3.5 pr-11 text-xs sm:text-sm text-bone placeholder:text-mist/50 focus:outline-none focus:border-signal/40 transition-colors font-sans"
                 />
                 <button 
                   type="submit" 
                   disabled={!input.trim()}
-                  className="absolute right-2 p-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-colors disabled:opacity-40 disabled:hover:bg-emerald-500 shadow-md shadow-emerald-500/30"
+                  className="absolute right-1.5 p-1.5 bg-signal text-ink rounded-lg hover:bg-signal/90 transition-colors disabled:opacity-30"
                   aria-label={t('chat', 'send')}
                 >
-                  <Send size={16} />
+                  <Send size={14} />
                 </button>
               </form>
             </div>

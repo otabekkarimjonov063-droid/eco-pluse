@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, Send, User, ThumbsUp, Star } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import GlassCard from './GlassCard';
+import VideoBackdrop from './VideoBackdrop';
 
 const initialMockComments = [
   {
@@ -123,98 +125,107 @@ const EcoComments = () => {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden bg-eco-light dark:bg-[#0A0F16] transition-colors duration-500">
-      {/* Background Glows */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(16,185,129,0.1)_0%,transparent_70%)] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(6,182,212,0.1)_0%,transparent_70%)] pointer-events-none" />
-      
+    <section className="py-20 relative overflow-hidden bg-transparent text-bone">
+      {/* Dynamic Looping Video Background */}
+      <VideoBackdrop 
+        src="/videos/aurora.mp4" 
+        poster="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&q=80&w=1600" 
+        opacity={0.2} 
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-16">
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center justify-center p-4 bg-emerald-500/10 rounded-full mb-6 border border-emerald-500/20"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 border border-signal/20 bg-signal/10 text-signal font-mono text-xs"
           >
-            <MessageSquare size={32} className="text-emerald-500 dark:text-emerald-400" />
+            <MessageSquare size={13} />
+            <span>Community Voice</span>
           </motion.div>
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 tracking-tight mb-4"
+            transition={{ delay: 0.08 }}
+            className="text-4xl md:text-5xl font-display font-light text-bone tracking-tight mb-3"
           >
             {t('comments', 'title')}
           </motion.h2>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium"
+            transition={{ delay: 0.16 }}
+            className="text-sm text-mist max-w-xl mx-auto font-normal font-sans"
           >
             {t('comments', 'subtitle')}
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
+        <div className="grid lg:grid-cols-12 gap-10 items-start">
           
           {/* Comments List */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-4">
             <AnimatePresence>
               {allComments.map((comment, index) => (
                 <motion.div
                   key={comment.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-3xl p-6 hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors shadow-lg dark:shadow-none group"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.06 }}
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                        {comment.name.charAt(0)}
+                  <GlassCard tone="base" className="p-5">
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-bone font-mono text-xs font-semibold">
+                          {comment.name.charAt(0)}
+                        </div>
+                        <div>
+                          <h4 className="text-bone font-medium text-sm font-sans">{comment.name}</h4>
+                          <span className="text-[11px] font-mono text-mist/60">
+                            {comment.displayTime || comment.time}
+                          </span>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="text-slate-900 dark:text-white font-bold text-lg">{comment.name}</h4>
-                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                          {comment.displayTime || comment.time}
-                        </span>
+                      <div className="flex gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star 
+                            key={i} 
+                            size={12} 
+                            className={i < comment.rating ? "fill-ember text-ember" : "fill-transparent text-mist/30"} 
+                          />
+                        ))}
                       </div>
                     </div>
-                    <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={14} className={i < comment.rating ? "fill-yellow-400 text-yellow-400" : "fill-slate-300 text-slate-300 dark:fill-slate-800 dark:text-slate-800"} />
-                      ))}
+                    
+                    <p className="text-bone/85 text-xs sm:text-sm leading-relaxed mb-4 font-sans">
+                      {comment.displayComment || comment.text}
+                    </p>
+                    
+                    <div className="flex items-center gap-4 border-t border-white/[0.06] pt-3">
+                      <button 
+                        onClick={() => handleLike(comment.id)}
+                        className={`flex items-center gap-1.5 text-xs font-mono transition-colors ${
+                          likedIds[comment.id] 
+                            ? 'text-signal' 
+                            : 'text-mist hover:text-signal'
+                        }`}
+                      >
+                        <ThumbsUp size={13} className={likedIds[comment.id] ? "fill-signal" : ""} /> 
+                        <span className="tabular-nums">{comment.currentLikes !== undefined ? comment.currentLikes : comment.likes}</span>
+                      </button>
+                      <button 
+                        onClick={() => {
+                          setNewComment(`@${comment.name} `);
+                        }}
+                        className="text-xs text-mist hover:text-bone transition-colors font-sans"
+                      >
+                        {t('comments', 'reply')}
+                      </button>
                     </div>
-                  </div>
-                  
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed font-medium mb-6">
-                    {comment.displayComment || comment.text}
-                  </p>
-                  
-                  <div className="flex items-center gap-4 border-t border-slate-200 dark:border-white/5 pt-4">
-                    <button 
-                      onClick={() => handleLike(comment.id)}
-                      className={`flex items-center gap-2 text-xs font-bold transition-colors ${
-                        likedIds[comment.id] 
-                          ? 'text-emerald-500' 
-                          : 'text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400'
-                      }`}
-                    >
-                      <ThumbsUp size={16} className={likedIds[comment.id] ? "fill-emerald-500" : ""} /> 
-                      {comment.currentLikes !== undefined ? comment.currentLikes : comment.likes}
-                    </button>
-                    <button 
-                      onClick={() => {
-                        setNewComment(`@${comment.name} `);
-                      }}
-                      className="text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-                    >
-                      {t('comments', 'reply')}
-                    </button>
-                  </div>
+                  </GlassCard>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -222,21 +233,19 @@ const EcoComments = () => {
 
           {/* Leave a Comment Form */}
           <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-5 sticky top-24"
           >
-            <div className="bg-white dark:bg-white/[0.03] backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden transition-colors duration-500">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent pointer-events-none" />
-              
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 relative z-10 flex items-center gap-3">
+            <GlassCard tone="raised" className="p-6">
+              <h3 className="text-xl font-display font-light text-bone mb-6">
                 {t('comments', 'leave_comment')}
               </h3>
 
-              <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <div className="flex gap-2 mb-4">
+                  <div className="flex gap-1.5 mb-2">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
@@ -244,11 +253,11 @@ const EcoComments = () => {
                         onMouseEnter={() => setHoveredStar(star)}
                         onMouseLeave={() => setHoveredStar(0)}
                         onClick={() => setSelectedStar(star)}
-                        className="focus:outline-none"
+                        className="focus:outline-none transition-transform hover:scale-110"
                       >
                         <Star 
-                          size={28} 
-                          className={`transition-all ${star <= (hoveredStar || selectedStar) ? "fill-yellow-400 text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)] scale-110" : "text-slate-300 hover:text-slate-400 dark:text-slate-600 dark:hover:text-slate-500"}`} 
+                          size={20} 
+                          className={`transition-all ${star <= (hoveredStar || selectedStar) ? "fill-ember text-ember scale-105" : "text-mist/30 hover:text-mist/60"}`} 
                         />
                       </button>
                     ))}
@@ -256,14 +265,14 @@ const EcoComments = () => {
                 </div>
 
                 <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" size={20} />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-mist" size={16} />
                   <input
                     type="text"
                     required
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     placeholder={t('comments', 'name')}
-                    className="w-full bg-slate-50 dark:bg-[#0A0F16] border border-slate-200 dark:border-white/10 rounded-xl px-12 py-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-medium"
+                    className="w-full bg-moss/40 border border-white/[0.08] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-bone placeholder:text-mist/50 outline-none focus:border-signal/40 transition-all font-sans"
                   />
                 </div>
 
@@ -274,18 +283,18 @@ const EcoComments = () => {
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder={t('comments', 'comment')}
                     rows="4"
-                    className="w-full bg-slate-50 dark:bg-[#0A0F16] border border-slate-200 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-medium resize-none"
+                    className="w-full bg-moss/40 border border-white/[0.08] rounded-xl p-3 text-xs text-bone placeholder:text-mist/50 outline-none focus:border-signal/40 transition-all resize-none font-sans"
                   ></textarea>
                 </div>
 
                 <button 
                   type="submit"
-                  className="w-full py-4 px-6 bg-emerald-500 hover:bg-emerald-400 text-white dark:text-[#0A0F16] rounded-xl font-bold text-lg transition-all active:scale-[0.98] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)]"
+                  className="w-full py-2.5 bg-signal text-ink hover:bg-signal/90 font-medium text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"
                 >
-                  {t('comments', 'send')} <Send size={20} />
+                  {t('comments', 'send')} <Send size={14} />
                 </button>
               </form>
-            </div>
+            </GlassCard>
           </motion.div>
 
         </div>

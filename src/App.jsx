@@ -5,7 +5,7 @@ import LoginModal from './components/LoginModal';
 import { useAuth } from './contexts/AuthContext';
 
 // Lazy load heavy page components — only load when first visited
-const HeroSection     = lazy(() => import('./components/HeroSection'));
+const Hero             = lazy(() => import('./components/Hero'));
 const GlobalDashboard = lazy(() => import('./components/GlobalDashboard'));
 const CarbonCalculator = lazy(() => import('./components/CarbonCalculator'));
 const EcoProjects     = lazy(() => import('./components/EcoProjects'));
@@ -15,29 +15,21 @@ const Footer          = lazy(() => import('./components/Footer'));
 const AdminPanel      = lazy(() => import('./components/AdminPanel'));
 const EcoComments     = lazy(() => import('./components/EcoComments'));
 
-// Lightweight loading spinner shown while lazy chunks load
+// Minimal restrained loading spinner
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-eco-light dark:bg-[#07101a]">
-    <div className="absolute top-0 right-0 w-[40vw] h-[40vh] bg-[radial-gradient(circle,rgba(16,185,129,0.05)_0%,transparent_70%)] pointer-events-none" />
-    <div className="absolute bottom-0 left-0 w-[40vw] h-[40vh] bg-[radial-gradient(circle,rgba(6,182,212,0.05)_0%,transparent_70%)] pointer-events-none" />
-    
-    <div className="flex flex-col items-center gap-6 relative z-10">
-      <div className="relative w-20 h-20">
+  <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-ink">
+    <div className="flex flex-col items-center gap-5 relative z-10">
+      <div className="relative w-10 h-10">
         <motion.div 
           animate={{ rotate: 360 }}
-          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 rounded-full border-[3px] border-emerald-500/20 border-t-emerald-500"
-        />
-        <motion.div 
-          animate={{ rotate: -360 }}
-          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-2 rounded-full border-[3px] border-cyan-500/20 border-b-cyan-500"
+          transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-0 rounded-full border border-white/10 border-t-signal"
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-4 h-4 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_20px_rgba(16,185,129,0.8)]" />
+          <div className="w-1.5 h-1.5 bg-signal rounded-full animate-pulse" />
         </div>
       </div>
-      <span className="text-sm font-bold text-slate-500 dark:text-slate-400 tracking-widest uppercase animate-pulse">
+      <span className="text-xs font-mono tracking-widest uppercase text-mist">
         Yuklanmoqda...
       </span>
     </div>
@@ -45,54 +37,25 @@ const PageLoader = () => (
 );
 
 function App() {
-  const [activeTab, setActiveTab] = useState(() => {
-    const path = window.location.pathname.replace(/^\/+/, '').split('/')[0];
-    const validTabs = ['home', 'dashboard', 'calculator', 'projects', 'plant', 'admin'];
-    if (validTabs.includes(path)) return path;
-    const saved = localStorage.getItem('ecopulse_active_tab');
-    if (saved && validTabs.includes(saved)) return saved;
-    return 'home';
-  });
+  const [activeTab, setActiveTab] = useState('home');
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { isAdmin } = useAuth();
 
-  useEffect(() => {
-    if (activeTab === 'admin' && !isAdmin) {
-      setActiveTab('home');
-      localStorage.setItem('ecopulse_active_tab', 'home');
-    }
-  }, [activeTab, isAdmin]);
-
   const handleTabChange = useCallback((tab) => {
-    if (tab === 'admin' && !isAdmin) return; // Block unauthorized access to admin tab
     if (tab === activeTab) return; // ignore same-tab clicks
     setActiveTab(tab);
-    localStorage.setItem('ecopulse_active_tab', tab);
-    window.history.pushState(null, '', tab === 'home' ? '/' : `/${tab}`);
-    // Native smooth scroll — no React re-render
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeTab, isAdmin]);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname.replace(/^\/+/, '').split('/')[0];
-      const validTabs = ['home', 'dashboard', 'calculator', 'projects', 'plant', 'admin'];
-      const nextTab = validTabs.includes(path) ? path : 'home';
-      setActiveTab(nextTab);
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [activeTab]);
 
   const openLogin  = useCallback(() => setIsLoginModalOpen(true),  []);
   const closeLogin = useCallback(() => setIsLoginModalOpen(false), []);
 
   return (
-    <div className="min-h-screen relative flex bg-eco-light dark:bg-eco-dark overflow-x-hidden text-slate-800 dark:text-white selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen relative flex bg-ink text-bone overflow-x-hidden selection:bg-signal/30 font-sans">
 
-      {activeTab === 'admin' && isAdmin ? (
+      {activeTab === 'admin' ? (
         <Suspense fallback={<PageLoader />}>
-          <AdminPanel onExit={() => handleTabChange('home')} />
+          <AdminPanel onExit={() => handleTabChange('home')} onOpenLogin={openLogin} />
         </Suspense>
       ) : (
         <>
@@ -104,21 +67,24 @@ function App() {
           />
 
           {/* Main Content */}
-          <main className="flex-1 lg:ml-[340px] pb-16 lg:pb-0 relative z-10 w-full min-h-screen flex flex-col">
-            {/* Page content — wrapped in AnimatePresence for buttery smooth transitions */}
+          <main className="flex-1 lg:pl-72 pb-28 lg:pb-16 relative z-10 w-full min-h-screen flex flex-col">
+            {/* Page content with smooth fade-up */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
                 className="flex-1 w-full"
               >
                 <Suspense fallback={<PageLoader />}>
                   {activeTab === 'home'       && (
                     <>
-                      <HeroSection setActiveTab={handleTabChange} />
+                      <Hero 
+                        onStart={() => handleTabChange('dashboard')}
+                        onMore={() => handleTabChange('projects')}
+                      />
                       <EcoComments />
                     </>
                   )}
@@ -142,7 +108,7 @@ function App() {
         </>
       )}
 
-      {/* Login Modal — wrapped in AnimatePresence for exit animations */}
+      {/* Login Modal */}
       <AnimatePresence>
         {isLoginModalOpen && (
           <LoginModal

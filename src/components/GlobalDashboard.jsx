@@ -7,6 +7,10 @@ import {
   AreaChart, Area, BarChart, Bar, Legend
 } from 'recharts';
 import CountUp from './CountUp';
+import GlassCard from './GlassCard';
+import VideoBackdrop from './VideoBackdrop';
+import WeatherWidget from './WeatherWidget';
+import { chart, ChartDefs, aqiColor } from '../lib/chartTheme';
 
 // Initial Mock Data (used as fallback or default list)
 const generateCityData = () => [
@@ -44,13 +48,13 @@ const generateChartData = () => {
 const CustomTooltip = React.memo(({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="premium-glass p-4 text-sm border-white/20 dark:border-white/10">
-        <p className="font-bold mb-2">{label}</p>
+      <div className="rounded-xl bg-white dark:bg-[#0c0d12]/95 border border-black/[0.08] dark:border-white/10 px-3.5 py-2.5 shadow-xl backdrop-blur-md text-xs font-mono">
+        <p className="text-zinc-500 dark:text-zinc-400 mb-1.5 font-medium">{label}</p>
         {payload.map((entry, index) => (
-          <p key={index} style={{ color: entry.color }} className="flex justify-between gap-4 font-semibold">
-            <span>{entry.name}:</span>
-            <span>{entry.value}</span>
-          </p>
+          <div key={index} className="flex justify-between items-center gap-4 py-0.5">
+            <span className="text-zinc-600 dark:text-zinc-300 font-sans">{entry.name}:</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{entry.value}</span>
+          </div>
         ))}
       </div>
     );
@@ -61,11 +65,11 @@ const CustomTooltip = React.memo(({ active, payload, label }) => {
 // Staggered Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.15 } }
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } }
 };
 const itemVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 15 } }
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } }
 };
 
 const getRatingStyle = (rating, color) => {
@@ -370,11 +374,18 @@ const GlobalDashboard = () => {
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-4 md:px-6 relative overflow-hidden">
+      {/* Dynamic Looping Video Background */}
+      <VideoBackdrop 
+        src="/videos/clouds.mp4" 
+        poster="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&q=80&w=1600" 
+        opacity={0.25} 
+      />
+
       {/* Deep Antigravity Background */}
-      <div className="absolute inset-0 z-[-1] overflow-hidden">
-        <div className="absolute inset-0 bg-eco-light dark:bg-[#07101a] transition-colors duration-700"></div>
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(16,185,129,0.05)_0%,transparent_70%)] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(6,182,212,0.05)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-transparent" />
+        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(16,185,129,0.08)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(6,182,212,0.08)_0%,transparent_70%)] pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -387,60 +398,71 @@ const GlobalDashboard = () => {
           className="text-center mb-10 relative"
         >
           {/* Live Indicator Network Status */}
-          <div className="absolute right-0 top-0 hidden md:flex items-center gap-2 premium-glass px-4 py-2 rounded-full border border-white/10 shadow-lg">
+          <div className="absolute right-0 top-0 hidden md:flex items-center gap-2 rounded-full border border-white/10 bg-moss/70 px-4 py-2 backdrop-blur-xl">
             {isOnline ? (
               <>
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.8)]"></span>
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-signal shadow-[0_0_8px_rgba(155,240,184,0.6)]"></span>
                 </span>
-                <span className="text-sm font-bold text-green-500 flex items-center gap-2">
-                  <Wifi size={16} /> LIVE
+                <span className="text-xs font-mono font-medium text-signal flex items-center gap-2">
+                  <Wifi size={14} /> LIVE
                 </span>
               </>
             ) : (
               <>
-                <span className="relative flex h-3 w-3">
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
                 </span>
-                <span className="text-sm font-bold text-red-500 flex items-center gap-2">
-                  <WifiOff size={16} /> OFFLINE (Cached)
+                <span className="text-xs font-mono font-medium text-red-400 flex items-center gap-2">
+                  <WifiOff size={14} /> OFFLINE
                 </span>
               </>
             )}
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500 flex items-center justify-center gap-3 leading-[1.5] py-2">
-            <Globe className="text-emerald-500 animate-spin-slow" size={40} /> {t('dashboard', 'title')}
+          <h1 className="font-display text-4xl md:text-5xl font-light mb-3 text-bone flex items-center justify-center gap-3 py-1">
+            <Globe className="text-signal" size={36} /> {t('dashboard', 'title')}
           </h1>
-          <p className="text-lg opacity-70 max-w-2xl mx-auto font-medium">
+          <p className="text-base text-mist max-w-2xl mx-auto font-normal">
             {t('dashboard', 'subtitle')}
           </p>
         </motion.div>
 
+        {/* Live 10s Open-Meteo Weather Sensor Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mb-8"
+        >
+          <WeatherWidget variant="banner" />
+        </motion.div>
+
         {/* AI Search & Recommendation Bar */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="mb-12 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-10 max-w-3xl mx-auto"
         >
           <form onSubmit={handleSearch} className="relative mb-6">
-            <div className={`premium-glass p-2 pl-4 flex items-center gap-3 rounded-full shadow-[0_10px_30px_-10px_rgba(16,185,129,0.3)] border ${!isOnline ? 'border-red-500/50' : 'border-emerald-500/20'}`}>
-              <Search className={isOnline ? 'text-emerald-500 opacity-70' : 'text-red-500 opacity-70'} />
+            <div className={`rounded-2xl p-1.5 pl-4 flex items-center gap-3 border backdrop-blur-xl bg-white/70 dark:bg-white/[0.03] shadow-sm dark:shadow-none ${!isOnline ? 'border-red-500/40' : 'border-black/[0.08] dark:border-white/[0.08]'}`}>
+              <Search size={18} className={isOnline ? 'text-signal' : 'text-red-400'} />
               <input 
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 disabled={!isOnline}
                 placeholder={isOnline ? t('dashboard', 'search_placeholder') : t('dashboard', 'no_connection')}
-                className="flex-1 bg-transparent border-none outline-none text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 font-medium disabled:opacity-50"
+                className="flex-1 bg-transparent border-none outline-none text-bone placeholder-mist text-sm font-normal disabled:opacity-50"
               />
               <button 
                 type="submit" 
                 disabled={isLoading || !searchQuery.trim() || !isOnline}
-                className={`px-6 py-2 rounded-full font-bold transition-colors flex items-center gap-2 disabled:opacity-50 ${isOnline ? 'bg-emerald-500 hover:bg-emerald-400 text-white' : 'bg-slate-500 text-white'}`}
+                className="rounded-xl bg-signal px-5 py-2 text-xs font-medium text-ink transition hover:bg-signal/90 disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-sm"
               >
-                {isLoading ? <Loader2 size={18} className="animate-spin" /> : t('dashboard', 'analyze_btn')}
+                {isLoading ? <Loader2 size={15} className="animate-spin" /> : t('dashboard', 'analyze_btn')}
               </button>
             </div>
           </form>
@@ -448,39 +470,40 @@ const GlobalDashboard = () => {
           {/* AI Insight Card */}
           <AnimatePresence mode="wait">
             {(aiMessage || isAiLoading) && (
-              <motion.div 
+              <GlassCard 
+                tone="raised"
+                as={motion.div}
                 key={activeCity.city}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className={`premium-glass p-6 rounded-3xl border-l-4 ${getRatingStyle(activeCity.rating, activeCity.color).border} relative overflow-hidden shadow-2xl`}
+                exit={{ opacity: 0, y: -10 }}
+                className="p-5"
               >
-                <div className={`absolute right-0 top-0 w-32 h-32 ${activeCity.bg} opacity-10 blur-2xl rounded-full`}></div>
-                <div className="flex items-start gap-4 relative z-10">
-                  <div className={`p-3 rounded-2xl ${getRatingStyle(activeCity.rating, activeCity.color).bgLight}`}>
-                    <Bot size={28} />
+                <div className="flex items-start gap-3.5 relative z-10">
+                  <div className="p-2.5 rounded-xl bg-signal/10 text-signal border border-signal/20">
+                    <Bot size={20} />
                   </div>
                   <div className="flex-1">
-                    <div className="flex justify-between items-center mb-1">
-                      <h3 className="font-bold flex items-center gap-2 text-slate-800 dark:text-white text-lg">
-                        AI Insight <Sparkles size={16} className="text-yellow-500 animate-pulse" />
+                    <div className="flex justify-between items-center mb-1.5">
+                      <h3 className="font-medium text-sm flex items-center gap-1.5 text-bone">
+                        AI Intelligence <Sparkles size={14} className="text-signal" />
                       </h3>
-                      <span className="text-xs opacity-50 flex items-center gap-1">
-                        <Activity size={12}/> API orqali generatsiya qilindi
+                      <span className="text-[11px] font-mono text-mist flex items-center gap-1">
+                        <Activity size={11} className="text-signal" /> Open-Meteo
                       </span>
                     </div>
                     {isAiLoading ? (
-                      <div className="flex items-center gap-2 text-slate-500">
-                        <Loader2 size={16} className="animate-spin" /> Sun'iy intellekt tavsiya tayyorlamoqda...
+                      <div className="flex items-center gap-2 text-mist text-xs font-mono">
+                        <Loader2 size={14} className="animate-spin" /> Generating environmental insight...
                       </div>
                     ) : (
-                      <p className="text-sm md:text-base font-medium leading-relaxed text-slate-700 dark:text-slate-200">
+                      <p className="text-xs sm:text-sm font-normal leading-relaxed text-bone/90">
                         {aiMessage}
                       </p>
                     )}
                   </div>
                 </div>
-              </motion.div>
+              </GlassCard>
             )}
           </AnimatePresence>
         </motion.div>
@@ -491,64 +514,67 @@ const GlobalDashboard = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10"
         >
-          <motion.div variants={itemVariants} className="premium-glass p-6 group">
-            <div className="flex justify-between items-start mb-4">
-              <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-500 group-hover:scale-110 transition-transform">
-                <CloudRain size={24} />
+          <GlassCard tone="base" as={motion.div} variants={itemVariants} className="p-5">
+            <div className="flex justify-between items-start mb-3">
+              <div className="p-2.5 bg-white/[0.04] border border-white/[0.06] rounded-xl text-bone">
+                <CloudRain size={20} />
               </div>
-              <span className="flex items-center text-sm font-bold text-red-500 bg-red-500/10 px-2 py-1 rounded-lg">
-                <ArrowUpRight size={16} /> 2.4%
+              <span className="flex items-center text-xs font-mono font-medium text-signal bg-signal/10 px-2 py-0.5 rounded-md border border-signal/20">
+                <ArrowUpRight size={13} /> 2.4%
               </span>
             </div>
-            <h3 className="text-sm font-bold opacity-60 uppercase tracking-wider mb-1">Global CO2 Avg</h3>
-            <div className="text-4xl font-extrabold text-slate-800 dark:text-white flex items-baseline gap-1">
-              <CountUp value={412.5} decimals={1} duration={2} /> <span className="text-lg opacity-50 font-medium">ppm</span>
+            <h3 className="text-xs font-mono uppercase tracking-wider text-mist mb-1">Global CO2 Avg</h3>
+            <div className="text-3xl font-display font-light tabular-nums text-bone flex items-baseline gap-1.5">
+              <CountUp value={412.5} decimals={1} duration={1.5} /> <span className="text-sm font-sans text-mist font-normal">ppm</span>
             </div>
-          </motion.div>
+          </GlassCard>
 
-          <motion.div variants={itemVariants} className="premium-glass p-6 group">
-            <div className="flex justify-between items-start mb-4">
-              <div className="p-3 bg-emerald-500/10 rounded-2xl text-emerald-500 group-hover:scale-110 transition-transform">
-                <Wind size={24} />
+          <GlassCard tone="base" as={motion.div} variants={itemVariants} className="p-5">
+            <div className="flex justify-between items-start mb-3">
+              <div className="p-2.5 bg-white/[0.04] border border-white/[0.06] rounded-xl text-signal">
+                <Wind size={20} />
               </div>
-              <span className="flex items-center text-sm font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-lg">
-                <ArrowDownRight size={16} /> 5.1%
+              <span className="flex items-center text-xs font-mono font-medium text-signal bg-signal/10 px-2 py-0.5 rounded-md border border-signal/20">
+                <ArrowDownRight size={13} /> 5.1%
               </span>
             </div>
-            <h3 className="text-sm font-bold opacity-60 uppercase tracking-wider mb-1">Global AQI Avg</h3>
-            <div className="text-4xl font-extrabold text-slate-800 dark:text-white flex items-baseline gap-1">
-              <CountUp value={68.2} decimals={1} duration={2} /> <span className="text-lg opacity-50 font-medium">Idx</span>
+            <h3 className="text-xs font-mono uppercase tracking-wider text-mist mb-1">Global AQI Avg</h3>
+            <div className="text-3xl font-display font-light tabular-nums text-bone flex items-baseline gap-1.5">
+              <CountUp value={68.2} decimals={1} duration={1.5} /> <span className="text-sm font-sans text-mist font-normal">Idx</span>
             </div>
-          </motion.div>
+          </GlassCard>
 
-          <motion.div variants={itemVariants} className="premium-glass p-6 lg:col-span-2 relative overflow-hidden group border-emerald-500/30">
-            <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity duration-700 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-500/40 via-transparent to-transparent"></div>
-            
-            <div className="flex flex-col sm:flex-row justify-between items-center h-full gap-6 relative z-10">
+          <GlassCard tone="raised" as={motion.div} variants={itemVariants} className="p-5 lg:col-span-2 relative overflow-hidden">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center h-full gap-5 relative z-10">
               <div>
-                <h3 className="text-xl font-bold mb-2 flex items-center gap-2 text-slate-800 dark:text-white">
-                  <Activity className="text-emerald-500 animate-pulse-fast" /> API Sinxronizatsiyasi
+                <h3 className="text-base font-medium mb-1 flex items-center gap-2 text-bone">
+                  <Activity size={18} className="text-signal" /> API Sinxronizatsiyasi
                 </h3>
-                <p className="text-sm opacity-70 max-w-xs">Har 10 soniyada Open-Meteo orqali 50,000+ sensorlardan ma'lumot yangilanmoqda.</p>
+                <p className="text-xs text-mist max-w-sm leading-relaxed">
+                  {t('dashboard', 'api_sync_desc') || "Har 10 soniyada Open-Meteo orqali 50,000+ sensorlardan ma'lumot yangilanmoqda."}
+                </p>
               </div>
-              <div className="w-full sm:w-auto flex flex-col items-center sm:items-end">
-                <div className="relative flex items-center justify-center w-24 h-24">
-                  <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none opacity-20 dark:opacity-40">
-                    <circle cx="48" cy="48" r="44" stroke="currentColor" strokeWidth="4" fill="none" className="text-emerald-500" strokeDasharray="276" strokeDashoffset="0" />
-                  </svg>
-                  <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500 z-10 relative">
-                    10s
+              
+              {/* Unclipped Live Telemetry Status Block */}
+              <div className="w-full sm:w-auto flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 shrink-0">
+                <div className="flex items-center gap-2">
+                  <div className="relative flex items-center justify-center w-9 h-9 rounded-full border border-signal/30 bg-signal/5">
+                    <span className="text-xs font-mono font-semibold text-signal">10s</span>
                   </div>
                 </div>
-                <div className="text-xs font-bold opacity-70 uppercase tracking-wider mt-2 text-center sm:text-right">
-                  So'nggi yangilanish:<br/>
-                  <span className="text-sm">{lastUpdated.toLocaleTimeString()}</span>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-mist whitespace-nowrap">
+                    {t('dashboard', 'last_update') || "So'nggi yangilanish:"}
+                  </span>
+                  <span className="text-xs font-mono tabular-nums text-signal bg-signal/10 px-2.5 py-1 rounded-lg border border-signal/20 whitespace-nowrap">
+                    {lastUpdated.toLocaleTimeString()}
+                  </span>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </GlassCard>
         </motion.div>
 
         {/* Main Content Grid */}
@@ -560,13 +586,13 @@ const GlobalDashboard = () => {
           className="grid grid-cols-1 lg:grid-cols-3 gap-8"
         >
           {/* City List (Cache) */}
-          <div className="premium-glass p-2 flex flex-col gap-1 overflow-hidden h-[600px]">
+          <GlassCard tone="base" className="p-2 flex flex-col gap-1 overflow-hidden h-[600px]">
             <div className="p-4 pb-2 flex justify-between items-center">
-              <h3 className="font-bold text-lg mb-1 flex items-center gap-2"><MapPin size={18} className="text-emerald-500"/> Tarix (Kesh)</h3>
-              {!isOnline && <span className="text-[10px] bg-red-500/20 text-red-500 px-2 py-1 rounded">Offline rejim</span>}
+              <h3 className="font-medium text-base mb-1 flex items-center gap-2 text-bone"><MapPin size={16} className="text-signal"/> Tarix (Kesh)</h3>
+              {!isOnline && <span className="text-[10px] font-mono bg-red-500/20 text-red-400 px-2 py-0.5 rounded">Offline</span>}
             </div>
             
-            <div className="flex-1 overflow-y-auto px-2 pb-2 space-y-2 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto px-2 pb-2 space-y-2">
               <AnimatePresence>
                 {cities.map((city) => (
                   <motion.div 
@@ -579,157 +605,144 @@ const GlobalDashboard = () => {
                       setActiveCityName(city.city);
                       generateRealAIRecommendation(city.city, city.aqi, city.co2);
                     }}
-                    className={`p-4 rounded-2xl cursor-pointer transition-all duration-300 border ${
+                    className={`p-3.5 rounded-xl cursor-pointer transition-all duration-200 border ${
                       activeCity.city === city.city 
-                        ? 'bg-white/60 dark:bg-black/40 border-emerald-500/50 shadow-lg shadow-emerald-500/10 scale-[1.02]' 
-                        : 'bg-black/5 dark:bg-white/5 border-transparent hover:bg-black/10 dark:hover:bg-white/10 hover:scale-[1.01]'
+                        ? 'bg-white/[0.08] border-signal/50 text-bone' 
+                        : 'bg-white/[0.02] border-white/[0.05] text-mist hover:text-bone hover:bg-white/[0.05]'
                     }`}
                   >
-                    <div className="flex justify-between items-center mb-3">
-                      <h4 className="font-bold text-lg">{city.city}</h4>
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-md transition-colors ${getRatingStyle(city.rating, city.color).chip}`}>
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-medium text-sm text-bone">{city.city}</h4>
+                      <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md" style={{ color: aqiColor(city.aqi), background: 'rgba(255,255,255,0.05)' }}>
                         {city.rating}
                       </span>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <div className="text-xs opacity-60 font-semibold mb-1 uppercase">AQI</div>
+                        <div className="text-[10px] text-mist font-mono uppercase">AQI</div>
                         <div className="flex items-center gap-2">
-                          <div className={`text-xl font-extrabold ${city.color}`}>{city.aqi}</div>
-                          {city.trend === 'up' ? <ArrowUpRight size={14} className="text-red-500"/> : <ArrowDownRight size={14} className="text-green-500"/>}
+                          <div className="text-base font-display font-light tabular-nums" style={{ color: aqiColor(city.aqi) }}>{city.aqi}</div>
+                          {city.trend === 'up' ? <ArrowUpRight size={13} className="text-red-400"/> : <ArrowDownRight size={13} className="text-signal"/>}
                         </div>
                       </div>
                       <div>
-                        <div className="text-xs opacity-60 font-semibold mb-1 uppercase">CO2 (PM)</div>
-                        <div className="text-xl font-extrabold">{city.co2}</div>
+                        <div className="text-[10px] text-mist font-mono uppercase">CO2</div>
+                        <div className="text-base font-display font-light tabular-nums text-bone">{city.co2}</div>
                       </div>
-                    </div>
-                    
-                    {/* Progress bar */}
-                    <div className="w-full h-1 bg-black/10 dark:bg-white/10 rounded-full mt-3 overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: `${city.progress}%` }}
-                        transition={{ duration: 1 }}
-                        className={`h-full ${city.bg}`}
-                      />
                     </div>
                   </motion.div>
                 ))}
               </AnimatePresence>
             </div>
-          </div>
+          </GlassCard>
 
           {/* Active City Cards Area */}
           <div className="lg:col-span-2 space-y-8">
             <AnimatePresence mode="wait">
-              <motion.div 
+              {/* Feature card: The one most important card on this page */}
+              <GlassCard 
+                tone="feature"
                 key={activeCity.city + activeCity.aqi}
-                initial={{ opacity: 0, scale: 0.95 }}
+                as={motion.div}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
-                className="premium-glass p-6 sm:p-8 relative overflow-hidden"
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.3 }}
+                className="p-6 sm:p-8"
               >
-                <div className={`absolute -right-20 -top-20 w-64 h-64 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2)_0%,transparent_70%)] animate-pulse-slow`}></div>
-                
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 relative z-10">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 relative z-10">
                   <div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold mb-1">{activeCity.city} <span className="text-lg font-normal opacity-50">/ {t('dashboard', 'live_data')}</span></h2>
-                    <p className="text-sm font-semibold opacity-70 flex items-center gap-2">
-                      <span className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></span>
+                    <h2 className="font-display text-2xl sm:text-3xl font-light text-bone mb-1">
+                      {activeCity.city} <span className="text-sm font-sans font-normal text-mist">/ {t('dashboard', 'live_data')}</span>
+                    </h2>
+                    <p className="text-xs font-mono text-mist flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-signal"></span>
                       {isOnline ? t('dashboard', 'live_stream') : t('dashboard', 'offline_mode')}
                     </p>
                   </div>
-                  <div className={`px-5 py-3 rounded-2xl border backdrop-blur-md shadow-sm transition-all ${getRatingStyle(activeCity.rating, activeCity.color).badge}`}>
-                    <div className={`text-xs font-bold uppercase tracking-wider mb-1 ${getRatingStyle(activeCity.rating, activeCity.color).label}`}>
+                  <div className="px-3.5 py-1.5 rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-md">
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist">
                       {t('dashboard', 'rating')}
                     </div>
-                    <div className={`text-2xl font-extrabold flex items-center gap-2 ${getRatingStyle(activeCity.rating, activeCity.color).value}`}>
-                      <span className={`w-2.5 h-2.5 rounded-full ${getRatingStyle(activeCity.rating, activeCity.color).dot} animate-pulse`}></span>
+                    <div className="text-base font-medium flex items-center gap-2" style={{ color: aqiColor(activeCity.aqi) }}>
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: aqiColor(activeCity.aqi) }}></span>
                       {getRatingText(activeCity.rating, language)}
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
-                  <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm hover:-translate-y-1 transition-transform">
-                    <Wind size={24} className="text-blue-400 mb-3" />
-                    <div className="text-xs font-bold opacity-60 uppercase mb-1">{t('dashboard', 'wind')}</div>
-                    <div className="text-2xl font-bold flex items-baseline gap-1">
-                      <CountUp value={activeCity.wind} duration={1} /> <span className="text-sm opacity-60 font-medium">km/h</span>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 relative z-10">
+                  <div className="bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.06]">
+                    <Wind size={16} className="text-mist mb-2" />
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist mb-0.5">{t('dashboard', 'wind')}</div>
+                    <div className="text-xl font-display font-light tabular-nums text-bone flex items-baseline gap-1">
+                      <CountUp value={activeCity.wind} duration={1} /> <span className="text-xs font-sans text-mist">km/h</span>
                     </div>
                   </div>
-                  <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm hover:-translate-y-1 transition-transform">
-                    <Droplets size={24} className="text-cyan-400 mb-3" />
-                    <div className="text-xs font-bold opacity-60 uppercase mb-1">{t('dashboard', 'humidity')}</div>
-                    <div className="text-2xl font-bold flex items-baseline gap-1">
-                      <CountUp value={activeCity.humidity} duration={1} /> <span className="text-sm opacity-60 font-medium">%</span>
+                  <div className="bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.06]">
+                    <Droplets size={16} className="text-mist mb-2" />
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist mb-0.5">{t('dashboard', 'humidity')}</div>
+                    <div className="text-xl font-display font-light tabular-nums text-bone flex items-baseline gap-1">
+                      <CountUp value={activeCity.humidity} duration={1} /> <span className="text-xs font-sans text-mist">%</span>
                     </div>
                   </div>
-                  <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm hover:-translate-y-1 transition-transform relative overflow-hidden">
-                    <div className={`absolute inset-0 opacity-10 ${activeCity.bg} animate-pulse`}></div>
-                    <Activity size={24} className={activeCity.color + ' mb-3'} />
-                    <div className="text-xs font-bold opacity-60 uppercase mb-1">{t('dashboard', 'aqi')}</div>
-                    <div className={`text-2xl font-bold flex items-baseline gap-1 ${activeCity.color}`}>
-                      <CountUp value={activeCity.aqi} duration={1.5} />
+                  <div className="bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.06]">
+                    <Activity size={16} className="text-signal mb-2" />
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist mb-0.5">{t('dashboard', 'aqi')}</div>
+                    <div className="text-xl font-display font-light tabular-nums text-signal flex items-baseline gap-1">
+                      <CountUp value={activeCity.aqi} duration={1.2} />
                     </div>
                   </div>
-                  <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm hover:-translate-y-1 transition-transform">
-                    <CloudRain size={24} className="text-slate-500 mb-3" />
-                    <div className="text-xs font-bold opacity-60 uppercase mb-1">{t('dashboard', 'co2')}</div>
-                    <div className="text-2xl font-bold flex items-baseline gap-1">
-                      <CountUp value={activeCity.co2} duration={1} /> <span className="text-sm opacity-60 font-medium">μg</span>
+                  <div className="bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.06]">
+                    <CloudRain size={16} className="text-mist mb-2" />
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist mb-0.5">{t('dashboard', 'co2')}</div>
+                    <div className="text-xl font-display font-light tabular-nums text-bone flex items-baseline gap-1">
+                      <CountUp value={activeCity.co2} duration={1} /> <span className="text-xs font-sans text-mist">μg</span>
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </GlassCard>
             </AnimatePresence>
 
-            {/* Recharts Graphics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="premium-glass p-6 flex flex-col h-[350px]">
-                <h3 className="font-bold text-lg mb-6 flex justify-between items-center">
+            {/* Recharts Graphics - Restyled with chartTheme */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <GlassCard tone="raised" className="p-5 flex flex-col h-[340px]">
+                <h3 className="font-sans font-medium text-sm mb-4 flex justify-between items-center text-bone">
                   {t('dashboard', 'chart_title')}
                 </h3>
                 <div className="flex-1 w-full h-full min-h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData} margin={{ top: 5, right: 0, left: -20, bottom: 0 }}>
-                      <defs>
-                        <linearGradient id="colorCO2" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#10b981" stopOpacity={0.4}/>
-                          <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,128,0.15)" vertical={false} />
-                      <XAxis dataKey="name" tick={{fill: 'currentColor', opacity: 0.5, fontSize: 12}} axisLine={false} tickLine={false} />
-                      <YAxis tick={{fill: 'currentColor', opacity: 0.5, fontSize: 12}} axisLine={false} tickLine={false} />
-                      <Tooltip content={<CustomTooltip />} />
-                      <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                      <Area type="monotone" dataKey="CO2" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorCO2)" animationDuration={1500} />
-                      <Line type="dashed" dataKey="Target" stroke="#ef4444" strokeWidth={2} strokeDasharray="5 5" dot={false} animationDuration={1500} />
+                    <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                      <ChartDefs />
+                      <CartesianGrid {...chart.gridProps} />
+                      <XAxis dataKey="name" {...chart.axisProps} />
+                      <YAxis {...chart.axisProps} />
+                      <Tooltip {...chart.tooltipProps} />
+                      <Area type="monotone" dataKey="CO2" stroke={chart.signal} strokeWidth={2} fill="url(#areaFill)" animationDuration={1000} />
+                      <Line type="dashed" dataKey="Target" stroke="rgba(255,255,255,0.2)" strokeWidth={1} strokeDasharray="3 3" dot={false} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
-              </div>
+              </GlassCard>
 
-              <div className="premium-glass p-6 flex flex-col h-[350px]">
-                <h3 className="font-bold text-lg mb-6 flex justify-between items-center">
+              <GlassCard tone="raised" className="p-5 flex flex-col h-[340px]">
+                <h3 className="font-sans font-medium text-sm mb-4 flex justify-between items-center text-bone">
                   {t('dashboard', 'chart_aqi_title')}
                 </h3>
                 <div className="flex-1 w-full h-full min-h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={chartData} margin={{ top: 5, right: 0, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,128,0.15)" vertical={false} />
-                      <XAxis dataKey="name" tick={{fill: 'currentColor', opacity: 0.5, fontSize: 12}} axisLine={false} tickLine={false} />
-                      <YAxis tick={{fill: 'currentColor', opacity: 0.5, fontSize: 12}} axisLine={false} tickLine={false} />
-                      <Tooltip content={<CustomTooltip />} cursor={{fill: 'rgba(128,128,128,0.1)'}} />
-                      <Bar dataKey="AQI" fill="#0ea5e9" radius={[6, 6, 0, 0]} maxBarSize={40} animationDuration={1500} />
+                    <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                      <ChartDefs />
+                      <CartesianGrid {...chart.gridProps} />
+                      <XAxis dataKey="name" {...chart.axisProps} />
+                      <YAxis {...chart.axisProps} />
+                      <Tooltip {...chart.tooltipProps} />
+                      <Bar dataKey="AQI" {...chart.barProps} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
-              </div>
+              </GlassCard>
             </div>
 
           </div>
