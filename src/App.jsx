@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Sidebar from './components/Sidebar';
-import LoginModal from './components/LoginModal';
 import { useAuth } from './contexts/AuthContext';
 
-// Lazy load heavy page components — only load when first visited
+// Lazy load heavy page components & modals — only load when first visited
+const LoginModal       = lazy(() => import('./components/LoginModal'));
 const Hero             = lazy(() => import('./components/Hero'));
 const GlobalDashboard = lazy(() => import('./components/GlobalDashboard'));
 const CarbonCalculator = lazy(() => import('./components/CarbonCalculator'));
@@ -111,11 +111,13 @@ function App() {
       {/* Login Modal */}
       <AnimatePresence>
         {isLoginModalOpen && (
-          <LoginModal
-            isOpen={isLoginModalOpen}
-            onClose={closeLogin}
-            setActiveTab={handleTabChange}
-          />
+          <Suspense fallback={null}>
+            <LoginModal
+              isOpen={isLoginModalOpen}
+              onClose={closeLogin}
+              setActiveTab={handleTabChange}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
     </div>

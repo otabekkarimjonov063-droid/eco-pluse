@@ -208,6 +208,8 @@ const PlantTree = () => {
                 <img 
                   src={step === 2 ? activeRegion.image : activeTree.image} 
                   alt="" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover" 
                 />
               )}
@@ -264,6 +266,10 @@ const PlantTree = () => {
                             <img 
                               src={tree.image} 
                               alt={displayTreeName} 
+                              width="64"
+                              height="64"
+                              loading="lazy"
+                              decoding="async"
                               className="w-16 h-16 rounded-lg object-cover" 
                             />
                           </div>
@@ -338,6 +344,10 @@ const PlantTree = () => {
                           <img 
                             src={region.image} 
                             alt={displayRegionName} 
+                            width="56"
+                            height="56"
+                            loading="lazy"
+                            decoding="async"
                             className="w-14 h-14 rounded-lg object-cover" 
                           />
                         </div>
@@ -520,7 +530,7 @@ const PlantTree = () => {
         </div>
       </div>
 
-      {/* RIGHT PANEL - IMMERSIVE VISUALS WITH RESTRAINED GLASS CARD */}
+      {/* RIGHT PANEL - IMMERSIVE VISUALS WITH 3D TREE LOWER DOWN AND TEXT ON TOP */}
       <div className="hidden md:flex w-1/2 lg:w-7/12 sticky top-0 h-screen p-6 lg:p-10 flex-col justify-center items-center overflow-hidden">
         <AnimatePresence mode="wait">
           {step === 2 ? (
@@ -532,18 +542,11 @@ const PlantTree = () => {
               initial="hidden" 
               animate="show" 
               exit="exit" 
-              className="w-full h-full max-h-[88vh] rounded-3xl overflow-hidden flex flex-col"
+              className="w-full h-full max-h-[90vh] rounded-3xl overflow-hidden"
             >
-              <div className="relative w-full h-full rounded-3xl overflow-hidden flex flex-col justify-between">
-                <img 
-                  src={activeRegion.image} 
-                  alt="" 
-                  className="absolute inset-0 w-full h-full object-cover opacity-85" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
-
+              <div className="relative w-full h-full p-5 sm:p-6 flex flex-col gap-3 justify-between">
                 {/* Top Badge */}
-                <div className="relative z-20 p-6 flex justify-between items-center">
+                <div className="flex justify-between items-center shrink-0">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-mist">
                     <span className="w-1.5 h-1.5 rounded-full bg-signal" />
                     <span>{t('plant', 'step2')}</span>
@@ -553,22 +556,32 @@ const PlantTree = () => {
                   </div>
                 </div>
 
-                {/* Bottom Card */}
-                <div className="relative z-20 p-6 sm:p-8">
-                  <div className="backdrop-blur-xl bg-moss/80 border border-white/10 p-6 rounded-2xl flex flex-col gap-3 text-bone">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2.5">
-                        <Globe className="text-signal" size={20} />
-                        <h3 className="text-2xl font-display font-light text-bone">{tText(activeRegion.name)}</h3>
-                      </div>
-                      <span className="text-[11px] font-mono px-2.5 py-0.5 bg-rose-500/10 text-rose-300 rounded-md border border-rose-500/20">
-                        {tText(activeRegion.risk)}
-                      </span>
+                {/* Region Info Card */}
+                <div className="shrink-0 backdrop-blur-xl bg-white/85 dark:bg-moss/85 border border-black/[0.08] dark:border-white/10 p-4 sm:p-5 rounded-2xl flex flex-col gap-2 text-bone shadow-md">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <Globe className="text-signal" size={20} />
+                      <h3 className="text-xl sm:text-2xl font-display font-light text-bone">{tText(activeRegion.name)}</h3>
                     </div>
-                    <p className="text-mist text-sm leading-relaxed">
-                      {tText(activeRegion.desc)}
-                    </p>
+                    <span className="text-[11px] font-mono px-2.5 py-0.5 bg-rose-500/10 text-rose-300 rounded-md border border-rose-500/20">
+                      {tText(activeRegion.risk)}
+                    </span>
                   </div>
+                  <p className="text-mist text-xs leading-relaxed">
+                    {tText(activeRegion.desc)}
+                  </p>
+                </div>
+
+                {/* Region Photo Viewport */}
+                <div className="relative flex-1 w-full min-h-[320px] rounded-2xl overflow-hidden border border-black/[0.06] dark:border-white/[0.06]">
+                  <img 
+                    src={activeRegion.image} 
+                    alt="" 
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent pointer-events-none" />
                 </div>
               </div>
             </GlassCard>
@@ -581,28 +594,12 @@ const PlantTree = () => {
               initial="hidden" 
               animate="show" 
               exit="exit" 
-              className="w-full h-full max-h-[88vh] rounded-3xl overflow-hidden flex flex-col"
+              className="w-full h-full max-h-[90vh] rounded-3xl overflow-hidden"
             >
-              <div className="relative w-full h-full rounded-3xl overflow-hidden flex flex-col justify-between">
+              <div className="relative w-full h-full p-5 sm:p-6 flex flex-col gap-3 justify-between">
                 
-                {/* 3D vs Photo View */}
-                {viewMode === '3d' ? (
-                  <div className="absolute inset-0 w-full h-full">
-                    <Tree3D treeType={activeTree.id} quantity={quantity} />
-                  </div>
-                ) : (
-                  <>
-                    <img 
-                      src={activeTree.image} 
-                      alt="" 
-                      className="absolute inset-0 w-full h-full object-cover opacity-85" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
-                  </>
-                )}
-
                 {/* Top Badge & 3D / Photo Mode Switcher */}
-                <div className="relative z-20 p-6 flex justify-between items-center pointer-events-auto">
+                <div className="flex justify-between items-center shrink-0 pointer-events-auto">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-mist">
                     <span className="w-1.5 h-1.5 rounded-full bg-signal" />
                     <span>{t('plant', 'step1')}</span>
@@ -639,26 +636,43 @@ const PlantTree = () => {
                   </div>
                 </div>
 
-                {/* Bottom Card */}
-                <div className="relative z-20 p-5 sm:p-6 pointer-events-none mt-auto">
-                  <div className="backdrop-blur-xl bg-white/85 dark:bg-moss/85 border border-black/[0.08] dark:border-white/10 p-5 rounded-2xl flex flex-col gap-3 text-bone shadow-xl pointer-events-auto">
-                    <div>
-                      <h3 className="text-2xl font-display font-light tracking-tight mb-0.5 text-bone">{tText(activeTree.name)}</h3>
-                      <p className="text-mist text-xs leading-relaxed">{tText(activeTree.desc)}</p>
-                    </div>
+                {/* Tree Info Card at Top (Clean, Compact, No Overlap with 3D Tree) */}
+                <div className="shrink-0 backdrop-blur-xl bg-white/85 dark:bg-moss/85 border border-black/[0.08] dark:border-white/10 p-4 sm:p-5 rounded-2xl flex flex-col gap-2.5 text-bone shadow-md">
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-display font-light tracking-tight mb-0.5 text-bone">{tText(activeTree.name)}</h3>
+                    <p className="text-mist text-xs leading-relaxed">{tText(activeTree.desc)}</p>
+                  </div>
 
-                    <div className="grid grid-cols-2 gap-3 bg-black/[0.03] dark:bg-white/[0.04] p-2.5 rounded-xl border border-black/[0.06] dark:border-white/[0.08]">
-                      <div className="text-center">
-                        <p className="text-[11px] font-mono uppercase tracking-wider text-mist">CO2 (kg/yr)</p>
-                        <p className="text-lg font-display font-light text-signal mt-0.5 tabular-nums">{activeTree.co2}</p>
-                      </div>
-                      <div className="text-center border-l border-black/[0.08] dark:border-white/10">
-                        <p className="text-[11px] font-mono uppercase tracking-wider text-mist">O2 (kg/yr)</p>
-                        <p className="text-lg font-display font-light text-signal mt-0.5 tabular-nums">{activeTree.oxygen}</p>
-                      </div>
+                  <div className="grid grid-cols-2 gap-3 bg-black/[0.03] dark:bg-white/[0.04] p-2 rounded-xl border border-black/[0.06] dark:border-white/[0.08]">
+                    <div className="text-center">
+                      <p className="text-[10px] font-mono uppercase tracking-wider text-mist">CO2 (kg/yr)</p>
+                      <p className="text-base sm:text-lg font-display font-light text-signal mt-0.5 tabular-nums">{activeTree.co2}</p>
+                    </div>
+                    <div className="text-center border-l border-black/[0.08] dark:border-white/10">
+                      <p className="text-[10px] font-mono uppercase tracking-wider text-mist">O2 (kg/yr)</p>
+                      <p className="text-base sm:text-lg font-display font-light text-signal mt-0.5 tabular-nums">{activeTree.oxygen}</p>
                     </div>
                   </div>
                 </div>
+
+                {/* Dedicated 3D Tree Viewport - LOWER DOWN ("pasroda") with 100% Unobstructed Visibility */}
+                <div className="relative flex-1 w-full min-h-[340px] rounded-2xl overflow-hidden border border-black/[0.06] dark:border-white/[0.06] bg-black/25">
+                  {viewMode === '3d' ? (
+                    <Tree3D treeType={activeTree.id} quantity={quantity} />
+                  ) : (
+                    <>
+                      <img 
+                        src={activeTree.image} 
+                        alt="" 
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent pointer-events-none" />
+                    </>
+                  )}
+                </div>
+
               </div>
             </GlassCard>
           )}

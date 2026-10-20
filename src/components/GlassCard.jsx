@@ -33,7 +33,7 @@ export default function GlassCard({ tone = 'base', as: Tag = 'div', className = 
             'radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(155,240,184,0.12), transparent 60%)',
         }}
       />
-      <div className="relative">{children}</div>
+      <div className="relative w-full h-full flex flex-col">{children}</div>
     </Tag>
   )
 }

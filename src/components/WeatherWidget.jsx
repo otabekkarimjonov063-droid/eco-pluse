@@ -102,6 +102,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
   // Exact 10-second automatic cycle timer
   useEffect(() => {
     const timer = setInterval(() => {
+      if (typeof document !== 'undefined' && document.hidden) return;
       setCityIndex((prev) => (prev + 1) % WEATHER_CITIES.length);
       setCycleTick((prev) => prev + 1);
     }, 10000); // 10000ms = 10s

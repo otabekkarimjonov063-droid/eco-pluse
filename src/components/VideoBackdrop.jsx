@@ -52,6 +52,8 @@ export default function VideoBackdrop({
         <img
           src={poster}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
           style={{ opacity: canPlay ? 0 : opacity }}
         />

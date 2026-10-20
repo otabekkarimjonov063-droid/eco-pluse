@@ -300,6 +300,8 @@ const EcoProjects = () => {
                     <img 
                       src={project.image} 
                       alt={displayTitle} 
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 opacity-80 group-hover:opacity-95" 
                     />
                     <div className="absolute top-3 left-3 z-20">

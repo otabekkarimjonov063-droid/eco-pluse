@@ -352,6 +352,7 @@ const GlobalDashboard = () => {
     let interval;
     if (isOnline) {
       interval = setInterval(async () => {
+        if (typeof document !== 'undefined' && document.hidden) return;
         const updatedData = await fetchCityData(activeCityName);
         if (updatedData) {
           setCities(prev => prev.map(c => c.city === activeCityName ? updatedData : c));
@@ -719,8 +720,8 @@ const GlobalDashboard = () => {
                       <XAxis dataKey="name" {...chart.axisProps} />
                       <YAxis {...chart.axisProps} />
                       <Tooltip {...chart.tooltipProps} />
-                      <Area type="monotone" dataKey="CO2" stroke={chart.signal} strokeWidth={2} fill="url(#areaFill)" animationDuration={1000} />
-                      <Line type="dashed" dataKey="Target" stroke="rgba(255,255,255,0.2)" strokeWidth={1} strokeDasharray="3 3" dot={false} />
+                      <Area type="monotone" dataKey="CO2" stroke={chart.signal} strokeWidth={2} fill="url(#areaFill)" isAnimationActive={false} />
+                      <Line type="dashed" dataKey="Target" stroke="rgba(255,255,255,0.2)" strokeWidth={1} strokeDasharray="3 3" dot={false} isAnimationActive={false} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -738,7 +739,7 @@ const GlobalDashboard = () => {
                       <XAxis dataKey="name" {...chart.axisProps} />
                       <YAxis {...chart.axisProps} />
                       <Tooltip {...chart.tooltipProps} />
-                      <Bar dataKey="AQI" {...chart.barProps} />
+                      <Bar dataKey="AQI" {...chart.barProps} isAnimationActive={false} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
