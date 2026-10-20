@@ -409,19 +409,25 @@ const LoginModal = ({ isOpen, onClose, setActiveTab }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/70"
-      style={{ WebkitBackdropFilter: 'none', backdropFilter: 'none' }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/65 backdrop-blur-md"
       onClick={(e) => { if (e.target === e.currentTarget && !isLoading) onClose(); }}
     >
       <motion.div 
-        initial={{ scale: 0.8, opacity: 0, y: 30, rotateX: 15 }}
-        animate={{ scale: 1, opacity: 1, y: 0, rotateX: 0 }}
-        exit={{ scale: 0.8, opacity: 0, y: 30, rotateX: -15 }}
-        transition={{ type: "spring", duration: 0.6, bounce: 0.3 }}
+        initial={{ opacity: 0, scale: 0.88, y: 24, rotateX: 8, filter: 'blur(6px)' }}
+        animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+        exit={{ opacity: 0, scale: 0.92, y: 16, filter: 'blur(4px)' }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 380, 
+          damping: 28, 
+          mass: 0.75 
+        }}
         style={{ transformPerspective: 1200 }}
-        className={`relative w-full max-w-md bg-white dark:bg-[#202124] rounded-3xl shadow-[0_0_60px_rgba(0,0,0,0.15)] dark:shadow-[0_0_60px_rgba(0,0,0,0.5)] overflow-hidden ${panelHeight} flex flex-col`}
+        className={`relative w-full max-w-md bg-white dark:bg-[#0b1613] border border-black/10 dark:border-signal/25 rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.4),0_0_80px_rgba(155,240,184,0.16)] overflow-hidden ${panelHeight} flex flex-col`}
       >
+        {/* Top glowing ambient accent line */}
+        <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-signal to-transparent opacity-90 z-30" />
 
         {/* Decorative blobs — lightweight, pointer-events-none */}
         <div className="absolute -top-24 -left-24 w-48 h-48 bg-[radial-gradient(circle,rgba(16,185,129,0.1)_0%,transparent_70%)] pointer-events-none" />

@@ -170,8 +170,8 @@ export default function Globe3D({ className = '' }) {
     const frame = (t) => {
       dotsMat.uniforms.uTime.value = t
       globe.rotation.y = t * 0.06
-      world.rotation.x += (pointer.y * 0.18 - world.rotation.x) * 0.04
-      world.rotation.y += (pointer.x * 0.25 - world.rotation.y) * 0.04
+      world.rotation.x += (pointer.y * 0.2 - world.rotation.x) * 0.08
+      world.rotation.y += (pointer.x * 0.28 - world.rotation.y) * 0.08
       sat.position.set(Math.cos(t * 0.35) * R * 1.45, Math.sin(t * 0.35) * R * 1.45, 0)
       renderer.render(scene, camera)
     }

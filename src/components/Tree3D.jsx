@@ -72,16 +72,15 @@ const Tree3D = ({ treeType = 'oak', quantity = 1 }) => {
     const width = mount.clientWidth || 500;
     const height = mount.clientHeight || 500;
 
-    // Renderer
+    // High-performance WebGL renderer
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
       powerPreference: 'high-performance',
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setSize(width, height);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.enabled = false; // Prevents massive frame drops during 3D rotation
     mount.appendChild(renderer.domElement);
 
     // Scene & Camera
@@ -103,11 +102,8 @@ const Tree3D = ({ treeType = 'oak', quantity = 1 }) => {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.35);
     dirLight.position.set(4, 7, 5);
-    dirLight.castShadow = true;
-    dirLight.shadow.mapSize.width = 1024;
-    dirLight.shadow.mapSize.height = 1024;
     scene.add(dirLight);
 
     // Inner canopy bioluminescent glow
@@ -304,10 +300,13 @@ const Tree3D = ({ treeType = 'oak', quantity = 1 }) => {
     let targetRotY = 0;
     let targetRotX = 0;
     let targetZoom = 5.2;
+    let velX = 0;
+    let velY = 0;
 
     const onPointerDown = (e) => {
       isDragging = true;
-      setIsInteracting(true);
+      velX = 0;
+      velY = 0;
       prevMouseX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
       prevMouseY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
     };
@@ -321,13 +320,14 @@ const Tree3D = ({ treeType = 'oak', quantity = 1 }) => {
       prevMouseX = clientX;
       prevMouseY = clientY;
 
-      targetRotY += deltaX * 0.009;
-      targetRotX = Math.max(-0.4, Math.min(0.5, targetRotX + deltaY * 0.007));
+      velX = deltaX * 0.012;
+      velY = deltaY * 0.009;
+      targetRotY += velX;
+      targetRotX = Math.max(-0.4, Math.min(0.5, targetRotX + velY));
     };
 
     const onPointerUp = () => {
       isDragging = false;
-      setIsInteracting(false);
     };
 
     const onWheel = (e) => {
@@ -337,7 +337,7 @@ const Tree3D = ({ treeType = 'oak', quantity = 1 }) => {
 
     const dom = renderer.domElement;
     dom.addEventListener('mousedown', onPointerDown);
-    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mousemove', onPointerMove, { passive: true });
     window.addEventListener('mouseup', onPointerUp);
     dom.addEventListener('wheel', onWheel, { passive: false });
     dom.addEventListener('touchstart', onPointerDown, { passive: true });
@@ -361,21 +361,26 @@ const Tree3D = ({ treeType = 'oak', quantity = 1 }) => {
 
     const animate = () => {
       raf = requestAnimationFrame(animate);
+      if (typeof document !== 'undefined' && document.hidden) return;
       const elapsed = clock.getElapsedTime();
 
-      // Gentle auto-rotation when idle
+      // Inertia and gentle idle auto-rotation
       if (!isDragging) {
-        targetRotY += 0.005;
+        velX *= 0.94;
+        velY *= 0.94;
+        targetRotY += velX + 0.0035;
+        targetRotX = Math.max(-0.4, Math.min(0.5, targetRotX + velY));
       }
 
-      // Smooth damping interpolation
-      treeGroup.rotation.y += (targetRotY - treeGroup.rotation.y) * 0.08;
-      treeGroup.rotation.x += (targetRotX - treeGroup.rotation.x) * 0.08;
-      camera.position.z += (targetZoom - camera.position.z) * 0.08;
+      // Snappy responsiveness when dragging (0.25), smooth glide when idle (0.08)
+      const lerpFactor = isDragging ? 0.32 : 0.08;
+      treeGroup.rotation.y += (targetRotY - treeGroup.rotation.y) * lerpFactor;
+      treeGroup.rotation.x += (targetRotX - treeGroup.rotation.x) * lerpFactor;
+      camera.position.z += (targetZoom - camera.position.z) * 0.12;
 
       // Foliage gentle wind wave
       foliageMeshes.forEach((item) => {
-        const sway = Math.sin(elapsed * 1.8 + item.offset) * 0.04;
+        const sway = Math.sin(elapsed * 1.6 + item.offset) * 0.035;
         item.mesh.rotation.z = sway;
       });
 

@@ -146,93 +146,84 @@ export default function Sidebar({
           })}
         </nav>
 
-        {/* Real-time Live Weather Widget (Cycles every 10 seconds) */}
-        <div className="mt-3">
+        {/* Unified Bottom Controls Dock (Weather + Auth + Theme + Language) */}
+        <div className="mt-auto pt-3 flex flex-col gap-2">
           <WeatherWidget variant="sidebar" />
-        </div>
 
-        {/* User Card or Login Button with Framer-motion animation */}
-        <AnimatePresence mode="wait">
-          {currentUser ? (
-            <motion.div
-              key="user-logged-in"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              className="mt-3 flex items-center gap-3 rounded-2xl border border-black/[0.08] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] p-3"
-            >
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-signal/15 text-signal font-display text-lg">
-                {currentUser.name?.[0] || 'U'}
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm text-bone font-medium">{currentUser.name}</p>
-                <button 
-                  onClick={handleLogout} 
-                  className="text-xs text-mist transition hover:text-ember cursor-pointer flex items-center gap-1 group"
-                >
-                  <LogOut size={12} className="group-hover:rotate-12 transition-transform" />
-                  <span>Chiqish</span>
-                </button>
-              </div>
-              {isAdmin && <span className="rounded-md bg-signal/10 px-2 py-0.5 text-xs font-mono text-signal">Admin</span>}
-            </motion.div>
-          ) : (
-            <motion.button
-              key="user-logged-out"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              onClick={onOpenLogin}
-              className="mt-3 flex items-center justify-center gap-2 rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.03] p-3 text-sm font-medium text-bone transition hover:bg-black/[0.05] dark:hover:bg-white/[0.08] hover:border-signal/40 cursor-pointer"
-            >
-              <LogIn size={16} className="text-signal" />
-              <span>{t('navbar', 'login') || 'Kirish'}</span>
-            </motion.button>
-          )}
-        </AnimatePresence>
-
-        {/* Dark Mode / Light Mode Toggle & UZ / RU / EN Language Switcher directly below */}
-        <div className="mt-3 flex flex-col gap-2 pt-2.5 border-t border-black/[0.08] dark:border-white/[0.06]">
-          {/* Dark / Light Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center justify-between w-full px-3 py-2 rounded-xl border border-black/[0.08] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02] hover:bg-black/[0.05] dark:hover:bg-white/[0.05] transition text-xs font-mono text-mist hover:text-bone cursor-pointer group"
-            title={isDark ? "Yorug' rejimga o'tish" : "Qorong'u rejimga o'tish"}
-          >
-            <span className="flex items-center gap-2">
-              {isDark ? (
-                <Moon size={14} className="text-signal group-hover:rotate-12 transition-transform" />
-              ) : (
-                <Sun size={14} className="text-amber-500 group-hover:rotate-45 transition-transform" />
-              )}
-              <span>{isDark ? "Qorong'u rejim" : "Yorug' rejim"}</span>
-            </span>
-            <span className="w-8 h-4 rounded-full bg-black/10 dark:bg-white/10 flex items-center p-0.5 transition-colors">
-              <motion.span
-                layout
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                className={`w-3 h-3 rounded-full ${isDark ? 'bg-signal ml-auto' : 'bg-amber-500'}`}
-              />
-            </span>
-          </button>
-
-          {/* UZ / RU / EN Language Switcher */}
-          <div className="flex items-center justify-between rounded-xl border border-black/[0.08] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02] p-1 text-xs font-mono">
-            {langs.map((l) => (
-              <button
-                key={l}
-                onClick={() => setLanguage(l)}
-                className={`flex-1 py-1 rounded-lg text-center transition cursor-pointer ${
-                  language === l
-                    ? 'bg-signal/20 dark:bg-white/10 text-signal font-semibold shadow-sm'
-                    : 'text-mist hover:text-bone'
-                }`}
+          {/* User Profile or Login Action Button */}
+          <AnimatePresence mode="wait">
+            {currentUser ? (
+              <motion.div
+                key="user-logged-in"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.18 }}
+                className="flex items-center gap-2.5 rounded-xl border border-black/[0.08] dark:border-white/[0.07] bg-black/[0.02] dark:bg-white/[0.03] p-2"
               >
-                {l}
-              </button>
-            ))}
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-signal/15 text-signal font-display text-base">
+                  {currentUser.name?.[0] || 'U'}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-xs text-bone font-medium">{currentUser.name}</p>
+                  <button 
+                    onClick={handleLogout} 
+                    className="text-[11px] text-mist transition hover:text-ember cursor-pointer flex items-center gap-1 group"
+                  >
+                    <LogOut size={11} className="group-hover:rotate-12 transition-transform" />
+                    <span>Chiqish</span>
+                  </button>
+                </div>
+                {isAdmin && <span className="rounded-md bg-signal/10 px-1.5 py-0.5 text-[10px] font-mono text-signal">Admin</span>}
+              </motion.div>
+            ) : (
+              <motion.button
+                key="user-logged-out"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.18 }}
+                onClick={onOpenLogin}
+                className="flex items-center justify-center gap-2 rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.03] py-2 px-3 text-xs font-medium text-bone transition hover:bg-black/[0.05] dark:hover:bg-white/[0.08] hover:border-signal/40 cursor-pointer shadow-xs"
+              >
+                <LogIn size={14} className="text-signal" />
+                <span>{t('navbar', 'login') || 'Kirish'}</span>
+              </motion.button>
+            )}
+          </AnimatePresence>
+
+          {/* Unified Utility Bar: Theme Toggle + Language Pills in ONE neat horizontal row */}
+          <div className="flex items-center justify-between gap-1 p-1 rounded-xl border border-black/[0.08] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02]">
+            {/* Dark / Light Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-black/[0.05] dark:hover:bg-white/[0.06] transition text-xs font-mono text-mist hover:text-bone cursor-pointer group"
+              title={isDark ? "Yorug' rejim" : "Qorong'u rejim"}
+            >
+              {isDark ? (
+                <Moon size={13} className="text-signal group-hover:rotate-12 transition-transform" />
+              ) : (
+                <Sun size={13} className="text-amber-500 group-hover:rotate-45 transition-transform" />
+              )}
+              <span className="text-[11px]">{isDark ? 'Dark' : 'Light'}</span>
+            </button>
+
+            {/* Language Switcher Pills */}
+            <div className="flex items-center gap-0.5">
+              {langs.map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLanguage(l)}
+                  className={`px-2 py-1 rounded-md text-[11px] font-mono transition cursor-pointer ${
+                    language === l
+                      ? 'bg-signal/20 dark:bg-white/10 text-signal font-semibold shadow-xs'
+                      : 'text-mist hover:text-bone'
+                  }`}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </aside>
