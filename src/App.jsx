@@ -5,7 +5,7 @@ import { useAuth } from './contexts/AuthContext';
 
 // Lazy load heavy page components & modals — only load when first visited
 const LoginModal       = lazy(() => import('./components/LoginModal'));
-const Hero             = lazy(() => import('./components/Hero'));
+const Hero             = lazy(() => import('./components/HeroSection'));
 const GlobalDashboard = lazy(() => import('./components/GlobalDashboard'));
 const CarbonCalculator = lazy(() => import('./components/CarbonCalculator'));
 const EcoProjects     = lazy(() => import('./components/EcoProjects'));
@@ -82,6 +82,7 @@ function App() {
                   {activeTab === 'home'       && (
                     <>
                       <Hero 
+                        setActiveTab={handleTabChange}
                         onStart={() => handleTabChange('dashboard')}
                         onMore={() => handleTabChange('projects')}
                       />
