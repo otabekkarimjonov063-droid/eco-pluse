@@ -16,8 +16,7 @@ const mockProjects = [
       EN: "Afforestation of Sahara and Aral Sea Basin"
     },
     categoryKey: 'cat_renewable',
-    image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=800',
-    image2: 'https://karakalpakstan.travel/data/uploads/00_media/2026/lyuna/1.jpg',
+    image: '/images/projects/sahara-solar.jpg',
     desc: {
       UZ: "Cho'llashishga qarshi kurashish uchun yirik quyosh panellari va Orolbo'yida saksovullar ekish loyihasi.",
       RU: "Проект по борьбе с опустыниванием: установка солнечных панелей и посадка саксаула в Приаралье.",
@@ -35,7 +34,7 @@ const mockProjects = [
       EN: "Ocean Plastic Cleanup Grid"
     },
     categoryKey: 'cat_ocean',
-    image: 'https://uz24.uz/uploads/image/669ea75f1504b326e37d132fec021ee8/large.jpg',
+    image: '/images/projects/ocean-cleanup.jpg',
     desc: {
       UZ: "Tinch okeanidagi ulkan plastik chiqindilar orolini avtonom dronlar va kemalar yordamida tozalash.",
       RU: "Очистка тихоокеанского мусорного пятна с помощью флота автономных экологических дронов.",
@@ -53,7 +52,7 @@ const mockProjects = [
       EN: "Smart Eco City Infrastructure"
     },
     categoryKey: 'cat_infrastructure',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgfe_rYrHm7Av8jb87XFnPL5vU9o_yg9CdnNjKxzajHaXGo8g4zhft1MQ&s=10',
+    image: '/images/projects/smart-city.jpg',
     desc: {
       UZ: "100% qayta tiklanuvchi energiya, nol-emissiya transport tizimiga ega futuristik eko-shaharcha.",
       RU: "Футуристический эко-город со 100% возобновляемой энергией и нулевым уровнем вредных выбросов.",
@@ -71,7 +70,7 @@ const mockProjects = [
       EN: "Amazon Rainforest Protection"
     },
     categoryKey: 'cat_forests',
-    image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&q=80&w=800',
+    image: '/images/projects/amazon-rainforest.jpg',
     desc: {
       UZ: "Noqonuniy daraxt kesishni to'xtatish va yong'inlardan zarar ko'rgan hududlarda 1 million tup daraxt ekish.",
       RU: "Предотвращение незаконных вырубок и высадка 1 миллиона деревьев в пострадавших от пожаров зонах.",
@@ -89,7 +88,7 @@ const mockProjects = [
       EN: "Offshore Wind Turbine Farm"
     },
     categoryKey: 'cat_energy',
-    image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=800',
+    image: '/images/projects/offshore-wind.jpg',
     desc: {
       UZ: "Dengiz qirg'og'ida 50 MVt quvvatga ega shamol turbinalarini o'rnatish orqali 100,000 xonadonni yoritish.",
       RU: "Установка морских ветровых турбин мощностью 50 МВт для снабжения электричеством 100 000 домов.",
@@ -107,7 +106,7 @@ const mockProjects = [
       EN: "Cultivated Clean Protein Lab"
     },
     categoryKey: 'cat_food',
-    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800',
+    image: '/images/projects/clean-protein-lab.jpg',
     desc: {
       UZ: "Chorvachilikning CO2 emissiyasini qisqartirish uchun o'simlik hujayralaridan yuqori sifatli eko-go'sht ishlab chiqarish.",
       RU: "Производство экологичного белка из растительных клеток для сокращения вредных выбросов животноводства.",

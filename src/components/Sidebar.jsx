@@ -107,7 +107,7 @@ export default function Sidebar({
       {/* Desktop Sidebar */}
       <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl border border-black/[0.08] dark:border-white/[0.07] bg-white/85 dark:bg-moss/70 p-4 backdrop-blur-2xl shadow-xl dark:shadow-none lg:flex">
         {/* Brand */}
-        <div className="flex items-center justify-between px-3 pb-5 pt-2">
+        <div className="flex items-center justify-between px-3 pb-3 pt-1 shrink-0 border-b border-black/[0.05] dark:border-white/[0.05] mb-2">
           <div className="flex items-center gap-2.5">
             <span className="h-2 w-2 rounded-full bg-signal shadow-[0_0_12px_2px_rgba(155,240,184,0.55)]" />
             <span className="font-display text-2xl font-light tracking-tight text-bone">EcoPulse</span>
@@ -118,7 +118,7 @@ export default function Sidebar({
         </div>
 
         {/* Navigation */}
-        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto pr-1" aria-label="Asosiy menyu">
+        <nav className="flex flex-1 flex-col gap-1.5 overflow-y-auto pt-1 pb-2 px-1 scrollbar-none" aria-label="Asosiy menyu">
           {navItems.map(({ id, label, icon: Icon }) => {
             const isActive = id === currentActive
             return (
@@ -126,20 +126,20 @@ export default function Sidebar({
                 key={id}
                 onClick={() => handleSelect(id)}
                 aria-current={isActive ? 'page' : undefined}
-                className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[0.95rem] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-signal cursor-pointer ${
-                  isActive ? 'text-bone font-medium' : 'text-mist hover:text-bone'
+                className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[0.95rem] transition-all outline-none focus-visible:ring-1 focus-visible:ring-signal/50 cursor-pointer ${
+                  isActive ? 'text-bone font-medium' : 'text-mist hover:text-bone hover:bg-black/[0.02] dark:hover:bg-white/[0.02]'
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="nav-active"
                     transition={{ type: 'spring', stiffness: 420, damping: 36 }}
-                    className="absolute inset-0 rounded-xl bg-black/[0.05] dark:bg-white/[0.06]"
+                    className="absolute inset-0 rounded-xl bg-black/[0.05] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08]"
                   >
-                    <span className="absolute left-0 top-2.5 bottom-2.5 w-[2px] rounded-full bg-signal" />
+                    <span className="absolute left-1.5 top-2.5 bottom-2.5 w-[3px] rounded-full bg-signal shadow-[0_0_8px_rgba(155,240,184,0.6)]" />
                   </motion.span>
                 )}
-                <Icon size={18} strokeWidth={1.5} className="relative shrink-0" />
+                <Icon size={18} strokeWidth={1.5} className={`relative shrink-0 ${isActive ? 'text-signal' : ''}`} />
                 <span className="relative truncate">{label}</span>
               </button>
             )

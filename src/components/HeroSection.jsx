@@ -46,8 +46,6 @@ const HeroSection = ({ setActiveTab, onStart, onMore }) => {
   // Scroll-driven parallax
   const globeScale = useTransform(scrollYProgress, [0, 1], [1, 2.4]);
   const globeY = useTransform(scrollYProgress, [0, 1], ['0%', '-12%']);
-  const bigTextY = useTransform(scrollYProgress, [0, 1], ['0%', '60%']);
-  const bigTextOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-35%']);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
 
@@ -59,24 +57,14 @@ const HeroSection = ({ setActiveTab, onStart, onMore }) => {
       {/* 3D Interactive Ambient Globe Backdrop */}
       <Globe3D />
 
+      {/* Soft readability veil behind the text so 3D sphere/orbit ring doesn't collide with letters */}
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_left,rgb(var(--color-ink)/0.95)_0%,rgb(var(--color-ink)/0.75)_50%,transparent_80%)]" />
+
       {/* ───────── HERO ───────── */}
       <section
         ref={ref}
         className="relative min-h-screen w-full overflow-hidden bg-transparent text-white"
       >
-        {/* Giant background wordmark */}
-        <motion.div
-          style={{ y: bigTextY, opacity: bigTextOpacity }}
-          className="absolute inset-x-0 top-[18%] flex justify-center pointer-events-none select-none"
-        >
-          <span
-            className="font-black tracking-[0.18em] text-transparent bg-clip-text bg-gradient-to-b from-white/20 to-white/0 whitespace-nowrap font-display"
-            style={{ fontSize: 'clamp(3.5rem, 15vw, 14rem)', lineHeight: 1, fontWeight: 300 }}
-          >
-            ECOPULSE
-          </span>
-        </motion.div>
-
         {/* Foreground content */}
         <motion.div
           style={{ y: contentY, opacity: contentOpacity }}
@@ -86,7 +74,7 @@ const HeroSection = ({ setActiveTab, onStart, onMore }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-[#d9c08a]/25 bg-transparent"
+            className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-[#d9c08a]/25 bg-white/[0.02] backdrop-blur-md"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d9c08a] opacity-75" />
@@ -98,24 +86,23 @@ const HeroSection = ({ setActiveTab, onStart, onMore }) => {
           </motion.div>
 
           <h1
-            className="font-display font-light leading-[1.05] max-w-5xl tracking-tight"
-            style={{ fontSize: 'clamp(2.25rem, 6.5vw, 5.5rem)' }}
+            className="font-display font-light leading-[1.18] max-w-5xl tracking-normal py-2 text-left"
+            style={{ fontSize: 'clamp(2.4rem, 6vw, 5.25rem)', wordSpacing: '0.05em' }}
           >
             {words.map((w, i) => (
-              <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.25em]">
-                <motion.span
-                  initial={{ y: '110%' }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.9, delay: 0.15 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
-                  className={
-                    i >= 2
-                      ? 'inline-block bg-clip-text text-transparent bg-gradient-to-r from-[#f1e3bd] via-[#d9c08a] to-[#a9c7b8]'
-                      : 'inline-block'
-                  }
-                >
-                  {w}
-                </motion.span>
-              </span>
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.12 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className={`inline-block mr-[0.35em] tracking-normal ${
+                  i >= 2
+                    ? 'bg-clip-text text-transparent bg-gradient-to-r from-[#f1e3bd] via-[#d9c08a] to-[#a9c7b8]'
+                    : 'text-white'
+                }`}
+              >
+                {w}
+              </motion.span>
             ))}
           </h1>
 
