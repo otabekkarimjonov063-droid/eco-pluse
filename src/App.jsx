@@ -68,7 +68,7 @@ function App() {
   const closeLogin = useCallback(() => setIsLoginModalOpen(false), []);
 
   return (
-    <div className="min-h-screen relative flex bg-transparent text-bone overflow-x-hidden selection:bg-signal/30 font-sans">
+    <div className="min-h-screen relative flex bg-transparent text-slate-800 dark:text-bone overflow-x-hidden selection:bg-signal/30 font-sans">
 
       {activeTab === 'admin' ? (
         <Suspense fallback={<PageLoader />}>

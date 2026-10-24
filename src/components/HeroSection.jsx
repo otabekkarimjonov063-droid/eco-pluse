@@ -55,7 +55,7 @@ const HeroSection = ({ setActiveTab }) => {
       {/* ───────── HERO ───────── */}
       <section
         ref={ref}
-        className="relative min-h-screen w-full overflow-hidden bg-transparent text-white"
+        className="relative min-h-screen w-full overflow-hidden bg-transparent text-slate-800 dark:text-white"
       >
         {/* Giant background wordmark */}
         <motion.div
@@ -63,7 +63,7 @@ const HeroSection = ({ setActiveTab }) => {
           className="absolute inset-x-0 top-[18%] flex justify-center pointer-events-none select-none"
         >
           <span
-            className="font-black tracking-[0.18em] text-transparent bg-clip-text bg-gradient-to-b from-white/20 to-white/0 whitespace-nowrap font-display"
+            className="font-black tracking-[0.18em] text-transparent bg-clip-text bg-gradient-to-b from-slate-900/10 dark:from-white/20 to-transparent whitespace-nowrap font-display"
             style={{ fontSize: 'clamp(3.5rem, 15vw, 14rem)', lineHeight: 1, fontWeight: 300 }}
           >
             ECOPULSE
@@ -82,16 +82,16 @@ const HeroSection = ({ setActiveTab }) => {
             className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-emerald-500/30 eco-glass"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span className="text-[11px] font-medium tracking-[0.35em] uppercase text-emerald-300">
+            <span className="text-[11px] font-semibold tracking-[0.35em] uppercase text-emerald-700 dark:text-emerald-300">
               {t('hero', 'live')}
             </span>
           </motion.div>
 
           <h1
-            className="font-display font-light leading-[1.05] max-w-5xl tracking-tight"
+            className="font-display font-light leading-[1.05] max-w-5xl tracking-tight text-slate-900 dark:text-white"
             style={{ fontSize: 'clamp(2.25rem, 6.5vw, 5.5rem)' }}
           >
             {words.map((w, i) => (
@@ -102,7 +102,7 @@ const HeroSection = ({ setActiveTab }) => {
                   transition={{ duration: 0.9, delay: 0.15 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
                   className={
                     i >= 2
-                      ? 'inline-block bg-clip-text text-transparent bg-gradient-to-r from-emerald-200 via-teal-300 to-emerald-400'
+                      ? 'inline-block bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 dark:from-emerald-200 dark:via-teal-300 dark:to-emerald-400'
                       : 'inline-block'
                   }
                 >
@@ -116,7 +116,7 @@ const HeroSection = ({ setActiveTab }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-6 max-w-2xl text-base sm:text-lg text-white/75 leading-relaxed"
+            className="mt-6 max-w-2xl text-base sm:text-lg text-slate-600 dark:text-white/75 leading-relaxed"
           >
             {t('hero', 'subtitle')}
           </motion.p>
@@ -129,14 +129,14 @@ const HeroSection = ({ setActiveTab }) => {
           >
             <button
               onClick={() => setActiveTab && setActiveTab('dashboard')}
-              className="group flex items-center gap-3 px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold tracking-wide transition-all shadow-[0_0_25px_rgba(16,185,129,0.35)]"
+              className="group flex items-center gap-3 px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold tracking-wide transition-all shadow-[0_0_25px_rgba(16,185,129,0.35)] cursor-pointer"
             >
               {t('hero', 'cta')}
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
             <button
               onClick={() => setActiveTab && setActiveTab('projects')}
-              className="px-8 py-4 rounded-full border border-white/20 eco-glass font-medium tracking-wide hover:border-emerald-400/50 hover:bg-emerald-500/10 transition-all text-white"
+              className="px-8 py-4 rounded-full border border-black/10 dark:border-white/20 eco-glass font-medium tracking-wide hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all text-slate-800 dark:text-white cursor-pointer"
             >
               {t('hero', 'explore')}
             </button>
@@ -149,51 +149,51 @@ const HeroSection = ({ setActiveTab }) => {
           className="hidden lg:flex absolute right-10 top-28 z-10 w-64 flex-col gap-3.5 pointer-events-none select-none"
         >
           {/* Card 1: Air Quality */}
-          <div className="animate-float-slow rounded-2xl eco-glass p-5 shadow-2xl backdrop-blur-2xl border border-white/15 relative overflow-hidden group">
-            <div className="absolute -top-10 -right-10 w-24 h-24 bg-emerald-400/15 rounded-full blur-xl pointer-events-none" />
+          <div className="animate-float-slow rounded-2xl eco-glass p-5 shadow-2xl backdrop-blur-2xl border border-black/10 dark:border-white/15 relative overflow-hidden group">
+            <div className="absolute -top-10 -right-10 w-24 h-24 bg-emerald-500/15 rounded-full blur-xl pointer-events-none" />
 
-            <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-white/80">
-              <span className="font-semibold text-white/90">Havo · Toshkent</span>
-              <span className="text-emerald-400 font-bold flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
+            <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-slate-600 dark:text-white/80">
+              <span className="font-semibold text-slate-800 dark:text-white/90">Havo · Toshkent</span>
+              <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
                 JONLI
               </span>
             </div>
-            <div className="mt-3 font-display font-light text-4xl text-white drop-shadow flex items-baseline">
+            <div className="mt-3 font-display font-light text-4xl text-slate-900 dark:text-white drop-shadow flex items-baseline">
               {aqi ?? '—'}
-              <span className="ml-2.5 font-mono text-xs text-emerald-300 font-medium">US AQI</span>
+              <span className="ml-2.5 font-mono text-xs text-emerald-600 dark:text-emerald-300 font-medium">US AQI</span>
             </div>
-            <div className="mt-4 h-1.5 rounded-full bg-white/15 overflow-hidden">
+            <div className="mt-4 h-1.5 rounded-full bg-black/[0.08] dark:bg-white/15 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 shadow-[0_0_12px_rgba(52,211,153,0.7)]" 
+                className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 shadow-[0_0_12px_rgba(52,211,153,0.7)]" 
                 style={{ width: `${Math.min((aqi || 40) / 2, 100)}%` }} 
               />
             </div>
           </div>
 
           {/* Card 2: CO2 */}
-          <div className="animate-float ml-8 rounded-2xl eco-glass p-5 shadow-2xl backdrop-blur-2xl border border-white/15 relative overflow-hidden group" style={{ animationDelay: '-2s' }}>
-            <div className="absolute -top-10 -right-10 w-24 h-24 bg-teal-400/15 rounded-full blur-xl pointer-events-none" />
+          <div className="animate-float ml-8 rounded-2xl eco-glass p-5 shadow-2xl backdrop-blur-2xl border border-black/10 dark:border-white/15 relative overflow-hidden group" style={{ animationDelay: '-2s' }}>
+            <div className="absolute -top-10 -right-10 w-24 h-24 bg-teal-500/15 rounded-full blur-xl pointer-events-none" />
 
-            <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-white/80">
-              <span className="font-semibold text-white/90">CO₂</span>
-              <span className="text-emerald-400 font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40">PPM</span>
+            <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-slate-600 dark:text-white/80">
+              <span className="font-semibold text-slate-800 dark:text-white/90">CO₂</span>
+              <span className="text-emerald-700 dark:text-emerald-400 font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30">PPM</span>
             </div>
-            <div className="mt-3 font-display font-light text-4xl text-white drop-shadow flex items-baseline">
+            <div className="mt-3 font-display font-light text-4xl text-slate-900 dark:text-white drop-shadow flex items-baseline">
               420+
-              <span className="ml-2.5 font-mono text-xs text-emerald-300 font-medium">global</span>
+              <span className="ml-2.5 font-mono text-xs text-emerald-600 dark:text-emerald-300 font-medium">global</span>
             </div>
-            <p className="mt-2 text-xs text-white/80 font-sans tracking-wide">o’rtacha ko’rsatkich</p>
+            <p className="mt-2 text-xs text-slate-500 dark:text-white/80 font-sans tracking-wide">o’rtacha ko’rsatkich</p>
           </div>
         </motion.div>
 
         {/* Ticker */}
-        <div className="absolute bottom-0 inset-x-0 z-10 overflow-hidden border-t border-white/10 eco-glass py-3">
-          <div className="flex w-max animate-[marquee_45s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.4em] uppercase text-white/60">
+        <div className="absolute bottom-0 inset-x-0 z-10 overflow-hidden border-t border-black/10 dark:border-white/10 eco-glass py-3">
+          <div className="flex w-max animate-[marquee_45s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.4em] uppercase text-slate-600 dark:text-white/60">
             {[0, 1].map((k) => (
               <span key={k} className="flex shrink-0">
                 {['Havo sifati', 'CO₂ monitoring', 'Daraxt ekish', 'Uglerod izi', 'Yashil loyihalar', 'Real vaqt'].map((w) => (
-                  <span key={w} className="px-8">{w}<span className="ml-16 text-emerald-400">✦</span></span>
+                  <span key={w} className="px-8">{w}<span className="ml-16 text-emerald-600 dark:text-emerald-400">✦</span></span>
                 ))}
               </span>
             ))}
@@ -201,32 +201,32 @@ const HeroSection = ({ setActiveTab }) => {
         </div>
 
         {/* Scroll hint */}
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/50">
-          <span className="text-[10px] tracking-[0.35em] uppercase">Scroll</span>
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-slate-500 dark:text-white/50">
+          <span className="text-[10px] tracking-[0.35em] uppercase font-mono">Scroll</span>
           <motion.span
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.6, repeat: Infinity }}
-            className="block w-px h-8 bg-gradient-to-b from-white/60 to-transparent"
+            className="block w-px h-8 bg-gradient-to-b from-slate-400 dark:from-white/60 to-transparent"
           />
         </div>
       </section>
 
       {/* ───────── IMPACT STATEMENT ───────── */}
-      <section className="relative w-full bg-transparent text-white px-6 py-32 overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
+      <section className="relative w-full bg-transparent text-slate-800 dark:text-white px-6 py-32 overflow-hidden">
+        <div className="absolute inset-x-0 top-0 h-40 dark:bg-gradient-to-b dark:from-black/60 to-transparent pointer-events-none" />
         <div className="relative max-w-5xl mx-auto">
-          <div className="mb-10 flex items-center gap-4 text-[11px] font-medium tracking-[0.35em] uppercase text-emerald-400">
-            <span>01</span><span className="h-px w-16 bg-emerald-400/40" /><span>Ta’sir</span>
+          <div className="mb-10 flex items-center gap-4 text-[11px] font-medium tracking-[0.35em] uppercase text-emerald-600 dark:text-emerald-400">
+            <span>01</span><span className="h-px w-16 bg-emerald-500/40" /><span>Ta’sir</span>
           </div>
           <motion.p
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-light leading-snug text-white/90"
+            className="font-display font-light leading-snug text-slate-900 dark:text-white/90"
             style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.5rem)' }}
           >
-            <Globe2 className="inline-block mr-3 -mt-2 text-emerald-400" size={40} />
+            <Globe2 className="inline-block mr-3 -mt-2 text-emerald-600 dark:text-emerald-400" size={40} />
             {t('hero', 'subtitle')}
           </motion.p>
 
@@ -242,16 +242,16 @@ const HeroSection = ({ setActiveTab }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.12 }}
-                className="eco-glass rounded-2xl p-8 sm:p-10 text-center sm:text-left shadow-xl"
+                className="eco-glass rounded-2xl p-8 sm:p-10 text-center sm:text-left shadow-xl border border-black/[0.06] dark:border-white/10"
               >
                 <div
-                  className="font-display font-light bg-clip-text text-transparent bg-gradient-to-br from-white via-emerald-100 to-emerald-400"
+                  className="font-display font-light bg-clip-text text-transparent bg-gradient-to-br from-slate-900 via-emerald-800 to-emerald-600 dark:from-white dark:via-emerald-100 dark:to-emerald-400"
                   style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}
                 >
                   <CountUp value={s.v} decimals={s.d} duration={2.5} suffix={s.suf} />
                 </div>
-                <div className="mt-3 flex items-center justify-center sm:justify-start gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-white/70">
-                  {s.icon && <Leaf size={14} className="text-emerald-400" />}
+                <div className="mt-3 flex items-center justify-center sm:justify-start gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-slate-600 dark:text-white/70">
+                  {s.icon && <Leaf size={14} className="text-emerald-600 dark:text-emerald-400" />}
                   {s.label}
                 </div>
               </motion.div>

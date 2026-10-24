@@ -79,7 +79,7 @@ export default function VideoBackdrop({
       )}
 
       {/* Atmospheric readability gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/60 to-ink transition-colors duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#f4f7f5]/90 via-[#ecf3ee]/80 to-[#f4f7f5]/95 dark:from-ink/80 dark:via-ink/60 dark:to-ink transition-colors duration-300" />
     </div>
   );
 }

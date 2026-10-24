@@ -47,18 +47,19 @@ export default function Sidebar({
   return (
     <>
       {/* Mobile Top Bar with Brand, Weather, Theme, Language & Login */}
-      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-3 py-2 bg-moss/90 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] lg:hidden">
+      {/* Mobile Top Bar with Brand, Weather, Theme, Language & Login */}
+      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-3 py-2 bg-white/90 dark:bg-moss/90 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] lg:hidden text-slate-800 dark:text-white">
         <div className="flex items-center gap-2 shrink-0">
           <button 
             onClick={() => handleSelect('home')} 
             className="flex items-center gap-2 cursor-pointer shrink-0"
           >
             <span className="h-2 w-2 rounded-full bg-signal shadow-[0_0_10px_2px_rgba(155,240,184,0.55)]" />
-            <span className="font-display text-lg font-light tracking-tight text-bone">EcoPulse</span>
+            <span className="font-display text-lg font-light tracking-tight text-slate-900 dark:text-bone">EcoPulse</span>
           </button>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-2 py-0.5 rounded-full border border-signal/25 bg-signal/10 hover:bg-signal/20 text-signal font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer shadow-[0_0_8px_rgba(155,240,184,0.15)] flex items-center gap-1"
+            className="px-2 py-0.5 rounded-full border border-signal/25 bg-signal/10 hover:bg-signal/20 text-emerald-700 dark:text-signal font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer shadow-[0_0_8px_rgba(155,240,184,0.15)] flex items-center gap-1"
           >
             <span>{currentVersion}</span>
             {hasNewUpdate && <span className="h-1.5 w-1.5 rounded-full bg-ember animate-ping" />}
@@ -75,19 +76,19 @@ export default function Sidebar({
           <button
             onClick={toggleTheme}
             aria-label="Mavzuni o'zgartirish"
-            className="p-1.5 rounded-lg border border-white/10 bg-white/[0.04] text-mist hover:text-bone cursor-pointer"
+            className="p-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] text-slate-600 dark:text-mist hover:text-slate-900 dark:hover:text-bone cursor-pointer"
           >
-            {isDark ? <Moon size={15} className="text-signal" /> : <Sun size={15} className="text-amber-400" />}
+            {isDark ? <Moon size={15} className="text-signal" /> : <Sun size={15} className="text-amber-500" />}
           </button>
 
           {/* Lang pill */}
-          <div className="flex items-center rounded-lg border border-white/10 bg-white/[0.03] p-0.5 text-[11px] font-mono">
+          <div className="flex items-center rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] p-0.5 text-[11px] font-mono">
             {langs.map((l) => (
               <button
                 key={l}
                 onClick={() => setLanguage(l)}
                 className={`px-1.5 py-0.5 rounded transition ${
-                  language === l ? 'bg-white/15 text-signal font-semibold' : 'text-mist'
+                  language === l ? 'bg-black/10 dark:bg-white/15 text-emerald-700 dark:text-signal font-semibold' : 'text-slate-600 dark:text-mist'
                 }`}
               >
                 {l}
@@ -100,14 +101,14 @@ export default function Sidebar({
             <button
               onClick={handleLogout}
               title="Chiqish"
-              className="p-1.5 rounded-lg border border-white/10 bg-white/[0.04] text-mist hover:text-ember cursor-pointer"
+              className="p-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] text-slate-600 dark:text-mist hover:text-red-500 cursor-pointer"
             >
               <LogOut size={15} />
             </button>
           ) : (
             <button
               onClick={onOpenLogin}
-              className="p-1.5 rounded-lg border border-white/10 bg-white/[0.04] text-signal cursor-pointer"
+              className="p-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] text-emerald-700 dark:text-signal cursor-pointer"
             >
               <LogIn size={15} />
             </button>
@@ -116,17 +117,17 @@ export default function Sidebar({
       </header>
 
       {/* Desktop Sidebar (Unified Eco-Glass) */}
-      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl eco-glass p-4 shadow-2xl lg:flex text-white">
+      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl eco-glass p-4 shadow-2xl lg:flex text-slate-800 dark:text-white border border-black/10 dark:border-white/15">
         {/* Brand */}
-        <div className="flex items-center justify-between px-3 pb-3 pt-1 shrink-0 border-b border-black/[0.05] dark:border-white/[0.05] mb-2">
+        <div className="flex items-center justify-between px-3 pb-3 pt-1 shrink-0 border-b border-black/[0.06] dark:border-white/[0.06] mb-2">
           <div className="flex items-center gap-2.5">
             <span className="h-2 w-2 rounded-full bg-signal shadow-[0_0_12px_2px_rgba(155,240,184,0.55)]" />
-            <span className="font-display text-2xl font-light tracking-tight text-bone">EcoPulse</span>
+            <span className="font-display text-2xl font-light tracking-tight text-slate-900 dark:text-bone">EcoPulse</span>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
             title="EcoPulse Yangilanishlar Markazi (Changelog)"
-            className="group relative flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-signal/25 bg-signal/[0.08] hover:bg-signal/20 text-signal transition-all cursor-pointer shadow-[0_0_12px_rgba(155,240,184,0.15)] hover:shadow-[0_0_18px_rgba(155,240,184,0.35)] hover:scale-105 active:scale-95"
+            className="group relative flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-signal/30 bg-signal/[0.12] hover:bg-signal/25 text-emerald-700 dark:text-signal transition-all cursor-pointer shadow-[0_0_12px_rgba(155,240,184,0.15)] hover:shadow-[0_0_18px_rgba(155,240,184,0.35)] hover:scale-105 active:scale-95"
           >
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75" />
@@ -150,20 +151,22 @@ export default function Sidebar({
                 key={id}
                 onClick={() => handleSelect(id)}
                 aria-current={isActive ? 'page' : undefined}
-                className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[0.95rem] transition-all outline-none focus-visible:ring-1 focus-visible:ring-signal/50 cursor-pointer ${
-                  isActive ? 'text-bone font-medium' : 'text-mist hover:text-bone hover:bg-black/[0.02] dark:hover:bg-white/[0.02]'
+                className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[0.95rem] transition-all outline-none focus-visible:ring-1 focus-visible:ring-emerald-500/50 cursor-pointer ${
+                  isActive 
+                    ? 'text-emerald-700 dark:text-bone font-medium' 
+                    : 'text-slate-600 hover:text-slate-900 dark:text-mist dark:hover:text-bone hover:bg-black/[0.04] dark:hover:bg-white/[0.02]'
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="nav-active"
                     transition={{ type: 'spring', stiffness: 420, damping: 36 }}
-                    className="absolute inset-0 rounded-xl bg-black/[0.05] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08]"
+                    className="absolute inset-0 rounded-xl bg-emerald-500/10 dark:bg-white/[0.06] border border-emerald-500/20 dark:border-white/[0.08]"
                   >
-                    <span className="absolute left-1.5 top-2.5 bottom-2.5 w-[3px] rounded-full bg-signal shadow-[0_0_8px_rgba(155,240,184,0.6)]" />
+                    <span className="absolute left-1.5 top-2.5 bottom-2.5 w-[3px] rounded-full bg-emerald-500 dark:bg-signal shadow-[0_0_8px_rgba(16,185,129,0.5)] dark:shadow-[0_0_8px_rgba(155,240,184,0.6)]" />
                   </motion.span>
                 )}
-                <Icon size={18} strokeWidth={1.5} className={`relative shrink-0 ${isActive ? 'text-signal' : ''}`} />
+                <Icon size={18} strokeWidth={1.5} className={`relative shrink-0 ${isActive ? 'text-emerald-600 dark:text-signal' : ''}`} />
                 <span className="relative truncate">{label}</span>
               </button>
             )
@@ -183,22 +186,22 @@ export default function Sidebar({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.18 }}
-                className="flex items-center gap-2.5 rounded-xl border border-black/[0.08] dark:border-white/[0.07] bg-black/[0.02] dark:bg-white/[0.03] p-2"
+                className="flex items-center gap-2.5 rounded-xl border border-black/[0.08] dark:border-white/[0.07] bg-black/[0.03] dark:bg-white/[0.03] p-2"
               >
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-signal/15 text-signal font-display text-base">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-emerald-500/15 dark:bg-signal/15 text-emerald-700 dark:text-signal font-display text-base">
                   {currentUser.name?.[0] || 'U'}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs text-bone font-medium">{currentUser.name}</p>
+                  <p className="truncate text-xs text-slate-800 dark:text-bone font-medium">{currentUser.name}</p>
                   <button 
                     onClick={handleLogout} 
-                    className="text-[11px] text-mist transition hover:text-ember cursor-pointer flex items-center gap-1 group"
+                    className="text-[11px] text-slate-500 dark:text-mist transition hover:text-red-500 cursor-pointer flex items-center gap-1 group"
                   >
                     <LogOut size={11} className="group-hover:rotate-12 transition-transform" />
                     <span>Chiqish</span>
                   </button>
                 </div>
-                {isAdmin && <span className="rounded-md bg-signal/10 px-1.5 py-0.5 text-[10px] font-mono text-signal">Admin</span>}
+                {isAdmin && <span className="rounded-md bg-emerald-500/10 dark:bg-signal/10 px-1.5 py-0.5 text-[10px] font-mono text-emerald-700 dark:text-signal">Admin</span>}
               </motion.div>
             ) : (
               <motion.button
@@ -208,9 +211,9 @@ export default function Sidebar({
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.18 }}
                 onClick={onOpenLogin}
-                className="flex items-center justify-center gap-2 rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.03] py-2 px-3 text-xs font-medium text-bone transition hover:bg-black/[0.05] dark:hover:bg-white/[0.08] hover:border-signal/40 cursor-pointer shadow-xs"
+                className="flex items-center justify-center gap-2 rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-black/[0.03] dark:bg-white/[0.03] py-2 px-3 text-xs font-medium text-slate-700 dark:text-bone transition hover:bg-black/[0.06] dark:hover:bg-white/[0.08] hover:border-emerald-500/40 cursor-pointer shadow-xs"
               >
-                <LogIn size={14} className="text-signal" />
+                <LogIn size={14} className="text-emerald-600 dark:text-signal" />
                 <span>{t('navbar', 'login') || 'Kirish'}</span>
               </motion.button>
             )}
@@ -221,7 +224,7 @@ export default function Sidebar({
             {/* Dark / Light Toggle */}
             <button
               onClick={toggleTheme}
-              className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-black/[0.05] dark:hover:bg-white/[0.06] transition text-xs font-mono text-mist hover:text-bone cursor-pointer group"
+              className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-black/[0.05] dark:hover:bg-white/[0.06] transition text-xs font-mono text-slate-600 hover:text-slate-900 dark:text-mist dark:hover:text-bone cursor-pointer group"
               title={isDark ? "Yorug' rejim" : "Qorong'u rejim"}
             >
               {isDark ? (
@@ -229,7 +232,7 @@ export default function Sidebar({
               ) : (
                 <Sun size={13} className="text-amber-500 group-hover:rotate-45 transition-transform" />
               )}
-              <span className="text-[11px]">{isDark ? 'Dark' : 'Light'}</span>
+              <span className="text-[11px] font-medium">{isDark ? 'Dark' : 'Light'}</span>
             </button>
 
             {/* Language Switcher Pills */}
@@ -240,8 +243,8 @@ export default function Sidebar({
                   onClick={() => setLanguage(l)}
                   className={`px-2 py-1 rounded-md text-[11px] font-mono transition cursor-pointer ${
                     language === l
-                      ? 'bg-signal/20 dark:bg-white/10 text-signal font-semibold shadow-xs'
-                      : 'text-mist hover:text-bone'
+                      ? 'bg-emerald-500/15 dark:bg-white/10 text-emerald-700 dark:text-signal font-semibold shadow-xs'
+                      : 'text-slate-500 hover:text-slate-900 dark:text-mist dark:hover:text-bone'
                   }`}
                 >
                   {l}
@@ -254,7 +257,7 @@ export default function Sidebar({
 
       {/* Mobile bottom bar */}
       <nav
-        className="fixed inset-x-3 bottom-3 z-40 flex justify-around rounded-2xl eco-glass p-2 shadow-xl lg:hidden text-white"
+        className="fixed inset-x-3 bottom-3 z-40 flex justify-around rounded-2xl eco-glass p-2 shadow-xl lg:hidden text-slate-800 dark:text-white border border-black/10 dark:border-white/15"
         aria-label="Asosiy menyu"
       >
         {navItems.map(({ id, label, icon: Icon }) => (
@@ -264,7 +267,7 @@ export default function Sidebar({
             aria-label={label}
             aria-current={id === currentActive ? 'page' : undefined}
             className={`grid h-11 w-11 place-items-center rounded-xl transition cursor-pointer ${
-              id === currentActive ? 'bg-white/[0.08] text-signal' : 'text-mist'
+              id === currentActive ? 'bg-emerald-500/15 dark:bg-white/[0.08] text-emerald-700 dark:text-signal' : 'text-slate-500 dark:text-mist'
             }`}
           >
             <Icon size={20} strokeWidth={1.5} />
