@@ -438,7 +438,7 @@ const PlantTree = () => {
                       required 
                       value={cardData.name}
                       onChange={(e) => setCardData({ ...cardData, name: e.target.value.toUpperCase() })}
-                      placeholder="NAME ON CARD" 
+                      placeholder={language === 'RU' ? 'ИМЯ НА КАРТЕ' : language === 'EN' ? 'NAME ON CARD' : 'KARTA EGASI ISMI'} 
                       className="w-full bg-white/[0.08] border border-white/20 p-3 rounded-xl font-medium text-white placeholder-white/40 outline-none focus:border-emerald-400 focus:bg-white/[0.14] transition-all text-xs tracking-wider uppercase" 
                     />
                   </div>
@@ -446,6 +446,8 @@ const PlantTree = () => {
                     <input 
                       type="text" 
                       required 
+                      inputMode="numeric"
+                      autoComplete="off"
                       value={cardData.number}
                       onChange={(e) => {
                         let val = e.target.value.replace(/\D/g, '');
@@ -461,6 +463,8 @@ const PlantTree = () => {
                     <input 
                       type="text" 
                       required 
+                      inputMode="numeric"
+                      autoComplete="off"
                       value={cardData.expiry}
                       onChange={(e) => {
                         let val = e.target.value.replace(/\D/g, '');
@@ -472,8 +476,12 @@ const PlantTree = () => {
                       className="w-full bg-white/[0.08] border border-white/20 p-3 rounded-xl font-mono text-white placeholder-white/40 outline-none focus:border-emerald-400 focus:bg-white/[0.14] text-xs" 
                     />
                     <input 
-                      type="password" 
+                      type="text" 
                       required 
+                      inputMode="numeric"
+                      autoComplete="off"
+                      data-lpignore="true"
+                      data-1p-ignore="true"
                       value={cardData.cvv}
                       onChange={(e) => setCardData({ ...cardData, cvv: e.target.value.slice(0, 4) })}
                       placeholder="CVV" 
@@ -629,7 +637,7 @@ const PlantTree = () => {
                           : 'text-white/70 hover:text-white'
                       }`}
                     >
-                      <ImageIcon size={13} /> Photo
+                      <ImageIcon size={13} /> {language === 'RU' ? 'Фото' : language === 'EN' ? 'Photo' : 'Rasm'}
                     </button>
                   </div>
 
@@ -647,11 +655,15 @@ const PlantTree = () => {
 
                   <div className="grid grid-cols-2 gap-3 bg-white/[0.05] p-2 rounded-xl border border-white/15">
                     <div className="text-center">
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-200/80">CO2 (kg/yr)</p>
+                      <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-200/80">
+                        {language === 'RU' ? 'CO₂ (кг/год)' : language === 'EN' ? 'CO₂ (kg/yr)' : 'CO₂ (kg/yil)'}
+                      </p>
                       <p className="text-base sm:text-lg font-display font-medium text-emerald-400 mt-0.5 tabular-nums drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">{activeTree.co2}</p>
                     </div>
                     <div className="text-center border-l border-white/15">
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-200/80">O2 (kg/yr)</p>
+                      <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-200/80">
+                        {language === 'RU' ? 'O₂ (кг/год)' : language === 'EN' ? 'O₂ (kg/yr)' : 'O₂ (kg/yil)'}
+                      </p>
                       <p className="text-base sm:text-lg font-display font-medium text-emerald-400 mt-0.5 tabular-nums drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">{activeTree.oxygen}</p>
                     </div>
                   </div>

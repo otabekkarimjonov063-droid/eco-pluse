@@ -300,7 +300,7 @@ const EcoProjects = () => {
                   key={project.id}
                   variants={itemVariants}
                   layout
-                  className="overflow-hidden flex flex-col group transition-all duration-300"
+                  className="overflow-hidden flex flex-col group transition-all duration-500 ease-out cursor-pointer hover:scale-[0.97] hover:shadow-2xl hover:brightness-105"
                 >
                   {/* Image Section */}
                   <div className="relative h-48 overflow-hidden bg-black/40">
@@ -310,7 +310,7 @@ const EcoProjects = () => {
                       loading="eager"
                       fetchPriority="high"
                       decoding="async"
-                      className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 opacity-85 group-hover:opacity-100" 
+                      className="w-full h-full object-cover transform transition-transform duration-700 ease-out group-hover:scale-120 opacity-85 group-hover:opacity-100" 
                     />
                     <div className="absolute top-3 left-3 z-20">
                       <span className="px-2.5 py-0.5 bg-moss/90 backdrop-blur-md text-[10px] font-mono text-signal rounded-md border border-signal/20">

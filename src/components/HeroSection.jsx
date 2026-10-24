@@ -20,7 +20,7 @@ const useStars = (n) =>
   );
 
 const HeroSection = ({ setActiveTab }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const ref = useRef(null);
   const [aqi, setAqi] = useState(null);
 
@@ -49,6 +49,12 @@ const HeroSection = ({ setActiveTab }) => {
 
   const title = t('hero', 'title') || '';
   const words = title.split(' ');
+
+  const tickerItems = {
+    UZ: ['Havo sifati', 'CO₂ monitoring', 'Daraxt ekish', 'Uglerod izi', 'Yashil loyihalar', 'Real vaqt'],
+    RU: ['Качество воздуха', 'Мониторинг CO₂', 'Посадка деревьев', 'Углеродный след', 'Зеленые проекты', 'Реальное время'],
+    EN: ['Air Quality', 'CO₂ Monitoring', 'Planting Trees', 'Carbon Footprint', 'Green Projects', 'Real-time']
+  }[language] || ['Havo sifati', 'CO₂ monitoring', 'Daraxt ekish', 'Uglerod izi', 'Yashil loyihalar', 'Real vaqt'];
 
   return (
     <>
@@ -91,19 +97,19 @@ const HeroSection = ({ setActiveTab }) => {
           </motion.div>
 
           <h1
-            className="font-display font-light leading-[1.05] max-w-5xl tracking-tight text-slate-900 dark:text-white"
+            className="font-display font-light leading-[1.16] max-w-5xl tracking-tight text-slate-900 dark:text-white pb-1"
             style={{ fontSize: 'clamp(2.25rem, 6.5vw, 5.5rem)' }}
           >
             {words.map((w, i) => (
-              <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.25em]">
+              <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.25em] pb-3 -mb-3 pt-1">
                 <motion.span
                   initial={{ y: '110%' }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.9, delay: 0.15 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
                   className={
                     i >= 2
-                      ? 'inline-block bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 dark:from-emerald-200 dark:via-teal-300 dark:to-emerald-400'
-                      : 'inline-block'
+                      ? 'inline-block pb-1 bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 dark:from-emerald-200 dark:via-teal-300 dark:to-emerald-400'
+                      : 'inline-block pb-1'
                   }
                 >
                   {w}
@@ -153,10 +159,12 @@ const HeroSection = ({ setActiveTab }) => {
             <div className="absolute -top-10 -right-10 w-24 h-24 bg-emerald-500/15 rounded-full blur-xl pointer-events-none" />
 
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-slate-600 dark:text-white/80">
-              <span className="font-semibold text-slate-800 dark:text-white/90">Havo · Toshkent</span>
+              <span className="font-semibold text-slate-800 dark:text-white/90">
+                {language === 'RU' ? 'Воздух · Ташкент' : language === 'EN' ? 'Air · Tashkent' : 'Havo · Toshkent'}
+              </span>
               <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
-                JONLI
+                {t('hero', 'live') || 'JONLI'}
               </span>
             </div>
             <div className="mt-3 font-display font-light text-4xl text-slate-900 dark:text-white drop-shadow flex items-baseline">
@@ -183,7 +191,9 @@ const HeroSection = ({ setActiveTab }) => {
               420+
               <span className="ml-2.5 font-mono text-xs text-emerald-600 dark:text-emerald-300 font-medium">global</span>
             </div>
-            <p className="mt-2 text-xs text-slate-500 dark:text-white/80 font-sans tracking-wide">o’rtacha ko’rsatkich</p>
+            <p className="mt-2 text-xs text-slate-500 dark:text-white/80 font-sans tracking-wide">
+              {language === 'RU' ? 'средний показатель' : language === 'EN' ? 'global average' : 'o’rtacha ko’rsatkich'}
+            </p>
           </div>
         </motion.div>
 
@@ -192,7 +202,7 @@ const HeroSection = ({ setActiveTab }) => {
           <div className="flex w-max animate-[marquee_45s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.4em] uppercase text-slate-600 dark:text-white/60">
             {[0, 1].map((k) => (
               <span key={k} className="flex shrink-0">
-                {['Havo sifati', 'CO₂ monitoring', 'Daraxt ekish', 'Uglerod izi', 'Yashil loyihalar', 'Real vaqt'].map((w) => (
+                {tickerItems.map((w) => (
                   <span key={w} className="px-8">{w}<span className="ml-16 text-emerald-600 dark:text-emerald-400">✦</span></span>
                 ))}
               </span>
@@ -216,7 +226,7 @@ const HeroSection = ({ setActiveTab }) => {
         <div className="absolute inset-x-0 top-0 h-40 dark:bg-gradient-to-b dark:from-black/60 to-transparent pointer-events-none" />
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-10 flex items-center gap-4 text-[11px] font-medium tracking-[0.35em] uppercase text-emerald-600 dark:text-emerald-400">
-            <span>01</span><span className="h-px w-16 bg-emerald-500/40" /><span>Ta’sir</span>
+            <span>01</span><span className="h-px w-16 bg-emerald-500/40" /><span>{language === 'RU' ? 'Воздействие' : language === 'EN' ? 'Impact' : 'Ta’sir'}</span>
           </div>
           <motion.p
             initial={{ opacity: 0, y: 50 }}
