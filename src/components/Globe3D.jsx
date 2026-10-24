@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// Soft round sprite so points look like glowing dots
+// Soft round sprite so points look like glowing dots (no external assets)
 const makeSprite = () => {
   const c = document.createElement('canvas');
   c.width = c.height = 64;
   const g = c.getContext('2d');
   const grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
   grd.addColorStop(0, 'rgba(255,255,255,1)');
-  grd.addColorStop(0.35, 'rgba(255,255,255,0.85)');
+  grd.addColorStop(0.35, 'rgba(255,255,255,0.8)');
   grd.addColorStop(1, 'rgba(255,255,255,0)');
   g.fillStyle = grd;
   g.fillRect(0, 0, 64, 64);
@@ -60,13 +60,12 @@ const Globe3D = () => {
     const globe = new THREE.Group();
     scene.add(globe);
 
-    // Dotted planet with realistic continents & ocean depth
-    const N = isMobile ? 3200 : 6000;
+    // Dotted planet
+    const N = isMobile ? 4500 : 9000;
     const pos = new Float32Array(N * 3);
     const col = new Float32Array(N * 3);
     const land = new THREE.Color('#e6d3a3');
     const sea = new THREE.Color('#2b5953');
-
     for (let i = 0; i < N; i++) {
       const y = 1 - (i / (N - 1)) * 2;
       const rad = Math.sqrt(1 - y * y);
@@ -77,35 +76,26 @@ const Globe3D = () => {
       const c = isLand(lat, lon) ? land : sea;
       col.set([c.r, c.g, c.b], i * 3);
     }
-
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
     const dots = new THREE.Points(
       geo,
       new THREE.PointsMaterial({
-        size: 0.032,
-        map: sprite,
-        vertexColors: true,
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        opacity: 0.95,
+        size: 0.028, map: sprite, vertexColors: true, transparent: true,
+        depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.95,
       })
     );
     globe.add(dots);
 
     // Dark core so the back of the globe doesn't show through
-    globe.add(new THREE.Mesh(new THREE.SphereGeometry(0.985, 36, 36), new THREE.MeshBasicMaterial({ color: '#040a09' })));
+    globe.add(new THREE.Mesh(new THREE.SphereGeometry(0.985, 48, 48), new THREE.MeshBasicMaterial({ color: '#040a09' })));
 
     // Atmosphere glow (fresnel)
     const atmo = new THREE.Mesh(
-      new THREE.SphereGeometry(1.18, 36, 36),
+      new THREE.SphereGeometry(1.18, 48, 48),
       new THREE.ShaderMaterial({
-        transparent: true,
-        side: THREE.BackSide,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
+        transparent: true, side: THREE.BackSide, depthWrite: false, blending: THREE.AdditiveBlending,
         vertexShader: 'varying vec3 vN; void main(){ vN = normalize(normalMatrix*normal); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
         fragmentShader: 'varying vec3 vN; void main(){ float i = pow(0.62 - dot(vN, vec3(0.0,0.0,1.0)), 3.0); gl_FragColor = vec4(0.62,0.80,0.74,1.0)*i; }',
       })
@@ -123,14 +113,14 @@ const Globe3D = () => {
 
     // Orbit ring
     const ring = new THREE.Mesh(
-      new THREE.RingGeometry(1.45, 1.452, 96),
+      new THREE.RingGeometry(1.45, 1.452, 128),
       new THREE.MeshBasicMaterial({ color: '#d9c08a', transparent: true, opacity: 0.28, side: THREE.DoubleSide })
     );
     ring.rotation.x = Math.PI / 2.3;
     scene.add(ring);
 
     // Stars
-    const SN = isMobile ? 180 : 450;
+    const SN = isMobile ? 250 : 600;
     const sp = new Float32Array(SN * 3);
     for (let i = 0; i < SN; i++) {
       const r = 12 + ((i * 53) % 20);
@@ -142,7 +132,7 @@ const Globe3D = () => {
     const stars = new THREE.Points(sg, new THREE.PointsMaterial({ size: 0.08, map: sprite, transparent: true, opacity: 0.7, depthWrite: false }));
     scene.add(stars);
 
-    // Mouse interaction
+    // Interaction
     const mouse = { x: 0, y: 0 };
     const spot = { x: window.innerWidth / 2, y: window.innerHeight / 2, tx: window.innerWidth / 2, ty: window.innerHeight / 2 };
     const onMove = (e) => {
@@ -153,7 +143,6 @@ const Globe3D = () => {
     };
     window.addEventListener('mousemove', onMove, { passive: true });
 
-    // Responsive placement
     const place = () => {
       const w = window.innerWidth, h = window.innerHeight;
       renderer.setSize(w, h);
@@ -167,73 +156,46 @@ const Globe3D = () => {
     window.addEventListener('resize', place);
 
     let raf = 0, t = 0, last = performance.now();
-    let isRunning = true;
-
-    // Cache scroll to avoid layout thrashing
-    let currentScrollY = window.scrollY;
-    const onScroll = () => {
-      currentScrollY = window.scrollY;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
     const loop = (now) => {
-      if (!isRunning) return;
       raf = requestAnimationFrame(loop);
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
       t += dt;
-
+      const sy = window.scrollY;
       globe.rotation.y += dt * (reduce ? 0.02 : 0.12);
-      globe.rotation.x += ((mouse.y * 0.25 + currentScrollY * 0.0003) - globe.rotation.x) * 0.08;
-      globe.rotation.z += ((-mouse.x * 0.08) - globe.rotation.z) * 0.08;
-
-      const z = 3.6 - Math.min(currentScrollY / 1400, 1) * 0.9;
+      globe.rotation.x += ((mouse.y * 0.25 + sy * 0.0003) - globe.rotation.x) * 0.04;
+      globe.rotation.z += ((-mouse.x * 0.08) - globe.rotation.z) * 0.04;
+      const z = 3.6 - Math.min(sy / 1400, 1) * 0.9;
       camera.position.z += (z - camera.position.z) * 0.06;
-
       ring.rotation.z += dt * 0.08;
       stars.rotation.y += dt * 0.004;
-
       markers.forEach((m) => {
         const s = 0.07 + 0.05 * (0.5 + 0.5 * Math.sin(t * 2.2 + m.userData.phase));
         m.scale.set(s, s, 1);
       });
-
       spot.x += (spot.tx - spot.x) * 0.08;
       spot.y += (spot.ty - spot.y) * 0.08;
-      if (spotRef.current) {
-        spotRef.current.style.transform = `translate(${spot.x}px, ${spot.y}px)`;
-      }
-
+      if (spotRef.current) spotRef.current.style.transform = `translate(${spot.x}px, ${spot.y}px)`;
       renderer.render(scene, camera);
     };
     raf = requestAnimationFrame(loop);
 
-    // Pause when tab hidden (saves 100% CPU/GPU)
+    // Pause when tab hidden (saves CPU/GPU)
     const onVis = () => {
-      if (document.hidden) {
-        isRunning = false;
-        cancelAnimationFrame(raf);
-      } else {
-        isRunning = true;
-        last = performance.now();
-        raf = requestAnimationFrame(loop);
-      }
+      cancelAnimationFrame(raf);
+      if (!document.hidden) { last = performance.now(); raf = requestAnimationFrame(loop); }
     };
     document.addEventListener('visibilitychange', onVis);
 
     return () => {
-      isRunning = false;
       cancelAnimationFrame(raf);
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('resize', place);
-      window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVis);
       scene.traverse((o) => { o.geometry?.dispose?.(); o.material?.dispose?.(); });
       sprite.dispose();
       renderer.dispose();
-      if (mount && renderer.domElement) {
-        mount.removeChild(renderer.domElement);
-      }
+      mount.removeChild(renderer.domElement);
     };
   }, []);
 

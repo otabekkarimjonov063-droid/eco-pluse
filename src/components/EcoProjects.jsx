@@ -172,6 +172,14 @@ const EcoProjects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
+  // Preload all project images for instant rendering
+  useEffect(() => {
+    mockProjects.forEach((p) => {
+      const img = new Image();
+      img.src = p.image;
+    });
+  }, []);
+
   const filteredProjects = selectedFilterKey === 'all' 
     ? projects 
     : projects.filter(p => p.categoryKey === selectedFilterKey);
@@ -299,9 +307,10 @@ const EcoProjects = () => {
                     <img 
                       src={project.image} 
                       alt={displayTitle} 
-                      loading="lazy"
+                      loading="eager"
+                      fetchPriority="high"
                       decoding="async"
-                      className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 opacity-80 group-hover:opacity-95" 
+                      className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 opacity-85 group-hover:opacity-100" 
                     />
                     <div className="absolute top-3 left-3 z-20">
                       <span className="px-2.5 py-0.5 bg-moss/90 backdrop-blur-md text-[10px] font-mono text-signal rounded-md border border-signal/20">

@@ -8,16 +8,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'Figtree', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Fraunces', 'Georgia', 'serif'],
       },
       colors: {
-        ink: 'rgb(var(--color-ink) / <alpha-value>)',
-        moss: 'rgb(var(--color-moss) / <alpha-value>)',
-        bone: 'rgb(var(--color-bone) / <alpha-value>)',
-        mist: 'rgb(var(--color-mist) / <alpha-value>)',
-        signal: 'rgb(var(--color-signal) / <alpha-value>)',
-        ember: 'rgb(var(--color-ember) / <alpha-value>)',
         'eco-neon': '#d9c08a',
         'eco-dark': '#050a09',
         'eco-dark-lighter': '#0c1714',
@@ -43,6 +37,7 @@ export default {
         'rotate-slow': 'rotateSlow 12s linear infinite',
         'wave': 'wave 2s infinite linear',
         'zoom-in': 'zoomIn 0.5s ease-out forwards',
+        // New premium animations
         'shimmer': 'shimmer 2.5s ease-in-out infinite',
         'bounce-in': 'bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards',
         'slide-in-right': 'slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
@@ -50,12 +45,8 @@ export default {
         'scale-up': 'scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'gradient-shift': 'gradientShift 6s ease infinite',
         'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
-        'marquee': 'marquee 45s linear infinite',
       },
       keyframes: {
-        marquee: {
-          'to': { transform: 'translateX(-50%)' },
-        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
@@ -94,6 +85,7 @@ export default {
           '0%': { opacity: '0', transform: 'scale(0.9)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
+        // New premium keyframes
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
