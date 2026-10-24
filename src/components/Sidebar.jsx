@@ -6,6 +6,7 @@ import {
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
 import { useTheme } from '../contexts/ThemeContext'
+import { useVersion } from '../contexts/VersionContext'
 import WeatherWidget from './WeatherWidget'
 
 /**
@@ -25,6 +26,7 @@ export default function Sidebar({
   const { t, language, setLanguage } = useLanguage()
   const { user: authUser, isAdmin, logout: authLogout } = useAuth()
   const { isDark, toggleTheme } = useTheme()
+  const { currentVersion, hasNewUpdate, setIsModalOpen } = useVersion()
 
   const currentActive = active || activeTab || 'home'
   const handleSelect = onSelect || setActiveTab
@@ -46,13 +48,22 @@ export default function Sidebar({
     <>
       {/* Mobile Top Bar with Brand, Weather, Theme, Language & Login */}
       <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-3 py-2 bg-moss/90 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] lg:hidden">
-        <button 
-          onClick={() => handleSelect('home')} 
-          className="flex items-center gap-2 cursor-pointer shrink-0"
-        >
-          <span className="h-2 w-2 rounded-full bg-signal shadow-[0_0_10px_2px_rgba(155,240,184,0.55)]" />
-          <span className="font-display text-lg font-light tracking-tight text-bone">EcoPulse</span>
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <button 
+            onClick={() => handleSelect('home')} 
+            className="flex items-center gap-2 cursor-pointer shrink-0"
+          >
+            <span className="h-2 w-2 rounded-full bg-signal shadow-[0_0_10px_2px_rgba(155,240,184,0.55)]" />
+            <span className="font-display text-lg font-light tracking-tight text-bone">EcoPulse</span>
+          </button>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="px-2 py-0.5 rounded-full border border-signal/25 bg-signal/10 hover:bg-signal/20 text-signal font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer shadow-[0_0_8px_rgba(155,240,184,0.15)] flex items-center gap-1"
+          >
+            <span>{currentVersion}</span>
+            {hasNewUpdate && <span className="h-1.5 w-1.5 rounded-full bg-ember animate-ping" />}
+          </button>
+        </div>
 
         {/* Compact Weather in Mobile Header (Always visible, 10s auto-switch) */}
         <div className="flex items-center">
@@ -112,9 +123,22 @@ export default function Sidebar({
             <span className="h-2 w-2 rounded-full bg-signal shadow-[0_0_12px_2px_rgba(155,240,184,0.55)]" />
             <span className="font-display text-2xl font-light tracking-tight text-bone">EcoPulse</span>
           </div>
-          <span className="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-full border border-signal/20 bg-signal/5 text-signal">
-            v2.6
-          </span>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            title="EcoPulse Yangilanishlar Markazi (Changelog)"
+            className="group relative flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-signal/25 bg-signal/[0.08] hover:bg-signal/20 text-signal transition-all cursor-pointer shadow-[0_0_12px_rgba(155,240,184,0.15)] hover:shadow-[0_0_18px_rgba(155,240,184,0.35)] hover:scale-105 active:scale-95"
+          >
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-signal" />
+            </span>
+            <span className="text-[10px] font-mono tracking-widest uppercase font-bold">
+              {currentVersion}
+            </span>
+            {hasNewUpdate && (
+              <span className="h-1.5 w-1.5 rounded-full bg-ember animate-bounce" />
+            )}
+          </button>
         </div>
 
         {/* Navigation */}

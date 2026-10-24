@@ -21,7 +21,8 @@ export default function VideoBackdrop({
       navigator.connection && navigator.connection.saveData
     );
 
-    if (!prefersReducedMotion && !isMobile && !isSaveData && src) {
+    const isRemote = src && (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('blob:'));
+    if (!prefersReducedMotion && !isMobile && !isSaveData && isRemote) {
       setShouldLoadVideo(true);
     } else {
       setShouldLoadVideo(false);

@@ -14,6 +14,8 @@ const EcoAIChat       = lazy(() => import('./components/EcoAIChat'));
 const Footer          = lazy(() => import('./components/Footer'));
 const AdminPanel      = lazy(() => import('./components/AdminPanel'));
 const EcoComments     = lazy(() => import('./components/EcoComments'));
+const VersionUpdateModal = lazy(() => import('./components/VersionUpdateModal'));
+import VersionToast   from './components/VersionToast';
 
 // Minimal restrained loading spinner
 const PageLoader = () => (
@@ -121,6 +123,12 @@ function App() {
           </Suspense>
         )}
       </AnimatePresence>
+
+      {/* Version Updates Modal & Floating Toast */}
+      <Suspense fallback={null}>
+        <VersionUpdateModal />
+      </Suspense>
+      <VersionToast />
     </div>
   );
 }
