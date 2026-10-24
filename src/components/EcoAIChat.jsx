@@ -249,12 +249,12 @@ const EcoAIChat = () => {
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-20 lg:bottom-6 right-5 lg:right-6 h-11 px-3.5 sm:px-4 rounded-full bg-moss/90 border border-white/[0.08] text-bone hover:border-signal/40 backdrop-blur-xl shadow-lg z-40 group flex items-center gap-2 transition-all font-sans"
+            className="fixed bottom-24 lg:bottom-8 right-5 lg:right-8 h-12 px-4 rounded-full bg-emerald-600/90 hover:bg-emerald-500 dark:bg-emerald-950/85 dark:hover:bg-emerald-900 border border-emerald-400/40 text-white backdrop-blur-2xl shadow-[0_10px_30px_rgba(16,185,129,0.35)] z-50 group flex items-center gap-2.5 transition-all font-sans cursor-pointer ring-2 ring-emerald-400/25 hover:scale-105 active:scale-95"
             aria-label="Eco-AI Chat"
           >
-            <MessageSquare size={16} className="text-signal group-hover:scale-105 transition-transform" />
-            <span className="text-xs font-mono font-medium hidden sm:inline text-bone">AI Chat</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
+            <MessageSquare size={17} className="text-emerald-200 group-hover:scale-110 transition-transform" />
+            <span className="text-xs font-mono font-semibold tracking-wide text-white">AI Chat</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -267,7 +267,7 @@ const EcoAIChat = () => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 10 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 sm:w-[400px] w-[calc(100vw-2rem)] h-[580px] max-h-[75vh] rounded-2xl flex flex-col z-50 overflow-hidden border border-white/[0.08] shadow-2xl bg-ink/95 backdrop-blur-2xl text-bone font-sans"
+            className="fixed bottom-24 lg:bottom-8 right-4 sm:right-8 sm:w-[400px] w-[calc(100vw-2rem)] h-[580px] max-h-[75vh] rounded-3xl flex flex-col z-50 overflow-hidden border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.6)] bg-black/60 dark:bg-black/75 backdrop-blur-2xl text-bone font-sans"
           >
             {/* Header */}
             <div className="bg-moss/80 p-4 flex items-center justify-between border-b border-white/[0.08] text-bone">

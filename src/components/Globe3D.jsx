@@ -88,8 +88,10 @@ const Globe3D = () => {
     );
     globe.add(dots);
 
-    // Dark core so the back of the globe doesn't show through
-    globe.add(new THREE.Mesh(new THREE.SphereGeometry(0.985, 48, 48), new THREE.MeshBasicMaterial({ color: '#040a09' })));
+    // Transparent occlusion core: occludes back-facing dots in 3D without drawing any dark black color (100% shaffof/transparent)
+    const coreGeo = new THREE.SphereGeometry(0.985, 48, 48);
+    const coreMat = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: true });
+    globe.add(new THREE.Mesh(coreGeo, coreMat));
 
     // Atmosphere glow (fresnel)
     const atmo = new THREE.Mesh(

@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 
-// Three levels of importance with full light and dark mode styles
+// Three levels of importance with full light and dark mode styles - transparent glassmorphic
 const tones = {
-  base: 'rounded-2xl border border-black/[0.08] dark:border-white/[0.07] bg-white/70 dark:bg-white/[0.025] shadow-sm dark:shadow-none',
-  raised: 'rounded-2xl border border-black/[0.12] dark:border-white/[0.11] bg-white/90 dark:bg-white/[0.05] shadow-md dark:shadow-none',
-  feature: 'rounded-[1.75rem] border border-signal/40 bg-white/80 dark:bg-moss/80 shadow-lg dark:shadow-none',
+  base: 'rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-white/40 dark:bg-black/20 shadow-sm backdrop-blur-xl',
+  raised: 'rounded-2xl border border-emerald-500/30 dark:border-white/[0.15] bg-white/60 dark:bg-black/30 shadow-md backdrop-blur-xl',
+  feature: 'rounded-[1.75rem] border border-white/20 dark:border-white/10 bg-white/30 dark:bg-black/25 shadow-2xl backdrop-blur-2xl',
 }
 
 export default function GlassCard({ tone = 'base', as: Tag = 'div', className = '', children, ...rest }) {

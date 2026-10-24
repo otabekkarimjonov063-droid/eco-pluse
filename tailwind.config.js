@@ -12,10 +12,16 @@ export default {
         display: ['Fraunces', 'Georgia', 'serif'],
       },
       colors: {
+        ink: '#060d0b',
+        moss: '#0a1714',
+        bone: '#e8eee4',
+        mist: '#8c9a92',
+        signal: '#9bf0b8',
+        ember: '#f2c14e',
         'eco-neon': '#d9c08a',
-        'eco-dark': '#050a09',
+        'eco-dark': '#060d0b',
         'eco-dark-lighter': '#0c1714',
-        'eco-light': '#dce4ec',
+        'eco-light': '#f4f7f5',
         'eco-primary': '#3aa57f',
         'eco-secondary': '#7fb3b0',
         'eco-accent': '#c9b27c'

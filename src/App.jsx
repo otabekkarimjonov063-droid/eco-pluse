@@ -39,13 +39,28 @@ const PageLoader = () => (
 );
 
 function App() {
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState(() => {
+    try {
+      const savedTab = localStorage.getItem('ecopulse_active_tab');
+      if (savedTab && ['home', 'dashboard', 'calculator', 'projects', 'plant', 'admin'].includes(savedTab)) {
+        return savedTab;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 'home';
+  });
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { isAdmin } = useAuth();
 
   const handleTabChange = useCallback((tab) => {
     if (tab === activeTab) return; // ignore same-tab clicks
     setActiveTab(tab);
+    try {
+      localStorage.setItem('ecopulse_active_tab', tab);
+    } catch (e) {
+      console.error(e);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab]);
 
@@ -53,7 +68,7 @@ function App() {
   const closeLogin = useCallback(() => setIsLoginModalOpen(false), []);
 
   return (
-    <div className="min-h-screen relative flex bg-ink text-bone overflow-x-hidden selection:bg-signal/30 font-sans">
+    <div className="min-h-screen relative flex bg-transparent text-bone overflow-x-hidden selection:bg-signal/30 font-sans">
 
       {activeTab === 'admin' ? (
         <Suspense fallback={<PageLoader />}>

@@ -115,8 +115,8 @@ export default function Sidebar({
         </div>
       </header>
 
-      {/* Desktop Sidebar */}
-      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl border border-black/[0.08] dark:border-white/[0.07] bg-white/85 dark:bg-moss/70 p-4 backdrop-blur-2xl shadow-xl dark:shadow-none lg:flex">
+      {/* Desktop Sidebar (Transparent Frosted Glassmorphism) */}
+      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl border border-black/[0.06] dark:border-white/[0.08] bg-white/60 dark:bg-black/35 p-4 backdrop-blur-2xl shadow-2xl lg:flex">
         {/* Brand */}
         <div className="flex items-center justify-between px-3 pb-3 pt-1 shrink-0 border-b border-black/[0.05] dark:border-white/[0.05] mb-2">
           <div className="flex items-center gap-2.5">
@@ -254,7 +254,7 @@ export default function Sidebar({
 
       {/* Mobile bottom bar */}
       <nav
-        className="fixed inset-x-3 bottom-3 z-40 flex justify-around rounded-2xl border border-white/[0.08] bg-moss/90 p-2 backdrop-blur-2xl lg:hidden"
+        className="fixed inset-x-3 bottom-3 z-40 flex justify-around rounded-2xl border border-black/[0.08] dark:border-white/[0.1] bg-white/70 dark:bg-black/50 p-2 backdrop-blur-2xl shadow-xl lg:hidden"
         aria-label="Asosiy menyu"
       >
         {navItems.map(({ id, label, icon: Icon }) => (

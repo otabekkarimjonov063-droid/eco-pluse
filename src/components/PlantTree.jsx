@@ -176,8 +176,8 @@ const PlantTree = () => {
         opacity={0.3} 
       />
 
-      {/* LEFT PANEL - CONTROLS */}
-      <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-24 pb-12 px-6 lg:px-12 min-h-screen overflow-y-auto relative backdrop-blur-xl bg-white/80 dark:bg-[#0c0d12]/85 border-r border-black/[0.08] dark:border-white/[0.08] transition-colors duration-300">
+      {/* LEFT PANEL - CONTROLS (Transparent Glassmorphism) */}
+      <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-24 pb-12 px-6 lg:px-12 min-h-screen overflow-y-auto relative backdrop-blur-2xl bg-white/40 dark:bg-black/30 border-r border-black/[0.06] dark:border-white/[0.08] shadow-2xl transition-colors duration-300">
 
         {/* Step Indicator */}
         <div className="absolute top-8 left-6 lg:left-12 flex items-center gap-2">
@@ -234,11 +234,11 @@ const PlantTree = () => {
             {step === 1 && (
               <motion.div key="step1" variants={leftVariants} initial="hidden" animate="show" exit="exit" className="space-y-6">
                 <div>
-                  <h1 className="font-display text-3xl lg:text-4xl font-light mb-2 tracking-tight text-bone">
+                  <h1 className="font-display text-3xl lg:text-4xl font-light mb-2 tracking-tight text-slate-900 dark:text-bone">
                     {t('plant', 'headline').split('.')[0]}. <br />
-                    <span className="text-signal italic">{t('plant', 'headline').split('.')[1] || ''}</span>
+                    <span className="text-emerald-500 dark:text-signal italic">{t('plant', 'headline').split('.')[1] || ''}</span>
                   </h1>
-                  <p className="text-mist text-sm max-w-md font-normal leading-relaxed">
+                  <p className="text-slate-600 dark:text-mist text-sm max-w-md font-normal leading-relaxed">
                     {t('plant', 'subheadline')}
                   </p>
                 </div>
@@ -254,14 +254,14 @@ const PlantTree = () => {
                         as="button"
                         onClick={() => setSelectedTree(idx)}
                         className={`w-full text-center p-3 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition ${
-                          isSelected ? 'border-signal/50' : ''
+                          isSelected ? 'border-emerald-500/60 dark:border-signal/60 bg-emerald-500/10 dark:bg-white/[0.08] ring-1 ring-emerald-500/30' : 'hover:bg-white/50 dark:hover:bg-white/[0.05]'
                         }`}
                       >
                         <div className="relative z-10 w-full flex flex-col items-center">
                           <div className={`p-1 rounded-xl transition-all duration-200 mb-2 border ${
                             isSelected 
-                              ? 'border-signal/60 bg-signal/10' 
-                              : 'border-white/[0.08] bg-white/[0.02]'
+                              ? 'border-emerald-500/60 dark:border-signal/60 bg-emerald-500/20 dark:bg-signal/15' 
+                              : 'border-black/[0.08] dark:border-white/[0.08] bg-white/40 dark:bg-white/[0.02]'
                           }`}>
                             <img 
                               src={tree.image} 
@@ -274,10 +274,10 @@ const PlantTree = () => {
                             />
                           </div>
 
-                          <h3 className={`text-sm font-medium transition-colors ${isSelected ? 'text-signal' : 'text-bone'}`}>
+                          <h3 className={`text-sm font-medium transition-colors ${isSelected ? 'text-emerald-600 dark:text-signal font-semibold' : 'text-slate-800 dark:text-bone'}`}>
                             {displayTreeName}
                           </h3>
-                          <p className="text-mist text-[11px] mt-0.5 font-mono tabular-nums">
+                          <p className="text-slate-500 dark:text-mist text-[11px] mt-0.5 font-mono tabular-nums">
                             ${tree.price} / {t('plant', 'per_tree')}
                           </p>
                         </div>
@@ -289,7 +289,7 @@ const PlantTree = () => {
                 <div className="pt-2">
                   <button 
                     onClick={() => setStep(2)} 
-                    className="w-full py-3 rounded-full bg-bone text-ink hover:bg-white text-sm font-medium flex justify-center items-center gap-2 transition cursor-pointer"
+                    className="w-full py-3.5 rounded-full primary-button text-sm font-semibold flex justify-center items-center gap-2 transition cursor-pointer shadow-lg"
                   >
                     {t('plant', 'continue_btn')} <ArrowRight size={16} />
                   </button>
@@ -531,7 +531,7 @@ const PlantTree = () => {
       </div>
 
       {/* RIGHT PANEL - IMMERSIVE VISUALS WITH 3D TREE LOWER DOWN AND TEXT ON TOP */}
-      <div className="hidden md:flex w-1/2 lg:w-7/12 sticky top-0 h-screen p-6 lg:p-10 flex-col justify-center items-center overflow-hidden">
+      <div className="hidden md:flex w-1/2 lg:w-7/12 sticky top-0 h-screen p-6 lg:p-8 flex-col justify-center items-center overflow-hidden pb-16">
         <AnimatePresence mode="wait">
           {step === 2 ? (
             <GlassCard 
@@ -542,32 +542,32 @@ const PlantTree = () => {
               initial="hidden" 
               animate="show" 
               exit="exit" 
-              className="w-full h-full max-h-[90vh] rounded-3xl overflow-hidden"
+              className="w-full h-full max-h-[86vh] rounded-3xl overflow-hidden"
             >
               <div className="relative w-full h-full p-5 sm:p-6 flex flex-col gap-3 justify-between">
                 {/* Top Badge */}
                 <div className="flex justify-between items-center shrink-0">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-mist">
-                    <span className="w-1.5 h-1.5 rounded-full bg-signal" />
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-white/20 dark:bg-black/40 border border-white/15 text-xs font-mono text-slate-700 dark:text-mist">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>{t('plant', 'step2')}</span>
                   </div>
-                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-bone tabular-nums">
+                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-white/20 dark:bg-black/40 border border-white/15 text-xs font-mono text-slate-800 dark:text-bone tabular-nums">
                     {activeRegion.temp}
                   </div>
                 </div>
 
-                {/* Region Info Card */}
-                <div className="shrink-0 backdrop-blur-xl bg-white/85 dark:bg-moss/85 border border-black/[0.08] dark:border-white/10 p-4 sm:p-5 rounded-2xl flex flex-col gap-2 text-bone shadow-md">
+                {/* Region Info Card (Transparent Frosted Glass) */}
+                <div className="shrink-0 backdrop-blur-2xl bg-white/40 dark:bg-black/35 border border-white/20 dark:border-white/10 p-4 sm:p-5 rounded-2xl flex flex-col gap-2 text-slate-900 dark:text-bone shadow-xl">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                      <Globe className="text-signal" size={20} />
-                      <h3 className="text-xl sm:text-2xl font-display font-light text-bone">{tText(activeRegion.name)}</h3>
+                      <Globe className="text-emerald-500 dark:text-signal" size={20} />
+                      <h3 className="text-xl sm:text-2xl font-display font-light text-slate-900 dark:text-bone">{tText(activeRegion.name)}</h3>
                     </div>
-                    <span className="text-[11px] font-mono px-2.5 py-0.5 bg-rose-500/10 text-rose-300 rounded-md border border-rose-500/20">
+                    <span className="text-[11px] font-mono px-2.5 py-0.5 bg-rose-500/15 text-rose-500 dark:text-rose-300 rounded-md border border-rose-500/30">
                       {tText(activeRegion.risk)}
                     </span>
                   </div>
-                  <p className="text-mist text-xs leading-relaxed">
+                  <p className="text-slate-600 dark:text-mist text-xs leading-relaxed">
                     {tText(activeRegion.desc)}
                   </p>
                 </div>
@@ -581,7 +581,7 @@ const PlantTree = () => {
                     decoding="async"
                     className="w-full h-full object-cover" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                 </div>
               </div>
             </GlassCard>
@@ -594,26 +594,26 @@ const PlantTree = () => {
               initial="hidden" 
               animate="show" 
               exit="exit" 
-              className="w-full h-full max-h-[90vh] rounded-3xl overflow-hidden"
+              className="w-full h-full max-h-[86vh] rounded-3xl overflow-hidden"
             >
               <div className="relative w-full h-full p-5 sm:p-6 flex flex-col gap-3 justify-between">
                 
                 {/* Top Badge & 3D / Photo Mode Switcher */}
                 <div className="flex justify-between items-center shrink-0 pointer-events-auto">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-mist">
-                    <span className="w-1.5 h-1.5 rounded-full bg-signal" />
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-white/20 dark:bg-black/40 border border-white/15 text-xs font-mono text-slate-700 dark:text-mist">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>{t('plant', 'step1')}</span>
                   </div>
 
                   {/* 3D / Photo Switcher Pill */}
-                  <div className="flex items-center gap-1 p-1 rounded-full bg-moss/80 backdrop-blur-md border border-white/10">
+                  <div className="flex items-center gap-1 p-1 rounded-full bg-white/25 dark:bg-black/40 backdrop-blur-md border border-white/15">
                     <button
                       type="button"
                       onClick={() => setViewMode('3d')}
                       className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
                         viewMode === '3d'
-                          ? 'bg-white/15 text-bone'
-                          : 'text-mist hover:text-bone'
+                          ? 'bg-white/40 dark:bg-white/20 text-slate-900 dark:text-bone font-medium shadow-xs'
+                          : 'text-slate-600 dark:text-mist hover:text-slate-900 dark:hover:text-bone'
                       }`}
                     >
                       <Rotate3D size={13} className={viewMode === '3d' ? 'animate-spin-slow' : ''} /> 3D
@@ -623,39 +623,39 @@ const PlantTree = () => {
                       onClick={() => setViewMode('photo')}
                       className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
                         viewMode === 'photo'
-                          ? 'bg-white/15 text-bone'
-                          : 'text-mist hover:text-bone'
+                          ? 'bg-white/40 dark:bg-white/20 text-slate-900 dark:text-bone font-medium shadow-xs'
+                          : 'text-slate-600 dark:text-mist hover:text-slate-900 dark:hover:text-bone'
                       }`}
                     >
                       <ImageIcon size={13} /> Photo
                     </button>
                   </div>
 
-                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-moss/70 border border-white/10 text-xs font-mono text-signal tabular-nums">
+                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-white/20 dark:bg-black/40 border border-white/15 text-xs font-mono text-emerald-600 dark:text-signal font-semibold tabular-nums">
                     ${activeTree.price}
                   </div>
                 </div>
 
-                {/* Tree Info Card at Top (Clean, Compact, No Overlap with 3D Tree) */}
-                <div className="shrink-0 backdrop-blur-xl bg-white/85 dark:bg-moss/85 border border-black/[0.08] dark:border-white/10 p-4 sm:p-5 rounded-2xl flex flex-col gap-2.5 text-bone shadow-md">
+                {/* Tree Info Card at Top (Transparent Frosted Glass, Crisp Contrast) */}
+                <div className="shrink-0 backdrop-blur-2xl bg-white/40 dark:bg-black/35 border border-white/20 dark:border-white/10 p-4 sm:p-5 rounded-2xl flex flex-col gap-2.5 shadow-xl">
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-display font-light tracking-tight mb-0.5 text-bone">{tText(activeTree.name)}</h3>
-                    <p className="text-mist text-xs leading-relaxed">{tText(activeTree.desc)}</p>
+                    <h3 className="text-xl sm:text-2xl font-display font-light tracking-tight mb-0.5 text-slate-900 dark:text-bone">{tText(activeTree.name)}</h3>
+                    <p className="text-slate-600 dark:text-mist text-xs leading-relaxed">{tText(activeTree.desc)}</p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 bg-black/[0.03] dark:bg-white/[0.04] p-2 rounded-xl border border-black/[0.06] dark:border-white/[0.08]">
+                  <div className="grid grid-cols-2 gap-3 bg-white/30 dark:bg-white/[0.04] p-2 rounded-xl border border-black/[0.06] dark:border-white/[0.08]">
                     <div className="text-center">
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-mist">CO2 (kg/yr)</p>
-                      <p className="text-base sm:text-lg font-display font-light text-signal mt-0.5 tabular-nums">{activeTree.co2}</p>
+                      <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-mist">CO2 (kg/yr)</p>
+                      <p className="text-base sm:text-lg font-display font-medium text-emerald-600 dark:text-signal mt-0.5 tabular-nums">{activeTree.co2}</p>
                     </div>
                     <div className="text-center border-l border-black/[0.08] dark:border-white/10">
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-mist">O2 (kg/yr)</p>
-                      <p className="text-base sm:text-lg font-display font-light text-signal mt-0.5 tabular-nums">{activeTree.oxygen}</p>
+                      <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-mist">O2 (kg/yr)</p>
+                      <p className="text-base sm:text-lg font-display font-medium text-emerald-600 dark:text-signal mt-0.5 tabular-nums">{activeTree.oxygen}</p>
                     </div>
                   </div>
                 </div>
 
-                {/* Dedicated 3D Tree Viewport - LOWER DOWN ("pasroda") with 100% Unobstructed Visibility */}
+                {/* Dedicated 3D Tree Viewport */}
                 <div className="relative flex-1 w-full min-h-[340px] rounded-2xl overflow-hidden border border-black/[0.06] dark:border-white/[0.06] bg-black/25">
                   {viewMode === '3d' ? (
                     <Tree3D treeType={activeTree.id} quantity={quantity} />
@@ -668,7 +668,7 @@ const PlantTree = () => {
                         decoding="async"
                         className="w-full h-full object-cover" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                     </>
                   )}
                 </div>
