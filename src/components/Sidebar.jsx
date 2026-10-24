@@ -115,8 +115,8 @@ export default function Sidebar({
         </div>
       </header>
 
-      {/* Desktop Sidebar (Transparent Frosted Glassmorphism) */}
-      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl border border-black/[0.06] dark:border-white/[0.08] bg-white/60 dark:bg-black/35 p-4 backdrop-blur-2xl shadow-2xl lg:flex">
+      {/* Desktop Sidebar (Ultra-Transparent Crystal Frosted Glass) */}
+      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl border border-white/15 bg-white/[0.12] dark:bg-white/[0.05] p-4 backdrop-blur-2xl shadow-2xl lg:flex text-white">
         {/* Brand */}
         <div className="flex items-center justify-between px-3 pb-3 pt-1 shrink-0 border-b border-black/[0.05] dark:border-white/[0.05] mb-2">
           <div className="flex items-center gap-2.5">

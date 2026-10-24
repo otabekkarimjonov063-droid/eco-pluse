@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 
-// Three levels of importance with full light and dark mode styles - transparent glassmorphic
+// Three levels of importance - ultra-clear crystal frosted glass (shaffof)
 const tones = {
-  base: 'rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-white/40 dark:bg-black/20 shadow-sm backdrop-blur-xl',
-  raised: 'rounded-2xl border border-emerald-500/30 dark:border-white/[0.15] bg-white/60 dark:bg-black/30 shadow-md backdrop-blur-xl',
-  feature: 'rounded-[1.75rem] border border-white/20 dark:border-white/10 bg-white/30 dark:bg-black/25 shadow-2xl backdrop-blur-2xl',
+  base: 'rounded-2xl border border-white/15 bg-white/[0.08] dark:bg-white/[0.05] shadow-lg backdrop-blur-2xl text-white',
+  raised: 'rounded-2xl border border-emerald-400/40 bg-white/[0.14] dark:bg-white/[0.09] shadow-xl backdrop-blur-2xl text-white',
+  feature: 'rounded-[1.75rem] border border-white/20 bg-white/[0.10] dark:bg-white/[0.06] shadow-2xl backdrop-blur-2xl text-white',
 }
 
 export default function GlassCard({ tone = 'base', as: Tag = 'div', className = '', children, ...rest }) {
