@@ -176,8 +176,8 @@ const PlantTree = () => {
         opacity={0.3} 
       />
 
-      {/* LEFT PANEL - CONTROLS (Ultra-Transparent Crystal Frosted Glass) */}
-      <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-24 pb-12 px-6 lg:px-12 min-h-screen overflow-y-auto relative backdrop-blur-2xl bg-white/[0.08] dark:bg-black/20 border-r border-white/10 shadow-2xl transition-colors duration-300 text-white">
+      {/* LEFT PANEL - CONTROLS (Unified Eco-Glass) */}
+      <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-24 pb-12 px-6 lg:px-12 min-h-screen overflow-y-auto relative eco-glass border-r border-white/10 shadow-2xl transition-colors duration-300 text-white">
 
         {/* Step Indicator */}
         <div className="absolute top-8 left-6 lg:left-12 flex items-center gap-2">
@@ -558,8 +558,8 @@ const PlantTree = () => {
                   </div>
                 </div>
 
-                {/* Region Info Card (Ultra-Transparent Frosted Glass) */}
-                <div className="shrink-0 backdrop-blur-2xl bg-white/[0.08] dark:bg-black/20 border border-white/20 p-4 sm:p-5 rounded-2xl flex flex-col gap-2 text-white shadow-2xl">
+                {/* Region Info Card (Unified Eco-Glass) */}
+                <div className="shrink-0 eco-glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-2 text-white shadow-2xl">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5">
                       <Globe className="text-emerald-400" size={20} />
@@ -638,8 +638,8 @@ const PlantTree = () => {
                   </div>
                 </div>
 
-                {/* Tree Info Card at Top (Ultra-Transparent Frosted Glass, Radiant Contrast) */}
-                <div className="shrink-0 backdrop-blur-2xl bg-white/[0.08] dark:bg-black/20 border border-white/20 p-4 sm:p-5 rounded-2xl flex flex-col gap-2.5 shadow-2xl text-white">
+                {/* Tree Info Card at Top (Unified Eco-Glass) */}
+                <div className="shrink-0 eco-glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-2.5 shadow-2xl text-white">
                   <div>
                     <h3 className="text-xl sm:text-2xl font-display font-light tracking-tight mb-0.5 text-white drop-shadow-md">{tText(activeTree.name)}</h3>
                     <p className="text-white/80 text-xs leading-relaxed">{tText(activeTree.desc)}</p>

@@ -267,7 +267,7 @@ const EcoAIChat = () => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 10 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-24 lg:bottom-8 right-4 sm:right-8 sm:w-[400px] w-[calc(100vw-2rem)] h-[580px] max-h-[75vh] rounded-3xl flex flex-col z-50 overflow-hidden border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.6)] bg-black/60 dark:bg-black/75 backdrop-blur-2xl text-bone font-sans"
+            className="fixed bottom-24 lg:bottom-8 right-4 sm:right-8 sm:w-[400px] w-[calc(100vw-2rem)] h-[580px] max-h-[75vh] rounded-3xl flex flex-col z-50 overflow-hidden eco-glass shadow-[0_20px_60px_rgba(0,0,0,0.6)] text-white font-sans"
           >
             {/* Header */}
             <div className="bg-moss/80 p-4 flex items-center justify-between border-b border-white/[0.08] text-bone">

@@ -155,7 +155,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
   // BANNER VARIANT (For Global Dashboard or Wide sections)
   if (isBanner) {
     return (
-      <div className="w-full rounded-3xl border border-black/[0.08] dark:border-white/[0.08] bg-white/75 dark:bg-white/[0.025] backdrop-blur-2xl p-4 md:p-6 text-bone shadow-sm dark:shadow-none transition-colors">
+      <div className="w-full rounded-3xl eco-glass p-4 md:p-6 text-white shadow-xl transition-colors">
         {/* Top Header Row with 10s indicator & API status */}
         <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-black/[0.06] dark:border-white/[0.06]">
           <div className="flex items-center gap-2">
@@ -287,7 +287,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
 
   // SIDEBAR VARIANT (Default Desktop Sidebar Widget)
   return (
-    <div className="w-full rounded-2xl border border-black/[0.08] dark:border-white/[0.07] bg-white/70 dark:bg-white/[0.025] backdrop-blur-xl p-3 text-bone transition-colors shadow-sm dark:shadow-none">
+    <div className="w-full rounded-2xl eco-glass-card p-3 text-white transition-colors">
       {/* Header telemetry status */}
       <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-black/[0.06] dark:border-white/[0.06]">
         <div className="flex items-center gap-1.5">

@@ -43,20 +43,62 @@
 
 @layer components {
 
+  /* ── Unified Crystal Glassmorphic System (Yagona Shaffoflik Tizimi) ── */
+  .eco-glass {
+    background-color: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  html.dark .eco-glass,
+  .dark .eco-glass {
+    background-color: rgba(12, 22, 18, 0.65) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .eco-glass-card {
+    background-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  html.dark .eco-glass-card,
+  .dark .eco-glass-card {
+    background-color: rgba(12, 22, 18, 0.55) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  }
+
+  .eco-glass-input {
+    background-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  html.dark .eco-glass-input,
+  .dark .eco-glass-input {
+    background-color: rgba(12, 22, 18, 0.60) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
   /* ── Premium Glassmorphism (Antigravity) ── */
   .premium-glass {
-    @apply bg-white/40 dark:bg-[#07101a]/40 border border-white/60 dark:border-white/10 rounded-3xl backdrop-blur-md;
-    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.3);
+    @apply eco-glass rounded-3xl;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.2);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .premium-glass:hover {
-    @apply bg-white/60 dark:bg-[#07101a]/60;
-    box-shadow: 0 20px 50px -15px rgba(0,255,170,0.15), inset 0 1px 0 rgba(255,255,255,0.4);
-    transform: translateY(-8px);
+    box-shadow: 0 20px 50px -15px rgba(0,255,170,0.15), inset 0 1px 0 rgba(255,255,255,0.3);
+    transform: translateY(-4px);
   }
 
   .premium-glass-deep {
-    @apply bg-white/20 dark:bg-[#07101a]/20 border border-white/30 dark:border-white/5 rounded-3xl backdrop-blur-md;
+    @apply eco-glass-card rounded-3xl;
     box-shadow: 0 30px 60px -20px rgba(0,0,0,0.15);
   }
 

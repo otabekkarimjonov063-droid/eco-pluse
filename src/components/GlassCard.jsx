@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 
-// Three levels of importance - ultra-clear crystal frosted glass (shaffof)
+// Three levels of importance - unified single glassmorphic system (bir xil shaffoflik)
 const tones = {
-  base: 'rounded-2xl border border-white/15 bg-white/[0.08] dark:bg-white/[0.05] shadow-lg backdrop-blur-2xl text-white',
-  raised: 'rounded-2xl border border-emerald-400/40 bg-white/[0.14] dark:bg-white/[0.09] shadow-xl backdrop-blur-2xl text-white',
-  feature: 'rounded-[1.75rem] border border-white/20 bg-white/[0.10] dark:bg-white/[0.06] shadow-2xl backdrop-blur-2xl text-white',
+  base: 'rounded-2xl eco-glass-card shadow-lg text-white',
+  raised: 'rounded-2xl eco-glass shadow-xl text-white border-emerald-400/40',
+  feature: 'rounded-[1.75rem] eco-glass shadow-2xl text-white',
 }
 
 export default function GlassCard({ tone = 'base', as: Tag = 'div', className = '', children, ...rest }) {

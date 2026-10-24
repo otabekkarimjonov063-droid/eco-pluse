@@ -448,7 +448,7 @@ const GlobalDashboard = () => {
           className="mb-10 max-w-3xl mx-auto"
         >
           <form onSubmit={handleSearch} className="relative mb-6">
-            <div className={`rounded-2xl p-1.5 pl-4 flex items-center gap-3 border backdrop-blur-xl bg-white/70 dark:bg-white/[0.03] shadow-sm dark:shadow-none ${!isOnline ? 'border-red-500/40' : 'border-black/[0.08] dark:border-white/[0.08]'}`}>
+            <div className={`rounded-2xl p-1.5 pl-4 flex items-center gap-3 eco-glass-input shadow-md ${!isOnline ? '!border-red-500/60' : ''}`}>
               <Search size={18} className={isOnline ? 'text-signal' : 'text-red-400'} />
               <input 
                 type="text" 
