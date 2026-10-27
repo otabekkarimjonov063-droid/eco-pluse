@@ -249,10 +249,10 @@ const EcoProjects = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <h1 className="font-display text-4xl md:text-5xl font-light mb-3 text-bone tracking-tight py-1">
+          <h1 className="font-display text-4xl md:text-5xl font-light mb-3 text-slate-900 dark:text-bone tracking-tight py-1">
             {t('projects', 'title')}
           </h1>
-          <p className="text-base text-mist max-w-xl mx-auto font-normal mb-8">
+          <p className="text-base text-slate-600 dark:text-mist max-w-xl mx-auto font-normal mb-8">
             {t('projects', 'subtitle')}
           </p>
 
@@ -268,7 +268,7 @@ const EcoProjects = () => {
                   className={`rounded-full px-4 py-1.5 text-xs font-mono transition-all border cursor-pointer ${
                     isSelected 
                       ? 'bg-signal text-ink border-signal font-semibold shadow-sm' 
-                      : 'bg-white/[0.03] border-white/[0.08] text-mist hover:text-bone hover:border-white/20'
+                      : 'bg-white/80 border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 dark:bg-white/[0.03] dark:border-white/[0.08] dark:text-mist dark:hover:text-bone dark:hover:border-white/20'
                   }`}
                 >
                   {label}
@@ -313,7 +313,7 @@ const EcoProjects = () => {
                       className="w-full h-full object-cover transform transition-transform duration-700 ease-out group-hover:scale-120 opacity-85 group-hover:opacity-100" 
                     />
                     <div className="absolute top-3 left-3 z-20">
-                      <span className="px-2.5 py-0.5 bg-moss/90 backdrop-blur-md text-[10px] font-mono text-signal rounded-md border border-signal/20">
+                      <span className="px-2.5 py-0.5 bg-white/90 dark:bg-moss/90 backdrop-blur-md text-[10px] font-mono text-emerald-800 dark:text-signal rounded-md border border-emerald-500/30 dark:border-signal/20 font-medium">
                         {categoryLabel}
                       </span>
                     </div>
@@ -328,22 +328,22 @@ const EcoProjects = () => {
 
                   {/* Content Section */}
                   <div className="p-5 flex flex-col flex-1">
-                    <h3 className="font-display text-lg font-light mb-2 line-clamp-1 text-bone group-hover:text-signal transition-colors">
+                    <h3 className="font-display text-lg font-light mb-2 line-clamp-1 text-slate-900 dark:text-bone group-hover:text-emerald-600 dark:group-hover:text-signal transition-colors">
                       {displayTitle}
                     </h3>
-                    <p className="text-xs text-mist mb-5 line-clamp-2 leading-relaxed flex-1">
+                    <p className="text-xs text-slate-600 dark:text-mist mb-5 line-clamp-2 leading-relaxed flex-1">
                       {displayDesc}
                     </p>
                     
                     {/* Progress Bar */}
                     <div className="mb-5 shrink-0">
                       <div className="flex justify-between text-xs font-mono mb-1.5">
-                        <span className="text-signal font-medium tabular-nums">
+                        <span className="text-emerald-700 dark:text-signal font-semibold tabular-nums">
                           $<CountUp value={project.funded} duration={1.2} /> {t('projects', 'funded')}
                         </span>
-                        <span className="text-mist text-[11px] tabular-nums">${project.target.toLocaleString()}</span>
+                        <span className="text-slate-500 dark:text-mist text-[11px] tabular-nums">${project.target.toLocaleString()}</span>
                       </div>
-                      <div className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-slate-200 dark:bg-white/[0.08] rounded-full overflow-hidden">
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${Math.min(100, progress)}%` }}
@@ -354,13 +354,13 @@ const EcoProjects = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-2 pt-4 border-t border-white/[0.06] shrink-0">
+                    <div className="flex items-center gap-2 pt-4 border-t border-slate-200 dark:border-white/[0.06] shrink-0">
                       <button 
                         onClick={() => handleOpenPayment(project)}
-                        className={`flex-1 rounded-full py-2.5 px-4 text-xs font-medium transition-all flex justify-center items-center gap-1.5 cursor-pointer ${
+                        className={`flex-1 rounded-full py-2.5 px-4 text-xs font-medium transition-all flex justify-center items-center gap-1.5 cursor-pointer shadow-xs ${
                           isCompleted 
-                            ? 'bg-white/[0.04] opacity-50 cursor-not-allowed text-mist' 
-                            : 'bg-bone text-ink hover:bg-white'
+                            ? 'bg-slate-100 text-slate-400 dark:bg-white/[0.04] dark:text-mist opacity-50 cursor-not-allowed' 
+                            : 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-bone dark:text-ink dark:hover:bg-white'
                         }`}
                         disabled={isCompleted}
                       >

@@ -17,21 +17,21 @@ const EcoComments     = lazy(() => import('./components/EcoComments'));
 const VersionUpdateModal = lazy(() => import('./components/VersionUpdateModal'));
 import VersionToast   from './components/VersionToast';
 
-// Minimal restrained loading spinner
+// Minimal restrained loading spinner that matches theme (no black flashing in light mode)
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-ink">
+  <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-eco-light dark:bg-ink transition-colors duration-200">
     <div className="flex flex-col items-center gap-5 relative z-10">
       <div className="relative w-10 h-10">
         <motion.div 
           animate={{ rotate: 360 }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 rounded-full border border-white/10 border-t-signal"
+          className="absolute inset-0 rounded-full border border-black/10 dark:border-white/10 border-t-emerald-600 dark:border-t-signal"
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-1.5 h-1.5 bg-signal rounded-full animate-pulse" />
+          <div className="w-1.5 h-1.5 bg-emerald-600 dark:bg-signal rounded-full animate-pulse" />
         </div>
       </div>
-      <span className="text-xs font-mono tracking-widest uppercase text-mist">
+      <span className="text-xs font-mono tracking-widest uppercase text-slate-500 dark:text-mist">
         Yuklanmoqda...
       </span>
     </div>
@@ -68,7 +68,7 @@ function App() {
   const closeLogin = useCallback(() => setIsLoginModalOpen(false), []);
 
   return (
-    <div className="min-h-screen relative flex bg-transparent text-slate-800 dark:text-bone overflow-x-hidden selection:bg-signal/30 font-sans">
+    <div className="min-h-screen relative flex bg-eco-light dark:bg-eco-dark text-slate-900 dark:text-bone overflow-x-hidden selection:bg-signal/30 font-sans transition-colors duration-200">
 
       {activeTab === 'admin' ? (
         <Suspense fallback={<PageLoader />}>

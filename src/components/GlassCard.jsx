@@ -2,20 +2,28 @@ import { useRef } from 'react'
 
 // Three levels of importance - unified single glassmorphic system (bir xil shaffoflik)
 const tones = {
-  base: 'rounded-2xl eco-glass-card shadow-lg text-white',
-  raised: 'rounded-2xl eco-glass shadow-xl text-white border-emerald-400/40',
-  feature: 'rounded-[1.75rem] eco-glass shadow-2xl text-white',
+  base: 'rounded-2xl eco-glass-card shadow-lg text-slate-800 dark:text-bone',
+  raised: 'rounded-2xl eco-glass shadow-xl text-slate-800 dark:text-bone border-emerald-500/30 dark:border-emerald-400/40',
+  feature: 'rounded-[1.75rem] eco-glass shadow-2xl text-slate-800 dark:text-bone',
 }
 
 export default function GlassCard({ tone = 'base', as: Tag = 'div', className = '', children, ...rest }) {
   const ref = useRef(null)
+  const animFrameRef = useRef(null)
 
-  // Spotlight follows the cursor: responds to user interaction
+  // Spotlight follows the cursor with rAF throttling for 60fps responsiveness
   const onMove = (e) => {
-    if (!ref.current) return
-    const r = ref.current.getBoundingClientRect()
-    ref.current.style.setProperty('--mx', `${e.clientX - r.left}px`)
-    ref.current.style.setProperty('--my', `${e.clientY - r.top}px`)
+    if (!ref.current || animFrameRef.current) return
+    const clientX = e.clientX
+    const clientY = e.clientY
+    animFrameRef.current = requestAnimationFrame(() => {
+      if (ref.current) {
+        const r = ref.current.getBoundingClientRect()
+        ref.current.style.setProperty('--mx', `${clientX - r.left}px`)
+        ref.current.style.setProperty('--my', `${clientY - r.top}px`)
+      }
+      animFrameRef.current = null
+    })
   }
 
   return (

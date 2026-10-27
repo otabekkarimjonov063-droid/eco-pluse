@@ -46,7 +46,7 @@ const RangeSlider = ({ value, min, max, step, suffix, onChange, prefix = '' }) =
           className="w-full absolute z-20 opacity-0 cursor-pointer h-full"
         />
         {/* Custom Track Background */}
-        <div className="w-full h-2 bg-white/[0.08] rounded-full relative overflow-hidden pointer-events-none">
+        <div className="w-full h-2 bg-slate-200 dark:bg-white/[0.08] rounded-full relative overflow-hidden pointer-events-none">
           {/* Custom Track Fill */}
           <div 
             className="h-full bg-signal transition-all duration-75 ease-out" 
@@ -55,15 +55,15 @@ const RangeSlider = ({ value, min, max, step, suffix, onChange, prefix = '' }) =
         </div>
         {/* Custom Thumb */}
         <div 
-          className="absolute w-5 h-5 bg-ink rounded-full shadow-md pointer-events-none border-2 border-signal transition-all duration-75 ease-out z-10 flex items-center justify-center"
+          className="absolute w-5 h-5 bg-white dark:bg-ink rounded-full shadow-md pointer-events-none border-2 border-signal transition-all duration-75 ease-out z-10 flex items-center justify-center"
           style={{ left: `calc(${percentage}% - 10px)` }}
         >
           <div className="w-1.5 h-1.5 rounded-full bg-signal" />
         </div>
       </div>
       
-      <div className="text-right text-3xl font-display font-light tabular-nums text-bone tracking-tight">
-        {prefix}{localVal} {suffix && <span className="text-base text-mist font-normal font-sans">{suffix}</span>}
+      <div className="text-right text-3xl font-display font-light tabular-nums text-slate-900 dark:text-bone tracking-tight">
+        {prefix}{localVal} {suffix && <span className="text-base text-slate-500 dark:text-mist font-normal font-sans">{suffix}</span>}
       </div>
     </div>
   );
@@ -180,16 +180,12 @@ const CarbonCalculator = () => {
       <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-transparent" />
         
-        {/* Antigravity Floating Orbs */}
-        <motion.div 
-          animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] right-[15%] w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(16,185,129,0.12)_0%,transparent_70%)] pointer-events-none"
+        {/* Antigravity Floating Orbs (Optimized GPU CSS) */}
+        <div 
+          className="absolute top-[20%] right-[15%] w-[350px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.1)_0%,transparent_70%)] pointer-events-none"
         />
-        <motion.div 
-          animate={{ x: [0, -40, 0], y: [0, 30, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[20%] left-[15%] w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(6,182,212,0.12)_0%,transparent_70%)] pointer-events-none"
+        <div 
+          className="absolute bottom-[20%] left-[15%] w-[350px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.1)_0%,transparent_70%)] pointer-events-none"
         />
       </div>
 
@@ -201,10 +197,10 @@ const CarbonCalculator = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <h1 className="font-display text-4xl md:text-5xl font-light mb-3 text-bone tracking-tight">
+          <h1 className="font-display text-4xl md:text-5xl font-light mb-3 text-slate-900 dark:text-bone tracking-tight">
             {t('calculator', 'title')}
           </h1>
-          <p className="text-base text-mist font-normal max-w-xl mx-auto">
+          <p className="text-base text-slate-600 dark:text-mist font-normal max-w-xl mx-auto">
             {t('calculator', 'subtitle')}
           </p>
         </motion.div>
@@ -221,7 +217,7 @@ const CarbonCalculator = () => {
           {/* Stepper Header with fixed un-clipped layer stacking */}
           {!isCalculated && (
             <div className="flex justify-between items-center mb-12 relative z-10">
-              <div className="absolute left-6 right-6 top-5 h-0.5 bg-white/[0.08] z-0 rounded-full overflow-hidden">
+              <div className="absolute left-6 right-6 top-5 h-0.5 bg-slate-200 dark:bg-white/[0.08] z-0 rounded-full overflow-hidden">
                 <motion.div 
                   className="h-full bg-signal rounded-full"
                   initial={{ width: 0 }}
@@ -237,13 +233,13 @@ const CarbonCalculator = () => {
                     className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 border ${
                       step >= s.num 
                         ? `bg-signal text-ink border-signal font-semibold shadow-sm` 
-                        : 'bg-moss/90 border-white/[0.08] text-mist'
+                        : 'bg-slate-100 border-slate-200 text-slate-500 dark:bg-moss/90 dark:border-white/[0.08] dark:text-mist'
                     }`}
                   >
                     {step > s.num ? <CheckCircle2 size={18} /> : s.icon}
                   </motion.div>
                   <span className={`text-[10px] font-mono mt-2 uppercase tracking-wider ${
-                    step >= s.num ? 'text-signal font-semibold' : 'text-mist/60'
+                    step >= s.num ? 'text-emerald-700 dark:text-signal font-semibold' : 'text-slate-500 dark:text-mist/60'
                   }`}>
                     {s.title}
                   </span>
@@ -267,12 +263,12 @@ const CarbonCalculator = () => {
                 {/* Step 1: Transport */}
                 {step === 1 && (
                   <div className="space-y-8">
-                    <h2 className="font-display text-2xl font-light flex items-center gap-3 text-bone">
+                    <h2 className="font-display text-2xl font-light flex items-center gap-3 text-slate-900 dark:text-bone">
                       <Car className="text-signal" size={28} /> {t('calculator', 'step1')}
                     </h2>
                     
-                    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-6">
-                      <label className="block text-sm font-medium mb-4 text-bone">{t('calculator', 'q_car')}</label>
+                    <div className="rounded-2xl border border-slate-200 bg-white/70 dark:border-white/[0.06] dark:bg-white/[0.025] p-6 shadow-xs">
+                      <label className="block text-sm font-medium mb-4 text-slate-900 dark:text-bone">{t('calculator', 'q_car')}</label>
                       <RangeSlider 
                         min="0" max="1000" step="10" 
                         value={carKm} onChange={setCarKm} 
@@ -280,8 +276,8 @@ const CarbonCalculator = () => {
                       />
                     </div>
 
-                    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-6">
-                      <label className="block text-sm font-medium mb-4 text-bone">{t('calculator', 'q_flight')}</label>
+                    <div className="rounded-2xl border border-slate-200 bg-white/70 dark:border-white/[0.06] dark:bg-white/[0.025] p-6 shadow-xs">
+                      <label className="block text-sm font-medium mb-4 text-slate-900 dark:text-bone">{t('calculator', 'q_flight')}</label>
                       <RangeSlider 
                         min="0" max="20" step="1" 
                         value={flights} onChange={setFlights} 
@@ -294,12 +290,12 @@ const CarbonCalculator = () => {
                 {/* Step 2: Energy */}
                 {step === 2 && (
                   <div className="space-y-8">
-                    <h2 className="font-display text-2xl font-light flex items-center gap-3 text-bone">
+                    <h2 className="font-display text-2xl font-light flex items-center gap-3 text-slate-900 dark:text-bone">
                       <Zap className="text-signal" size={28} /> {t('calculator', 'step2')}
                     </h2>
                     
-                    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-6">
-                      <label className="block text-sm font-medium mb-4 text-bone">{t('calculator', 'q_energy')}</label>
+                    <div className="rounded-2xl border border-slate-200 bg-white/70 dark:border-white/[0.06] dark:bg-white/[0.025] p-6 shadow-xs">
+                      <label className="block text-sm font-medium mb-4 text-slate-900 dark:text-bone">{t('calculator', 'q_energy')}</label>
                       <RangeSlider 
                         min="50" max="1000" step="10" 
                         value={energy} onChange={setEnergy} 
@@ -312,12 +308,12 @@ const CarbonCalculator = () => {
                 {/* Step 3: Diet */}
                 {step === 3 && (
                   <div className="space-y-8">
-                    <h2 className="font-display text-2xl font-light flex items-center gap-3 text-bone">
+                    <h2 className="font-display text-2xl font-light flex items-center gap-3 text-slate-900 dark:text-bone">
                       <Utensils className="text-signal" size={28} /> {t('calculator', 'step3')}
                     </h2>
                     
-                    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-6">
-                      <label className="block text-sm font-medium mb-4 text-bone">{t('calculator', 'q_meat')}</label>
+                    <div className="rounded-2xl border border-slate-200 bg-white/70 dark:border-white/[0.06] dark:bg-white/[0.025] p-6 shadow-xs">
+                      <label className="block text-sm font-medium mb-4 text-slate-900 dark:text-bone">{t('calculator', 'q_meat')}</label>
                       <RangeSlider 
                         min="0" max="21" step="1" 
                         value={meat} onChange={setMeat} 
@@ -330,12 +326,12 @@ const CarbonCalculator = () => {
                 {/* Step 4: Shopping */}
                 {step === 4 && (
                   <div className="space-y-8">
-                    <h2 className="font-display text-2xl font-light flex items-center gap-3 text-bone">
+                    <h2 className="font-display text-2xl font-light flex items-center gap-3 text-slate-900 dark:text-bone">
                       <ShoppingBag className="text-signal" size={28} /> {t('calculator', 'step4')}
                     </h2>
                     
-                    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-6">
-                      <label className="block text-sm font-medium mb-4 text-bone">{t('calculator', 'q_shopping')} ($)</label>
+                    <div className="rounded-2xl border border-slate-200 bg-white/70 dark:border-white/[0.06] dark:bg-white/[0.025] p-6 shadow-xs">
+                      <label className="block text-sm font-medium mb-4 text-slate-900 dark:text-bone">{t('calculator', 'q_shopping')} ($)</label>
                       <RangeSlider 
                         min="50" max="5000" step="50" 
                         value={shopping} onChange={setShopping} 
@@ -346,17 +342,17 @@ const CarbonCalculator = () => {
                 )}
 
                 {/* Navigation Buttons */}
-                <div className="flex justify-between mt-10 pt-6 border-t border-white/[0.08]">
+                <div className="flex justify-between mt-10 pt-6 border-t border-slate-200 dark:border-white/[0.08]">
                   <button 
                     onClick={handlePrev}
                     disabled={step === 1}
-                    className="rounded-full border border-white/[0.08] bg-white/[0.03] px-6 py-2.5 text-sm text-bone/80 flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/[0.08] transition cursor-pointer"
+                    className="rounded-full border border-slate-300 bg-slate-100 px-6 py-2.5 text-sm text-slate-700 hover:bg-slate-200 dark:border-white/[0.08] dark:bg-white/[0.03] dark:text-bone/80 dark:hover:bg-white/[0.08] flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer"
                   >
                     <ArrowLeft size={16} /> {t('calculator', 'prev')}
                   </button>
                   <button 
                     onClick={handleNext}
-                    className="rounded-full bg-bone px-7 py-2.5 text-sm font-medium text-ink transition hover:bg-white flex items-center gap-2 cursor-pointer"
+                    className="rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-bone dark:text-ink dark:hover:bg-white px-7 py-2.5 text-sm font-medium transition flex items-center gap-2 cursor-pointer shadow-md"
                   >
                     {step === 4 ? t('calculator', 'calculate') : t('calculator', 'next')} 
                     {step !== 4 && <ArrowRight size={16} />}
@@ -375,11 +371,11 @@ const CarbonCalculator = () => {
               >
                 <div className="text-center mb-10">
                   <Leaf size={40} className={`mx-auto mb-3 ${result.total < 4 ? 'text-signal' : 'text-ember'}`} />
-                  <h2 className="font-display text-3xl font-light text-bone mb-2">{t('calculator', 'result_title')}</h2>
-                  <div className="text-6xl sm:text-7xl font-display font-light tabular-nums mb-3 text-bone inline-block tracking-tight">
-                    <CountUp value={result.total} decimals={2} duration={1.5} /> <span className="text-2xl text-mist font-normal font-sans">{language === 'RU' ? 'Тонн' : language === 'EN' ? 'Tons' : 'Tonna'}</span>
+                  <h2 className="font-display text-3xl font-light text-slate-900 dark:text-bone mb-2">{t('calculator', 'result_title')}</h2>
+                  <div className="text-6xl sm:text-7xl font-display font-light tabular-nums mb-3 text-slate-900 dark:text-bone inline-block tracking-tight">
+                    <CountUp value={result.total} decimals={2} duration={1.5} /> <span className="text-2xl text-slate-600 dark:text-mist font-normal font-sans">{language === 'RU' ? 'Тонн' : language === 'EN' ? 'Tons' : 'Tonna'}</span>
                   </div>
-                  <p className="text-sm text-mist max-w-lg mx-auto font-normal">
+                  <p className="text-sm text-slate-600 dark:text-mist max-w-lg mx-auto font-normal">
                     {result.total < 4 ? t('calculator', 'result_desc_good') : t('calculator', 'result_desc_bad')}
                   </p>
                 </div>
@@ -387,7 +383,7 @@ const CarbonCalculator = () => {
                 {/* Graph Breakdown */}
                 <div className="grid lg:grid-cols-2 gap-6 mb-8">
                   <GlassCard tone="raised" className="p-5 h-[300px]">
-                    <h3 className="font-mono text-xs uppercase tracking-wider mb-4 text-mist">{t('calculator', 'breakdown_title')}</h3>
+                    <h3 className="font-mono text-xs uppercase tracking-wider mb-4 text-slate-700 dark:text-mist font-semibold">{t('calculator', 'breakdown_title')}</h3>
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={result.breakdown} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                         <ChartDefs />
@@ -401,7 +397,7 @@ const CarbonCalculator = () => {
                   </GlassCard>
                   
                   <GlassCard tone="raised" className="p-5">
-                    <h3 className="font-mono text-xs uppercase tracking-wider mb-4 text-mist">{t('calculator', 'recommendations')}</h3>
+                    <h3 className="font-mono text-xs uppercase tracking-wider mb-4 text-slate-700 dark:text-mist font-semibold">{t('calculator', 'recommendations')}</h3>
                     <ul className="space-y-2.5">
                       {result.breakdown.sort((a,b) => b.value - a.value).slice(0, 3).map((item, idx) => (
                         <motion.li 
@@ -409,10 +405,10 @@ const CarbonCalculator = () => {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.15 + idx * 0.08 }}
                           key={idx} 
-                          className="flex gap-3 items-start bg-white/[0.03] p-3 rounded-xl border border-white/[0.06]"
+                          className="flex gap-3 items-start bg-slate-50 dark:bg-white/[0.03] p-3 rounded-xl border border-slate-200 dark:border-white/[0.06]"
                         >
-                          <span className="w-5 h-5 rounded-full bg-signal/10 text-signal flex items-center justify-center font-mono font-medium text-[11px] shrink-0 border border-signal/20">{idx+1}</span>
-                          <div className="text-xs text-bone/80 font-normal leading-relaxed">
+                          <span className="w-5 h-5 rounded-full bg-signal/15 text-emerald-800 dark:text-signal flex items-center justify-center font-mono font-medium text-[11px] shrink-0 border border-signal/30">{idx+1}</span>
+                          <div className="text-xs text-slate-800 dark:text-bone/80 font-normal leading-relaxed">
                             {language === 'RU' ? `Ваши выбросы по сектору "${item.name}" высоки.` : language === 'EN' ? `Your emissions in "${item.name}" are high.` : `Sizning "${item.name}" bo'yicha emissiyangiz yuqori.`} {item.name === 'Transport' ? t('calculator', 'rec_transport') : item.name === 'Ovqatlanish' ? t('calculator', 'rec_food') : t('calculator', 'rec_energy')}
                           </div>
                         </motion.li>
@@ -422,7 +418,7 @@ const CarbonCalculator = () => {
                 </div>
 
                 <div className="text-center">
-                  <button onClick={reset} className="rounded-full border border-white/[0.08] bg-white/[0.03] px-6 py-2.5 text-xs text-mist hover:text-bone transition inline-flex items-center gap-2 cursor-pointer">
+                  <button onClick={reset} className="rounded-full border border-slate-300 bg-slate-100 px-6 py-2.5 text-xs text-slate-700 hover:text-slate-900 hover:bg-slate-200 dark:border-white/[0.08] dark:bg-white/[0.03] dark:text-mist dark:hover:text-bone transition inline-flex items-center gap-2 cursor-pointer">
                     <RotateCcw size={14} /> {t('calculator', 'recalculate')}
                   </button>
                 </div>

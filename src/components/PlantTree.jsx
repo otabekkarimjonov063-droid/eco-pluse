@@ -168,7 +168,7 @@ const PlantTree = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-2rem)] lg:min-h-screen bg-transparent text-white flex flex-col md:flex-row overflow-hidden font-sans relative lg:border-l border-white/10 transition-colors duration-300">
+    <div className="min-h-[calc(100vh-2rem)] lg:min-h-screen bg-transparent text-slate-900 dark:text-white flex flex-col md:flex-row overflow-hidden font-sans relative lg:border-l border-slate-200 dark:border-white/10 transition-colors duration-300">
       {/* Dynamic Looping Video Background */}
       <VideoBackdrop 
         src="/videos/growth.mp4" 
@@ -177,7 +177,7 @@ const PlantTree = () => {
       />
 
       {/* LEFT PANEL - CONTROLS (Unified Eco-Glass) */}
-      <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-24 pb-12 px-6 lg:px-12 min-h-screen overflow-y-auto relative eco-glass border-r border-white/10 shadow-2xl transition-colors duration-300 text-white">
+      <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-24 pb-12 px-6 lg:px-12 min-h-screen overflow-y-auto relative eco-glass border-r border-slate-200 dark:border-white/10 shadow-2xl transition-colors duration-300 text-slate-900 dark:text-white">
 
         {/* Step Indicator */}
         <div className="absolute top-8 left-6 lg:left-12 flex items-center gap-2">
@@ -185,14 +185,14 @@ const PlantTree = () => {
             <div key={s} className="flex items-center gap-2">
               <div className={`w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs transition-all duration-300 ${
                 step === s 
-                  ? 'bg-emerald-400 text-black font-bold shadow-[0_0_14px_rgba(52,211,153,0.7)]' 
+                  ? 'bg-emerald-500 text-white font-bold shadow-[0_0_14px_rgba(16,185,129,0.5)]' 
                   : step > s 
-                    ? 'border border-emerald-400/60 text-emerald-300 bg-emerald-500/20' 
-                    : 'border border-white/20 text-white/50 bg-white/5'
+                    ? 'border border-emerald-500 text-emerald-600 bg-emerald-500/15 dark:border-emerald-400/60 dark:text-emerald-300 dark:bg-emerald-500/20' 
+                    : 'border border-slate-300 text-slate-400 bg-slate-100 dark:border-white/20 dark:text-white/50 dark:bg-white/5'
               }`}>
                 {step > s ? <CheckCircle size={13} /> : `0${s}`}
               </div>
-              {s !== 4 && <div className={`w-5 h-[1px] transition-all duration-300 ${step > s ? 'bg-emerald-400/60' : 'bg-white/15'}`}></div>}
+              {s !== 4 && <div className={`w-5 h-[1px] transition-all duration-300 ${step > s ? 'bg-emerald-500/60' : 'bg-slate-300 dark:bg-white/15'}`}></div>}
             </div>
           ))}
         </div>
@@ -200,7 +200,7 @@ const PlantTree = () => {
         <div className="pt-14 pb-8 flex flex-col justify-center">
           
           {/* Mobile Preview Showcase */}
-          <div className="md:hidden mb-6 rounded-2xl overflow-hidden border border-white/15 bg-black/40">
+          <div className="md:hidden mb-6 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/15 bg-black/40">
             <div className="relative h-60 overflow-hidden bg-[#08090a]">
               {step !== 2 && viewMode === '3d' ? (
                 <Tree3D treeType={activeTree.id} quantity={quantity} />
@@ -234,11 +234,11 @@ const PlantTree = () => {
             {step === 1 && (
               <motion.div key="step1" variants={leftVariants} initial="hidden" animate="show" exit="exit" className="space-y-6">
                 <div>
-                  <h1 className="font-display text-3xl lg:text-4xl font-light mb-2 tracking-tight text-white drop-shadow-md">
+                  <h1 className="font-display text-3xl lg:text-4xl font-light mb-2 tracking-tight text-slate-900 dark:text-white">
                     {t('plant', 'headline').split('.')[0]}. <br />
-                    <span className="text-emerald-400 font-medium italic drop-shadow-[0_0_16px_rgba(52,211,153,0.6)]">{t('plant', 'headline').split('.')[1] || ''}</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-medium italic">{t('plant', 'headline').split('.')[1] || ''}</span>
                   </h1>
-                  <p className="text-white/80 text-sm max-w-md font-normal leading-relaxed drop-shadow-sm">
+                  <p className="text-slate-600 dark:text-white/80 text-sm max-w-md font-normal leading-relaxed">
                     {t('plant', 'subheadline')}
                   </p>
                 </div>
@@ -255,15 +255,15 @@ const PlantTree = () => {
                         onClick={() => setSelectedTree(idx)}
                         className={`w-full text-center p-3 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition ${
                           isSelected 
-                            ? 'border-emerald-400/80 bg-emerald-500/20 shadow-[0_0_24px_rgba(52,211,153,0.3)] ring-1 ring-emerald-400/50' 
-                            : 'border-white/15 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-xl'
+                            ? 'border-emerald-500 bg-emerald-500/15 shadow-[0_0_24px_rgba(16,185,129,0.2)] ring-1 ring-emerald-500/50' 
+                            : 'border-slate-200/80 bg-white/70 hover:bg-white dark:border-white/15 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] backdrop-blur-xl'
                         }`}
                       >
                         <div className="relative z-10 w-full flex flex-col items-center">
                           <div className={`p-1 rounded-xl transition-all duration-200 mb-2 border ${
                             isSelected 
                               ? 'border-emerald-400/60 bg-emerald-500/25' 
-                              : 'border-white/15 bg-white/[0.04]'
+                              : 'border-slate-200 bg-slate-50 dark:border-white/15 dark:bg-white/[0.04]'
                           }`}>
                             <img 
                               src={tree.image} 
@@ -276,10 +276,10 @@ const PlantTree = () => {
                             />
                           </div>
 
-                          <h3 className={`text-sm font-semibold transition-colors ${isSelected ? 'text-emerald-300 drop-shadow-sm' : 'text-white'}`}>
+                          <h3 className={`text-sm font-semibold transition-colors ${isSelected ? 'text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-800 dark:text-white font-semibold'}`}>
                             {displayTreeName}
                           </h3>
-                          <p className="text-emerald-300/85 text-[11px] mt-0.5 font-mono tabular-nums">
+                          <p className="text-emerald-600 dark:text-emerald-300/85 text-[11px] mt-0.5 font-mono tabular-nums font-medium">
                             ${tree.price} / {t('plant', 'per_tree')}
                           </p>
                         </div>
@@ -305,14 +305,14 @@ const PlantTree = () => {
                 <div>
                   <button 
                     onClick={() => setStep(1)} 
-                    className="text-white/70 hover:text-white flex items-center gap-2 mb-4 font-semibold transition-colors text-sm cursor-pointer"
+                    className="text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white flex items-center gap-2 mb-4 font-semibold transition-colors text-sm cursor-pointer"
                   >
                     <ChevronRight className="rotate-180" size={16} /> {t('plant', 'back_btn')}
                   </button>
-                  <h2 className="text-3xl sm:text-4xl font-serif font-normal tracking-tight mb-2 text-white drop-shadow-md">
+                  <h2 className="text-3xl sm:text-4xl font-serif font-normal tracking-tight mb-2 text-slate-900 dark:text-white">
                     {t('plant', 'select_region')}
                   </h2>
-                  <p className="text-white/80 text-sm max-w-md">
+                  <p className="text-slate-600 dark:text-white/80 text-sm max-w-md">
                     {tText(activeTree.name)}
                   </p>
                 </div>
@@ -330,18 +330,18 @@ const PlantTree = () => {
                         onClick={() => setSelectedRegion(idx)}
                         className={`w-full text-left p-3.5 rounded-2xl transition-all duration-200 border relative overflow-hidden group flex items-center gap-3.5 cursor-pointer backdrop-blur-xl ${
                           isSelected
-                            ? 'bg-emerald-500/20 border-emerald-400/80 shadow-[0_0_24px_rgba(52,211,153,0.3)] ring-1 ring-emerald-400/40'
-                            : 'bg-white/[0.06] border-white/15 hover:bg-white/[0.12]'
+                            ? 'bg-emerald-500/15 border-emerald-500 shadow-[0_0_24px_rgba(16,185,129,0.2)] ring-1 ring-emerald-500/40'
+                            : 'bg-white/70 border-slate-200/80 hover:bg-white dark:bg-white/[0.06] dark:border-white/15 dark:hover:bg-white/[0.12]'
                         }`}
                       >
                         {isSelected && (
-                          <motion.div layoutId="activeRegionBorder" className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-400" />
+                          <motion.div layoutId="activeRegionBorder" className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 dark:bg-emerald-400" />
                         )}
                         
                         <div className={`p-1 rounded-xl transition-all shrink-0 border ${
                           isSelected 
                             ? 'border-emerald-400/60 bg-emerald-500/25' 
-                            : 'border-white/15 bg-white/[0.04]'
+                            : 'border-slate-200 bg-slate-50 dark:border-white/15 dark:bg-white/[0.04]'
                         }`}>
                           <img 
                             src={region.image} 
@@ -355,17 +355,17 @@ const PlantTree = () => {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <h3 className={`text-sm font-semibold transition-colors ${isSelected ? 'text-emerald-300 drop-shadow-sm' : 'text-white'}`}>
+                          <h3 className={`text-sm font-semibold transition-colors ${isSelected ? 'text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-800 dark:text-white font-semibold'}`}>
                             {displayRegionName}
                           </h3>
-                          <p className="text-xs text-white/75 truncate mt-0.5">
+                          <p className="text-xs text-slate-600 dark:text-white/75 truncate mt-0.5">
                             {displayDesc}
                           </p>
                           <div className="flex items-center gap-2 mt-1.5">
-                            <span className="text-[10px] font-mono px-2 py-0.5 bg-rose-500/25 text-rose-200 rounded-md border border-rose-500/40">
+                            <span className="text-[10px] font-mono px-2 py-0.5 bg-rose-500/15 text-rose-700 dark:bg-rose-500/25 dark:text-rose-200 rounded-md border border-rose-500/30">
                               {displayRisk}
                             </span>
-                            <span className="text-[10px] font-mono text-white/80">
+                            <span className="text-[10px] font-mono text-slate-600 dark:text-white/80">
                               {region.temp}
                             </span>
                           </div>
@@ -392,32 +392,32 @@ const PlantTree = () => {
                 <div>
                   <button 
                     onClick={() => setStep(2)} 
-                    className="text-white/70 hover:text-white flex items-center gap-2 mb-4 font-semibold transition-colors text-xs cursor-pointer"
+                    className="text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white flex items-center gap-2 mb-4 font-semibold transition-colors text-xs cursor-pointer"
                   >
                     <ChevronRight className="rotate-180" size={14} /> {t('plant', 'back_btn')}
                   </button>
-                  <h2 className="text-3xl sm:text-4xl font-serif font-normal tracking-tight mb-2 text-white drop-shadow-md">
+                  <h2 className="text-3xl sm:text-4xl font-serif font-normal tracking-tight mb-2 text-slate-900 dark:text-white">
                     {t('plant', 'step3')}
                   </h2>
-                  <p className="text-xs font-mono text-emerald-300/80">
+                  <p className="text-xs font-mono text-emerald-700 dark:text-emerald-300/80 font-medium">
                     {tText(activeTree.name)} • {tText(activeRegion.name)}
                   </p>
                 </div>
 
                 {/* Quantity selector */}
-                <div className="p-4 bg-white/[0.08] backdrop-blur-xl rounded-2xl border border-white/20 flex items-center justify-between">
-                  <span className="font-medium text-sm text-white">{t('plant', 'quantity')}</span>
+                <div className="p-4 bg-white/70 dark:bg-white/[0.08] backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-white/20 flex items-center justify-between">
+                  <span className="font-medium text-sm text-slate-800 dark:text-white">{t('plant', 'quantity')}</span>
                   <div className="flex items-center gap-3">
                     <button 
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white hover:border-emerald-400 transition-colors cursor-pointer"
+                      className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 dark:bg-white/10 dark:hover:bg-white/20 dark:border-white/20 dark:text-white flex items-center justify-center transition-colors cursor-pointer"
                     >
                       <Minus size={14} />
                     </button>
-                    <span className="text-base font-mono font-bold w-8 text-center text-white">{quantity}</span>
+                    <span className="text-base font-mono font-bold w-8 text-center text-slate-900 dark:text-white">{quantity}</span>
                     <button 
                       onClick={() => setQuantity(quantity + 1)}
-                      className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white hover:border-emerald-400 transition-colors cursor-pointer"
+                      className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 dark:bg-white/10 dark:hover:bg-white/20 dark:border-white/20 dark:text-white flex items-center justify-center transition-colors cursor-pointer"
                     >
                       <Plus size={14} />
                     </button>
@@ -425,9 +425,9 @@ const PlantTree = () => {
                 </div>
 
                 {/* Total box */}
-                <div className="p-4 bg-emerald-500/20 border border-emerald-400/50 rounded-2xl flex items-center justify-between backdrop-blur-xl shadow-[0_0_20px_rgba(52,211,153,0.2)]">
-                  <span className="font-semibold text-sm text-emerald-300">{t('plant', 'total_amount')}</span>
-                  <span className="text-2xl font-mono font-bold text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)]">${totalAmount}</span>
+                <div className="p-4 bg-emerald-500/15 border border-emerald-500/40 rounded-2xl flex items-center justify-between backdrop-blur-xl shadow-sm">
+                  <span className="font-semibold text-sm text-emerald-800 dark:text-emerald-300">{t('plant', 'total_amount')}</span>
+                  <span className="text-2xl font-mono font-bold text-emerald-700 dark:text-emerald-400 drop-shadow-sm">${totalAmount}</span>
                 </div>
 
                 {/* Card input */}
@@ -439,7 +439,7 @@ const PlantTree = () => {
                       value={cardData.name}
                       onChange={(e) => setCardData({ ...cardData, name: e.target.value.toUpperCase() })}
                       placeholder={language === 'RU' ? 'ИМЯ НА КАРТЕ' : language === 'EN' ? 'NAME ON CARD' : 'KARTA EGASI ISMI'} 
-                      className="w-full bg-white/[0.08] border border-white/20 p-3 rounded-xl font-medium text-white placeholder-white/40 outline-none focus:border-emerald-400 focus:bg-white/[0.14] transition-all text-xs tracking-wider uppercase" 
+                      className="w-full bg-white dark:bg-white/[0.08] border border-slate-300 dark:border-white/20 p-3 rounded-xl font-medium text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/40 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:bg-white dark:focus:bg-white/[0.14] transition-all text-xs tracking-wider uppercase" 
                     />
                   </div>
                   <div>
@@ -456,7 +456,7 @@ const PlantTree = () => {
                       }}
                       placeholder="8600 0000 0000 0000" 
                       maxLength="19" 
-                      className="w-full bg-white/[0.08] border border-white/20 p-3 rounded-xl font-mono text-white placeholder-white/40 outline-none focus:border-emerald-400 focus:bg-white/[0.14] transition-all text-xs" 
+                      className="w-full bg-white dark:bg-white/[0.08] border border-slate-300 dark:border-white/20 p-3 rounded-xl font-mono text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/40 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:bg-white dark:focus:bg-white/[0.14] transition-all text-xs" 
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
@@ -473,7 +473,7 @@ const PlantTree = () => {
                       }}
                       placeholder="MM/YY" 
                       maxLength="5" 
-                      className="w-full bg-white/[0.08] border border-white/20 p-3 rounded-xl font-mono text-white placeholder-white/40 outline-none focus:border-emerald-400 focus:bg-white/[0.14] text-xs" 
+                      className="w-full bg-white dark:bg-white/[0.08] border border-slate-300 dark:border-white/20 p-3 rounded-xl font-mono text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/40 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:bg-white dark:focus:bg-white/[0.14] text-xs" 
                     />
                     <input 
                       type="text" 
@@ -486,7 +486,7 @@ const PlantTree = () => {
                       onChange={(e) => setCardData({ ...cardData, cvv: e.target.value.slice(0, 4) })}
                       placeholder="CVV" 
                       maxLength="4" 
-                      className="w-full bg-white/[0.08] border border-white/20 p-3 rounded-xl font-mono text-white placeholder-white/40 outline-none focus:border-emerald-400 focus:bg-white/[0.14] text-xs" 
+                      className="w-full bg-white dark:bg-white/[0.08] border border-slate-300 dark:border-white/20 p-3 rounded-xl font-mono text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/40 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:bg-white dark:focus:bg-white/[0.14] text-xs" 
                     />
                   </div>
 
@@ -504,17 +504,17 @@ const PlantTree = () => {
             {/* STEP 4: SUCCESS */}
             {step === 4 && (
               <motion.div key="step4" variants={leftVariants} initial="hidden" animate="show" exit="exit" className="text-center space-y-6 my-auto py-8">
-                <div className="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-400/50 shadow-[0_0_20px_rgba(52,211,153,0.3)]">
+                <div className="w-14 h-14 bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/40 dark:border-emerald-400/50 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                   <CheckCircle size={28} />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-serif font-normal tracking-tight mb-2 text-white drop-shadow-md">
+                  <h2 className="text-3xl font-serif font-normal tracking-tight mb-2 text-slate-900 dark:text-white">
                     {t('plant', 'order_placed')}
                   </h2>
-                  <p className="text-xs text-white/80 max-w-sm mx-auto">
+                  <p className="text-xs text-slate-600 dark:text-white/80 max-w-sm mx-auto">
                     {t('plant', 'order_desc')}
                   </p>
-                  <div className="mt-4 inline-block px-3.5 py-1.5 bg-emerald-500/20 text-emerald-300 font-mono text-xs rounded-lg border border-emerald-400/40">
+                  <div className="mt-4 inline-block px-3.5 py-1.5 bg-emerald-500/15 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 font-mono text-xs rounded-lg border border-emerald-500/30 dark:border-emerald-400/40">
                     ID: {orderId}
                   </div>
                 </div>
@@ -528,7 +528,7 @@ const PlantTree = () => {
                   </button>
                   <button 
                     onClick={() => { setStep(1); setQuantity(1); }}
-                    className="w-full py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-sm font-medium rounded-xl text-white cursor-pointer backdrop-blur-md transition-colors"
+                    className="w-full py-3 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-sm font-medium rounded-xl text-slate-800 dark:bg-white/10 dark:hover:bg-white/20 dark:border-white/20 dark:text-white cursor-pointer backdrop-blur-md transition-colors"
                   >
                     {t('plant', 'close')}
                   </button>
@@ -557,33 +557,33 @@ const PlantTree = () => {
               <div className="relative w-full h-full p-5 sm:p-6 flex flex-col gap-3 justify-between">
                 {/* Top Badge */}
                 <div className="flex justify-between items-center shrink-0">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-xs font-mono text-white">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-white/80 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-xs font-mono text-slate-700 dark:text-white">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                     <span>{t('plant', 'step2')}</span>
                   </div>
-                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-xs font-mono text-white tabular-nums">
+                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-white/80 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-xs font-mono text-slate-700 dark:text-white tabular-nums">
                     {activeRegion.temp}
                   </div>
                 </div>
 
                 {/* Region Info Card (Unified Eco-Glass) */}
-                <div className="shrink-0 eco-glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-2 text-white shadow-2xl">
+                <div className="shrink-0 eco-glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-2 text-slate-900 dark:text-white shadow-2xl">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                      <Globe className="text-emerald-400" size={20} />
-                      <h3 className="text-xl sm:text-2xl font-display font-light text-white drop-shadow-sm">{tText(activeRegion.name)}</h3>
+                      <Globe className="text-emerald-600 dark:text-emerald-400" size={20} />
+                      <h3 className="text-xl sm:text-2xl font-display font-light text-slate-900 dark:text-white drop-shadow-sm">{tText(activeRegion.name)}</h3>
                     </div>
-                    <span className="text-[11px] font-mono px-2.5 py-0.5 bg-rose-500/25 text-rose-200 rounded-md border border-rose-500/40">
+                    <span className="text-[11px] font-mono px-2.5 py-0.5 bg-rose-500/15 text-rose-700 dark:bg-rose-500/25 dark:text-rose-200 rounded-md border border-rose-500/30">
                       {tText(activeRegion.risk)}
                     </span>
                   </div>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-slate-600 dark:text-white/80 text-xs leading-relaxed">
                     {tText(activeRegion.desc)}
                   </p>
                 </div>
 
                 {/* Region Photo Viewport */}
-                <div className="relative flex-1 w-full min-h-[320px] rounded-2xl overflow-hidden border border-white/15">
+                <div className="relative flex-1 w-full min-h-[320px] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/15">
                   <img 
                     src={activeRegion.image} 
                     alt="" 
@@ -610,20 +610,20 @@ const PlantTree = () => {
                 
                 {/* Top Badge & 3D / Photo Mode Switcher */}
                 <div className="flex justify-between items-center shrink-0 pointer-events-auto">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-xs font-mono text-white">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-white/80 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-xs font-mono text-slate-700 dark:text-white">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     <span>{t('plant', 'step1')}</span>
                   </div>
 
                   {/* 3D / Photo Switcher Pill */}
-                  <div className="flex items-center gap-1 p-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+                  <div className="flex items-center gap-1 p-1 rounded-full bg-slate-100/90 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/20">
                     <button
                       type="button"
                       onClick={() => setViewMode('3d')}
                       className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
                         viewMode === '3d'
-                          ? 'bg-white/25 text-white font-semibold shadow-xs'
-                          : 'text-white/70 hover:text-white'
+                          ? 'bg-white text-slate-900 shadow-sm font-semibold dark:bg-white/25 dark:text-white'
+                          : 'text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white'
                       }`}
                     >
                       <Rotate3D size={13} className={viewMode === '3d' ? 'animate-spin-slow' : ''} /> 3D
@@ -633,44 +633,44 @@ const PlantTree = () => {
                       onClick={() => setViewMode('photo')}
                       className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
                         viewMode === 'photo'
-                          ? 'bg-white/25 text-white font-semibold shadow-xs'
-                          : 'text-white/70 hover:text-white'
+                          ? 'bg-white text-slate-900 shadow-sm font-semibold dark:bg-white/25 dark:text-white'
+                          : 'text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white'
                       }`}
                     >
                       <ImageIcon size={13} /> {language === 'RU' ? 'Фото' : language === 'EN' ? 'Photo' : 'Rasm'}
                     </button>
                   </div>
 
-                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-emerald-500/20 border border-emerald-400/40 text-xs font-mono text-emerald-300 font-bold tabular-nums">
+                  <div className="px-3 py-1.5 rounded-full backdrop-blur-md bg-emerald-500/15 border border-emerald-500/30 text-xs font-mono text-emerald-700 dark:text-emerald-300 font-bold tabular-nums">
                     ${activeTree.price}
                   </div>
                 </div>
 
                 {/* Tree Info Card at Top (Unified Eco-Glass) */}
-                <div className="shrink-0 eco-glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-2.5 shadow-2xl text-white">
+                <div className="shrink-0 eco-glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-2.5 shadow-2xl text-slate-900 dark:text-white">
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-display font-light tracking-tight mb-0.5 text-white drop-shadow-md">{tText(activeTree.name)}</h3>
-                    <p className="text-white/80 text-xs leading-relaxed">{tText(activeTree.desc)}</p>
+                    <h3 className="text-xl sm:text-2xl font-display font-light tracking-tight mb-0.5 text-slate-900 dark:text-white drop-shadow-sm">{tText(activeTree.name)}</h3>
+                    <p className="text-slate-600 dark:text-white/80 text-xs leading-relaxed">{tText(activeTree.desc)}</p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 bg-white/[0.05] p-2 rounded-xl border border-white/15">
+                  <div className="grid grid-cols-2 gap-3 bg-black/[0.03] dark:bg-white/[0.05] p-2.5 rounded-xl border border-slate-200/80 dark:border-white/15">
                     <div className="text-center">
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-200/80">
+                      <p className="text-[11px] font-mono uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-semibold">
                         {language === 'RU' ? 'CO₂ (кг/год)' : language === 'EN' ? 'CO₂ (kg/yr)' : 'CO₂ (kg/yil)'}
                       </p>
-                      <p className="text-base sm:text-lg font-display font-medium text-emerald-400 mt-0.5 tabular-nums drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">{activeTree.co2}</p>
+                      <p className="text-base sm:text-lg font-display font-bold text-emerald-700 dark:text-emerald-400 mt-0.5 tabular-nums drop-shadow-sm">{activeTree.co2}</p>
                     </div>
-                    <div className="text-center border-l border-white/15">
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-200/80">
+                    <div className="text-center border-l border-slate-200/80 dark:border-white/15">
+                      <p className="text-[11px] font-mono uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-semibold">
                         {language === 'RU' ? 'O₂ (кг/год)' : language === 'EN' ? 'O₂ (kg/yr)' : 'O₂ (kg/yil)'}
                       </p>
-                      <p className="text-base sm:text-lg font-display font-medium text-emerald-400 mt-0.5 tabular-nums drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">{activeTree.oxygen}</p>
+                      <p className="text-base sm:text-lg font-display font-bold text-emerald-700 dark:text-emerald-400 mt-0.5 tabular-nums drop-shadow-sm">{activeTree.oxygen}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Dedicated 3D Tree Viewport */}
-                <div className="relative flex-1 w-full min-h-[340px] rounded-2xl overflow-hidden border border-white/15 bg-black/20">
+                <div className="relative flex-1 w-full min-h-[340px] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/15 bg-black/20">
                   {viewMode === '3d' ? (
                     <Tree3D treeType={activeTree.id} quantity={quantity} />
                   ) : (

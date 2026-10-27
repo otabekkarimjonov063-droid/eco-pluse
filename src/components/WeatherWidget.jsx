@@ -155,18 +155,18 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
   // BANNER VARIANT (For Global Dashboard or Wide sections)
   if (isBanner) {
     return (
-      <div className="w-full rounded-3xl eco-glass p-4 md:p-6 text-white shadow-xl transition-colors">
+      <div className="w-full rounded-3xl eco-glass p-4 md:p-6 text-slate-800 dark:text-bone shadow-xl transition-colors border border-black/[0.06] dark:border-white/[0.08]">
         {/* Top Header Row with 10s indicator & API status */}
         <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-black/[0.06] dark:border-white/[0.06]">
           <div className="flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-signal shadow-[0_0_8px_rgba(155,240,184,0.7)]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 dark:bg-signal opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600 dark:bg-signal shadow-[0_0_8px_rgba(155,240,184,0.7)]" />
             </span>
-            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-signal">
+            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-700 dark:text-signal">
               Jonli Ob-havo Markazi
             </span>
-            <span className="text-[11px] font-mono text-mist/80 hidden sm:inline">
+            <span className="text-[11px] font-mono text-slate-500 dark:text-mist/80 hidden sm:inline">
               • Open-Meteo API (10s almashinuv)
             </span>
           </div>
@@ -174,25 +174,26 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
           <div className="flex items-center gap-2">
             <button
               onClick={() => fetchWeather(currentCity)}
-              className="p-1 rounded-lg text-mist hover:text-signal transition cursor-pointer"
+              className="p-1 rounded-lg text-slate-500 hover:text-emerald-600 dark:text-mist dark:hover:text-signal transition cursor-pointer"
               title="Yangilash"
             >
-              <RefreshCw size={14} className={isLoading ? 'animate-spin text-signal' : ''} />
+              <RefreshCw size={14} className={isLoading ? 'animate-spin text-emerald-600 dark:text-signal' : ''} />
             </button>
-            <span className="text-xs font-mono text-mist px-2 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06]">
+            <span className="text-xs font-mono text-slate-700 dark:text-mist px-2 py-0.5 rounded-full bg-black/[0.05] dark:bg-white/[0.06]">
               {cityIndex + 1} / {WEATHER_CITIES.length}
             </span>
           </div>
         </div>
 
-        {/* 10-Second Countdown Progress Bar */}
+        {/* 10-Second Countdown Progress Bar (Optimized GPU-only compositor) */}
         <div className="w-full bg-black/[0.06] dark:bg-white/[0.06] h-1 rounded-full overflow-hidden mb-4">
           <motion.div
             key={`banner-progress-${cityIndex}-${cycleTick}`}
-            initial={{ width: '0%' }}
-            animate={{ width: '100%' }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
             transition={{ duration: 10, ease: 'linear' }}
-            className="h-full bg-signal shadow-[0_0_8px_rgba(155,240,184,0.6)]"
+            style={{ transformOrigin: 'left' }}
+            className="h-full bg-emerald-500 dark:bg-signal shadow-[0_0_8px_rgba(155,240,184,0.6)]"
           />
         </div>
 
@@ -203,20 +204,20 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center"
           >
             {/* City & Condition */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-2">
-                <h3 className="font-display text-2xl md:text-3xl font-light text-bone tracking-tight">
+                <h3 className="font-display text-2xl md:text-3xl font-light text-slate-900 dark:text-bone tracking-tight">
                   {cityName}
                 </h3>
-                <span className="text-xs font-mono text-signal px-2 py-0.5 rounded-md border border-signal/20 bg-signal/5">
+                <span className="text-xs font-mono text-emerald-700 dark:text-signal px-2 py-0.5 rounded-md border border-emerald-500/30 dark:border-signal/20 bg-emerald-500/10 dark:bg-signal/5 font-semibold">
                   {currentCity.country}
                 </span>
               </div>
-              <p className="text-sm text-mist flex items-center gap-1.5 mt-1 font-sans">
+              <p className="text-sm text-slate-600 dark:text-mist flex items-center gap-1.5 mt-1 font-sans">
                 <Icon size={16} className={meta.color} />
                 <span>{conditionLabel}</span>
               </p>
@@ -226,35 +227,35 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
             <div className="flex items-center md:justify-center gap-3">
               <Icon size={42} className={`${meta.color} shrink-0`} />
               <div>
-                <span className="font-display text-4xl md:text-5xl font-light text-bone tabular-nums tracking-tight">
+                <span className="font-display text-4xl md:text-5xl font-light text-slate-900 dark:text-bone tabular-nums tracking-tight">
                   {weather.temp > 0 ? `+${weather.temp}` : weather.temp}°C
                 </span>
               </div>
             </div>
 
             {/* Environment Telemetry */}
-            <div className="grid grid-cols-2 gap-3 text-xs font-mono text-mist border-t md:border-t-0 md:border-l border-black/[0.06] dark:border-white/[0.06] pt-3 md:pt-0 md:pl-4">
+            <div className="grid grid-cols-2 gap-3 text-xs font-mono text-slate-600 dark:text-mist border-t md:border-t-0 md:border-l border-black/[0.06] dark:border-white/[0.06] pt-3 md:pt-0 md:pl-4">
               <div className="flex items-center gap-2">
-                <Wind size={15} className="text-signal/80" />
+                <Wind size={15} className="text-emerald-600 dark:text-signal/80" />
                 <div>
-                  <div className="text-[10px] text-mist/70 uppercase">Shamol</div>
-                  <div className="text-bone font-medium">{weather.wind} km/h</div>
+                  <div className="text-[10px] text-slate-500 dark:text-mist/70 uppercase">Shamol</div>
+                  <div className="text-slate-900 dark:text-bone font-medium">{weather.wind} km/h</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
-                <Droplets size={15} className="text-cyan-400" />
+                <Droplets size={15} className="text-cyan-600 dark:text-cyan-400" />
                 <div>
-                  <div className="text-[10px] text-mist/70 uppercase">Namlik</div>
-                  <div className="text-bone font-medium">{weather.humidity}%</div>
+                  <div className="text-[10px] text-slate-500 dark:text-mist/70 uppercase">Namlik</div>
+                  <div className="text-slate-900 dark:text-bone font-medium">{weather.humidity}%</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-2 col-span-2 mt-1">
-                <Activity size={15} className="text-emerald-400" />
+                <Activity size={15} className="text-emerald-600 dark:text-emerald-400" />
                 <div>
-                  <div className="text-[10px] text-mist/70 uppercase">AQI Ko'rsatkichi</div>
-                  <div className="text-bone font-medium">{weather.aqi} • Toza havo</div>
+                  <div className="text-[10px] text-slate-500 dark:text-mist/70 uppercase">AQI Ko'rsatkichi</div>
+                  <div className="text-slate-900 dark:text-bone font-medium">{weather.aqi} • Toza havo</div>
                 </div>
               </div>
             </div>
@@ -272,8 +273,8 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
                 onClick={() => setCityIndex(idx)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-mono whitespace-nowrap transition cursor-pointer ${
                   isSelected
-                    ? 'bg-signal text-ink font-semibold shadow-sm'
-                    : 'text-mist hover:text-bone hover:bg-black/[0.04] dark:hover:bg-white/[0.05]'
+                    ? 'bg-emerald-600 text-white dark:bg-signal dark:text-ink font-semibold shadow-sm'
+                    : 'text-slate-600 dark:text-mist hover:text-slate-900 dark:hover:text-bone hover:bg-black/[0.05] dark:hover:bg-white/[0.05]'
                 }`}
               >
                 {cName}
@@ -312,9 +313,10 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
       <div className="w-full bg-black/[0.06] dark:bg-white/[0.04] h-0.5 rounded-full overflow-hidden mb-2">
         <motion.div
           key={`sidebar-progress-${cityIndex}-${cycleTick}`}
-          initial={{ width: '0%' }}
-          animate={{ width: '100%' }}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
           transition={{ duration: 10, ease: 'linear' }}
+          style={{ transformOrigin: 'left' }}
           className="h-full bg-emerald-500 dark:bg-signal"
         />
       </div>

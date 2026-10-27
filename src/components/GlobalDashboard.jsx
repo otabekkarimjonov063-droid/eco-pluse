@@ -347,7 +347,7 @@ const GlobalDashboard = () => {
     setIsLoading(false);
   };
 
-  // Live polling every 10 seconds for the active city
+  // Live polling every 45 seconds for the active city (throttled to avoid network/CPU lag)
   useEffect(() => {
     let interval;
     if (isOnline) {
@@ -358,7 +358,7 @@ const GlobalDashboard = () => {
           setCities(prev => prev.map(c => c.city === activeCityName ? updatedData : c));
           setLastUpdated(new Date());
         }
-      }, 10000); // Live sync every 10s
+      }, 45000); // Throttled 45s interval
     }
     return () => clearInterval(interval);
   }, [isOnline, activeCityName]);
@@ -374,7 +374,7 @@ const GlobalDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 md:px-6 relative overflow-hidden">
+    <div className="min-h-screen pt-24 pb-20 px-4 md:px-6 relative overflow-hidden text-slate-800 dark:text-bone">
       {/* Dynamic Looping Video Background */}
       <VideoBackdrop 
         src="/videos/clouds.mp4" 
@@ -399,14 +399,14 @@ const GlobalDashboard = () => {
           className="text-center mb-10 relative"
         >
           {/* Live Indicator Network Status */}
-          <div className="absolute right-0 top-0 hidden md:flex items-center gap-2 rounded-full border border-white/10 bg-moss/70 px-4 py-2 backdrop-blur-xl">
+          <div className="absolute right-0 top-0 hidden md:flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-moss/70 px-4 py-2 backdrop-blur-md shadow-xs">
             {isOnline ? (
               <>
                 <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-signal shadow-[0_0_8px_rgba(155,240,184,0.6)]"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 dark:bg-signal opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600 dark:bg-signal shadow-[0_0_8px_rgba(155,240,184,0.6)]"></span>
                 </span>
-                <span className="text-xs font-mono font-medium text-signal flex items-center gap-2">
+                <span className="text-xs font-mono font-semibold text-emerald-700 dark:text-signal flex items-center gap-2">
                   <Wifi size={14} /> LIVE
                 </span>
               </>
@@ -415,17 +415,17 @@ const GlobalDashboard = () => {
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
                 </span>
-                <span className="text-xs font-mono font-medium text-red-400 flex items-center gap-2">
+                <span className="text-xs font-mono font-medium text-red-500 dark:text-red-400 flex items-center gap-2">
                   <WifiOff size={14} /> OFFLINE
                 </span>
               </>
             )}
           </div>
 
-          <h1 className="font-display text-4xl md:text-5xl font-light mb-3 text-bone flex items-center justify-center gap-3 py-1">
-            <Globe className="text-signal" size={36} /> {t('dashboard', 'title')}
+          <h1 className="font-display text-4xl md:text-5xl font-light mb-3 text-slate-900 dark:text-bone flex items-center justify-center gap-3 py-1">
+            <Globe className="text-emerald-600 dark:text-signal" size={36} /> {t('dashboard', 'title')}
           </h1>
-          <p className="text-base text-mist max-w-2xl mx-auto font-normal">
+          <p className="text-base text-slate-600 dark:text-mist max-w-2xl mx-auto font-normal">
             {t('dashboard', 'subtitle')}
           </p>
         </motion.div>
@@ -449,19 +449,19 @@ const GlobalDashboard = () => {
         >
           <form onSubmit={handleSearch} className="relative mb-6">
             <div className={`rounded-2xl p-1.5 pl-4 flex items-center gap-3 eco-glass-input shadow-md ${!isOnline ? '!border-red-500/60' : ''}`}>
-              <Search size={18} className={isOnline ? 'text-signal' : 'text-red-400'} />
+              <Search size={18} className={isOnline ? 'text-emerald-600 dark:text-signal' : 'text-red-400'} />
               <input 
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 disabled={!isOnline}
                 placeholder={isOnline ? t('dashboard', 'search_placeholder') : t('dashboard', 'no_connection')}
-                className="flex-1 bg-transparent border-none outline-none text-bone placeholder-mist text-sm font-normal disabled:opacity-50"
+                className="flex-1 bg-transparent border-none outline-none text-slate-900 dark:text-bone placeholder-slate-400 dark:placeholder-mist text-sm font-normal disabled:opacity-50"
               />
               <button 
                 type="submit" 
                 disabled={isLoading || !searchQuery.trim() || !isOnline}
-                className="rounded-xl bg-signal px-5 py-2 text-xs font-medium text-ink transition hover:bg-signal/90 disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-sm"
+                className="rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-signal dark:hover:bg-signal/90 px-5 py-2 text-xs font-semibold text-white dark:text-ink transition disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-sm"
               >
                 {isLoading ? <Loader2 size={15} className="animate-spin" /> : t('dashboard', 'analyze_btn')}
               </button>
@@ -481,24 +481,24 @@ const GlobalDashboard = () => {
                 className="p-5"
               >
                 <div className="flex items-start gap-3.5 relative z-10">
-                  <div className="p-2.5 rounded-xl bg-signal/10 text-signal border border-signal/20">
+                  <div className="p-2.5 rounded-xl bg-emerald-500/15 dark:bg-signal/10 text-emerald-700 dark:text-signal border border-emerald-500/25 dark:border-signal/20">
                     <Bot size={20} />
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-center mb-1.5">
-                      <h3 className="font-medium text-sm flex items-center gap-1.5 text-bone">
-                        AI Intelligence <Sparkles size={14} className="text-signal" />
+                      <h3 className="font-medium text-sm flex items-center gap-1.5 text-slate-900 dark:text-bone">
+                        AI Intelligence <Sparkles size={14} className="text-emerald-600 dark:text-signal" />
                       </h3>
-                      <span className="text-[11px] font-mono text-mist flex items-center gap-1">
-                        <Activity size={11} className="text-signal" /> Open-Meteo
+                      <span className="text-[11px] font-mono text-slate-500 dark:text-mist flex items-center gap-1">
+                        <Activity size={11} className="text-emerald-600 dark:text-signal" /> Open-Meteo
                       </span>
                     </div>
                     {isAiLoading ? (
-                      <div className="flex items-center gap-2 text-mist text-xs font-mono">
+                      <div className="flex items-center gap-2 text-slate-500 dark:text-mist text-xs font-mono">
                         <Loader2 size={14} className="animate-spin" /> Generating environmental insight...
                       </div>
                     ) : (
-                      <p className="text-xs sm:text-sm font-normal leading-relaxed text-bone/90">
+                      <p className="text-xs sm:text-sm font-normal leading-relaxed text-slate-700 dark:text-bone/90">
                         {aiMessage}
                       </p>
                     )}
@@ -519,57 +519,57 @@ const GlobalDashboard = () => {
         >
           <GlassCard tone="base" as={motion.div} variants={itemVariants} className="p-5">
             <div className="flex justify-between items-start mb-3">
-              <div className="p-2.5 bg-white/[0.04] border border-white/[0.06] rounded-xl text-bone">
+              <div className="p-2.5 bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-xl text-slate-800 dark:text-bone">
                 <CloudRain size={20} />
               </div>
-              <span className="flex items-center text-xs font-mono font-medium text-signal bg-signal/10 px-2 py-0.5 rounded-md border border-signal/20">
+              <span className="flex items-center text-xs font-mono font-semibold text-emerald-700 dark:text-signal bg-emerald-500/10 dark:bg-signal/10 px-2 py-0.5 rounded-md border border-emerald-500/20 dark:border-signal/20">
                 <ArrowUpRight size={13} /> 2.4%
               </span>
             </div>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-mist mb-1">Global CO2 Avg</h3>
-            <div className="text-3xl font-display font-light tabular-nums text-bone flex items-baseline gap-1.5">
-              <CountUp value={412.5} decimals={1} duration={1.5} /> <span className="text-sm font-sans text-mist font-normal">ppm</span>
+            <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-mist mb-1">Global CO2 Avg</h3>
+            <div className="text-3xl font-display font-light tabular-nums text-slate-900 dark:text-bone flex items-baseline gap-1.5">
+              <CountUp value={412.5} decimals={1} duration={1.5} /> <span className="text-sm font-sans text-slate-500 dark:text-mist font-normal">ppm</span>
             </div>
           </GlassCard>
 
           <GlassCard tone="base" as={motion.div} variants={itemVariants} className="p-5">
             <div className="flex justify-between items-start mb-3">
-              <div className="p-2.5 bg-white/[0.04] border border-white/[0.06] rounded-xl text-signal">
+              <div className="p-2.5 bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-xl text-emerald-600 dark:text-signal">
                 <Wind size={20} />
               </div>
-              <span className="flex items-center text-xs font-mono font-medium text-signal bg-signal/10 px-2 py-0.5 rounded-md border border-signal/20">
+              <span className="flex items-center text-xs font-mono font-semibold text-emerald-700 dark:text-signal bg-emerald-500/10 dark:bg-signal/10 px-2 py-0.5 rounded-md border border-emerald-500/20 dark:border-signal/20">
                 <ArrowDownRight size={13} /> 5.1%
               </span>
             </div>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-mist mb-1">Global AQI Avg</h3>
-            <div className="text-3xl font-display font-light tabular-nums text-bone flex items-baseline gap-1.5">
-              <CountUp value={68.2} decimals={1} duration={1.5} /> <span className="text-sm font-sans text-mist font-normal">Idx</span>
+            <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-mist mb-1">Global AQI Avg</h3>
+            <div className="text-3xl font-display font-light tabular-nums text-slate-900 dark:text-bone flex items-baseline gap-1.5">
+              <CountUp value={68.2} decimals={1} duration={1.5} /> <span className="text-sm font-sans text-slate-500 dark:text-mist font-normal">Idx</span>
             </div>
           </GlassCard>
 
           <GlassCard tone="raised" as={motion.div} variants={itemVariants} className="p-5 lg:col-span-2 relative overflow-hidden">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center h-full gap-5 relative z-10">
               <div>
-                <h3 className="text-base font-medium mb-1 flex items-center gap-2 text-bone">
-                  <Activity size={18} className="text-signal" /> API Sinxronizatsiyasi
+                <h3 className="text-base font-medium mb-1 flex items-center gap-2 text-slate-900 dark:text-bone">
+                  <Activity size={18} className="text-emerald-600 dark:text-signal" /> API Sinxronizatsiyasi
                 </h3>
-                <p className="text-xs text-mist max-w-sm leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-mist max-w-sm leading-relaxed">
                   {t('dashboard', 'api_sync_desc') || "Har 10 soniyada Open-Meteo orqali 50,000+ sensorlardan ma'lumot yangilanmoqda."}
                 </p>
               </div>
               
-              {/* Unclipped Live Telemetry Status Block */}
+              {/* Telemetry Status Block */}
               <div className="w-full sm:w-auto flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 shrink-0">
                 <div className="flex items-center gap-2">
-                  <div className="relative flex items-center justify-center w-9 h-9 rounded-full border border-signal/30 bg-signal/5">
-                    <span className="text-xs font-mono font-semibold text-signal">10s</span>
+                  <div className="relative flex items-center justify-center w-9 h-9 rounded-full border border-emerald-500/30 dark:border-signal/30 bg-emerald-500/10 dark:bg-signal/5">
+                    <span className="text-xs font-mono font-semibold text-emerald-700 dark:text-signal">10s</span>
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-1">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-mist whitespace-nowrap">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-mist whitespace-nowrap">
                     {t('dashboard', 'last_update') || "So'nggi yangilanish:"}
                   </span>
-                  <span className="text-xs font-mono tabular-nums text-signal bg-signal/10 px-2.5 py-1 rounded-lg border border-signal/20 whitespace-nowrap">
+                  <span className="text-xs font-mono tabular-nums text-emerald-700 dark:text-signal bg-emerald-500/10 dark:bg-signal/10 px-2.5 py-1 rounded-lg border border-emerald-500/20 dark:border-signal/20 whitespace-nowrap">
                     {lastUpdated.toLocaleTimeString()}
                   </span>
                 </div>
@@ -589,8 +589,8 @@ const GlobalDashboard = () => {
           {/* City List (Cache) */}
           <GlassCard tone="base" className="p-2 flex flex-col gap-1 overflow-hidden h-[600px]">
             <div className="p-4 pb-2 flex justify-between items-center">
-              <h3 className="font-medium text-base mb-1 flex items-center gap-2 text-bone"><MapPin size={16} className="text-signal"/> Tarix (Kesh)</h3>
-              {!isOnline && <span className="text-[10px] font-mono bg-red-500/20 text-red-400 px-2 py-0.5 rounded">Offline</span>}
+              <h3 className="font-medium text-base mb-1 flex items-center gap-2 text-slate-900 dark:text-bone"><MapPin size={16} className="text-emerald-600 dark:text-signal"/> Tarix (Kesh)</h3>
+              {!isOnline && <span className="text-[10px] font-mono bg-red-500/20 text-red-500 dark:text-red-400 px-2 py-0.5 rounded">Offline</span>}
             </div>
             
             <div className="flex-1 overflow-y-auto px-2 pb-2 space-y-2">
@@ -608,28 +608,28 @@ const GlobalDashboard = () => {
                     }}
                     className={`p-3.5 rounded-xl cursor-pointer transition-all duration-200 border ${
                       activeCity.city === city.city 
-                        ? 'bg-white/[0.08] border-signal/50 text-bone' 
-                        : 'bg-white/[0.02] border-white/[0.05] text-mist hover:text-bone hover:bg-white/[0.05]'
+                        ? 'bg-emerald-500/10 dark:bg-white/[0.08] border-emerald-500/40 dark:border-signal/50 text-slate-900 dark:text-bone shadow-xs' 
+                        : 'bg-black/[0.02] dark:bg-white/[0.02] border-black/[0.05] dark:border-white/[0.05] text-slate-600 dark:text-mist hover:text-slate-900 dark:hover:text-bone hover:bg-black/[0.04] dark:hover:bg-white/[0.05]'
                     }`}
                   >
                     <div className="flex justify-between items-center mb-2">
-                      <h4 className="font-medium text-sm text-bone">{city.city}</h4>
-                      <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md" style={{ color: aqiColor(city.aqi), background: 'rgba(255,255,255,0.05)' }}>
+                      <h4 className="font-medium text-sm text-slate-900 dark:text-bone">{city.city}</h4>
+                      <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md" style={{ color: aqiColor(city.aqi), background: 'rgba(0,0,0,0.04)' }}>
                         {city.rating}
                       </span>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <div className="text-[10px] text-mist font-mono uppercase">AQI</div>
+                        <div className="text-[10px] text-slate-500 dark:text-mist font-mono uppercase">AQI</div>
                         <div className="flex items-center gap-2">
                           <div className="text-base font-display font-light tabular-nums" style={{ color: aqiColor(city.aqi) }}>{city.aqi}</div>
-                          {city.trend === 'up' ? <ArrowUpRight size={13} className="text-red-400"/> : <ArrowDownRight size={13} className="text-signal"/>}
+                          {city.trend === 'up' ? <ArrowUpRight size={13} className="text-red-500"/> : <ArrowDownRight size={13} className="text-emerald-600 dark:text-signal"/>}
                         </div>
                       </div>
                       <div>
-                        <div className="text-[10px] text-mist font-mono uppercase">CO2</div>
-                        <div className="text-base font-display font-light tabular-nums text-bone">{city.co2}</div>
+                        <div className="text-[10px] text-slate-500 dark:text-mist font-mono uppercase">CO2</div>
+                        <div className="text-base font-display font-light tabular-nums text-slate-900 dark:text-bone">{city.co2}</div>
                       </div>
                     </div>
                   </motion.div>
@@ -654,19 +654,19 @@ const GlobalDashboard = () => {
               >
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 relative z-10">
                   <div>
-                    <h2 className="font-display text-2xl sm:text-3xl font-light text-bone mb-1">
-                      {activeCity.city} <span className="text-sm font-sans font-normal text-mist">/ {t('dashboard', 'live_data')}</span>
+                    <h2 className="font-display text-2xl sm:text-3xl font-light text-slate-900 dark:text-bone mb-1">
+                      {activeCity.city} <span className="text-sm font-sans font-normal text-slate-500 dark:text-mist">/ {t('dashboard', 'live_data')}</span>
                     </h2>
-                    <p className="text-xs font-mono text-mist flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-signal"></span>
+                    <p className="text-xs font-mono text-slate-600 dark:text-mist flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-signal"></span>
                       {isOnline ? t('dashboard', 'live_stream') : t('dashboard', 'offline_mode')}
                     </p>
                   </div>
-                  <div className="px-3.5 py-1.5 rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-md">
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist">
+                  <div className="px-3.5 py-1.5 rounded-xl border border-black/[0.08] dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] backdrop-blur-md">
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-mist">
                       {t('dashboard', 'rating')}
                     </div>
-                    <div className="text-base font-medium flex items-center gap-2" style={{ color: aqiColor(activeCity.aqi) }}>
+                    <div className="text-base font-semibold flex items-center gap-2" style={{ color: aqiColor(activeCity.aqi) }}>
                       <span className="w-2 h-2 rounded-full" style={{ backgroundColor: aqiColor(activeCity.aqi) }}></span>
                       {getRatingText(activeCity.rating, language)}
                     </div>
@@ -674,32 +674,32 @@ const GlobalDashboard = () => {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 relative z-10">
-                  <div className="bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.06]">
-                    <Wind size={16} className="text-mist mb-2" />
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist mb-0.5">{t('dashboard', 'wind')}</div>
-                    <div className="text-xl font-display font-light tabular-nums text-bone flex items-baseline gap-1">
-                      <CountUp value={activeCity.wind} duration={1} /> <span className="text-xs font-sans text-mist">km/h</span>
+                  <div className="bg-black/[0.03] dark:bg-white/[0.03] p-3.5 rounded-xl border border-black/[0.06] dark:border-white/[0.06]">
+                    <Wind size={16} className="text-slate-500 dark:text-mist mb-2" />
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-mist mb-0.5">{t('dashboard', 'wind')}</div>
+                    <div className="text-xl font-display font-light tabular-nums text-slate-900 dark:text-bone flex items-baseline gap-1">
+                      <CountUp value={activeCity.wind} duration={1} /> <span className="text-xs font-sans text-slate-500 dark:text-mist">km/h</span>
                     </div>
                   </div>
-                  <div className="bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.06]">
-                    <Droplets size={16} className="text-mist mb-2" />
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist mb-0.5">{t('dashboard', 'humidity')}</div>
-                    <div className="text-xl font-display font-light tabular-nums text-bone flex items-baseline gap-1">
-                      <CountUp value={activeCity.humidity} duration={1} /> <span className="text-xs font-sans text-mist">%</span>
+                  <div className="bg-black/[0.03] dark:bg-white/[0.03] p-3.5 rounded-xl border border-black/[0.06] dark:border-white/[0.06]">
+                    <Droplets size={16} className="text-slate-500 dark:text-mist mb-2" />
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-mist mb-0.5">{t('dashboard', 'humidity')}</div>
+                    <div className="text-xl font-display font-light tabular-nums text-slate-900 dark:text-bone flex items-baseline gap-1">
+                      <CountUp value={activeCity.humidity} duration={1} /> <span className="text-xs font-sans text-slate-500 dark:text-mist">%</span>
                     </div>
                   </div>
-                  <div className="bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.06]">
-                    <Activity size={16} className="text-signal mb-2" />
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist mb-0.5">{t('dashboard', 'aqi')}</div>
-                    <div className="text-xl font-display font-light tabular-nums text-signal flex items-baseline gap-1">
+                  <div className="bg-black/[0.03] dark:bg-white/[0.03] p-3.5 rounded-xl border border-black/[0.06] dark:border-white/[0.06]">
+                    <Activity size={16} className="text-emerald-600 dark:text-signal mb-2" />
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-mist mb-0.5">{t('dashboard', 'aqi')}</div>
+                    <div className="text-xl font-display font-light tabular-nums text-emerald-600 dark:text-signal flex items-baseline gap-1">
                       <CountUp value={activeCity.aqi} duration={1.2} />
                     </div>
                   </div>
-                  <div className="bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.06]">
-                    <CloudRain size={16} className="text-mist mb-2" />
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-mist mb-0.5">{t('dashboard', 'co2')}</div>
-                    <div className="text-xl font-display font-light tabular-nums text-bone flex items-baseline gap-1">
-                      <CountUp value={activeCity.co2} duration={1} /> <span className="text-xs font-sans text-mist">μg</span>
+                  <div className="bg-black/[0.03] dark:bg-white/[0.03] p-3.5 rounded-xl border border-black/[0.06] dark:border-white/[0.06]">
+                    <CloudRain size={16} className="text-slate-500 dark:text-mist mb-2" />
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-mist mb-0.5">{t('dashboard', 'co2')}</div>
+                    <div className="text-xl font-display font-light tabular-nums text-slate-900 dark:text-bone flex items-baseline gap-1">
+                      <CountUp value={activeCity.co2} duration={1} /> <span className="text-xs font-sans text-slate-500 dark:text-mist">μg</span>
                     </div>
                   </div>
                 </div>
@@ -709,7 +709,7 @@ const GlobalDashboard = () => {
             {/* Recharts Graphics - Restyled with chartTheme */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <GlassCard tone="raised" className="p-5 flex flex-col h-[340px]">
-                <h3 className="font-sans font-medium text-sm mb-4 flex justify-between items-center text-bone">
+                <h3 className="font-sans font-medium text-sm mb-4 flex justify-between items-center text-slate-900 dark:text-bone">
                   {t('dashboard', 'chart_title')}
                 </h3>
                 <div className="flex-1 w-full h-full min-h-[200px]">
@@ -728,7 +728,7 @@ const GlobalDashboard = () => {
               </GlassCard>
 
               <GlassCard tone="raised" className="p-5 flex flex-col h-[340px]">
-                <h3 className="font-sans font-medium text-sm mb-4 flex justify-between items-center text-bone">
+                <h3 className="font-sans font-medium text-sm mb-4 flex justify-between items-center text-slate-900 dark:text-bone">
                   {t('dashboard', 'chart_aqi_title')}
                 </h3>
                 <div className="flex-1 w-full h-full min-h-[200px]">

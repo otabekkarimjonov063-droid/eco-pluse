@@ -149,7 +149,7 @@ const EcoComments = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.08 }}
-            className="text-4xl md:text-5xl font-display font-light text-bone tracking-tight mb-3"
+            className="text-4xl md:text-5xl font-display font-light text-slate-900 dark:text-bone tracking-tight mb-3"
           >
             {t('comments', 'title')}
           </motion.h2>
@@ -158,7 +158,7 @@ const EcoComments = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.16 }}
-            className="text-sm text-mist max-w-xl mx-auto font-normal font-sans"
+            className="text-sm text-slate-600 dark:text-mist max-w-xl mx-auto font-normal font-sans"
           >
             {t('comments', 'subtitle')}
           </motion.p>
@@ -179,12 +179,12 @@ const EcoComments = () => {
                   <GlassCard tone="base" className="p-5">
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-bone font-mono text-xs font-semibold">
+                        <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/[0.05] border border-slate-200 dark:border-white/[0.08] flex items-center justify-center text-slate-800 dark:text-bone font-mono text-xs font-semibold">
                           {comment.name.charAt(0)}
                         </div>
                         <div>
-                          <h4 className="text-bone font-medium text-sm font-sans">{comment.name}</h4>
-                          <span className="text-[11px] font-mono text-mist/60">
+                          <h4 className="text-slate-900 dark:text-bone font-medium text-sm font-sans">{comment.name}</h4>
+                          <span className="text-[11px] font-mono text-slate-500 dark:text-mist/60">
                             {comment.displayTime || comment.time}
                           </span>
                         </div>
@@ -194,23 +194,23 @@ const EcoComments = () => {
                           <Star 
                             key={i} 
                             size={12} 
-                            className={i < comment.rating ? "fill-ember text-ember" : "fill-transparent text-mist/30"} 
+                            className={i < comment.rating ? "fill-ember text-ember" : "fill-transparent text-slate-300 dark:text-mist/30"} 
                           />
                         ))}
                       </div>
                     </div>
                     
-                    <p className="text-bone/85 text-xs sm:text-sm leading-relaxed mb-4 font-sans">
+                    <p className="text-slate-700 dark:text-bone/85 text-xs sm:text-sm leading-relaxed mb-4 font-sans">
                       {comment.displayComment || comment.text}
                     </p>
                     
-                    <div className="flex items-center gap-4 border-t border-white/[0.06] pt-3">
+                    <div className="flex items-center gap-4 border-t border-slate-200 dark:border-white/[0.06] pt-3">
                       <button 
                         onClick={() => handleLike(comment.id)}
                         className={`flex items-center gap-1.5 text-xs font-mono transition-colors ${
                           likedIds[comment.id] 
-                            ? 'text-signal' 
-                            : 'text-mist hover:text-signal'
+                            ? 'text-emerald-700 dark:text-signal font-semibold' 
+                            : 'text-slate-500 hover:text-emerald-600 dark:text-mist dark:hover:text-signal'
                         }`}
                       >
                         <ThumbsUp size={13} className={likedIds[comment.id] ? "fill-signal" : ""} /> 
@@ -220,7 +220,7 @@ const EcoComments = () => {
                         onClick={() => {
                           setNewComment(`@${comment.name} `);
                         }}
-                        className="text-xs text-mist hover:text-bone transition-colors font-sans"
+                        className="text-xs text-slate-500 hover:text-slate-900 dark:text-mist dark:hover:text-bone transition-colors font-sans"
                       >
                         {t('comments', 'reply')}
                       </button>
@@ -239,7 +239,7 @@ const EcoComments = () => {
             className="lg:col-span-5 sticky top-24"
           >
             <GlassCard tone="raised" className="p-6">
-              <h3 className="text-xl font-display font-light text-bone mb-6">
+              <h3 className="text-xl font-display font-light text-slate-900 dark:text-bone mb-6">
                 {t('comments', 'leave_comment')}
               </h3>
 
@@ -257,7 +257,7 @@ const EcoComments = () => {
                       >
                         <Star 
                           size={20} 
-                          className={`transition-all ${star <= (hoveredStar || selectedStar) ? "fill-ember text-ember scale-105" : "text-mist/30 hover:text-mist/60"}`} 
+                          className={`transition-all ${star <= (hoveredStar || selectedStar) ? "fill-ember text-ember scale-105" : "text-slate-300 dark:text-mist/30 hover:text-slate-500 dark:hover:text-mist/60"}`} 
                         />
                       </button>
                     ))}
@@ -265,14 +265,14 @@ const EcoComments = () => {
                 </div>
 
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-mist" size={16} />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-mist" size={16} />
                   <input
                     type="text"
                     required
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     placeholder={t('comments', 'name')}
-                    className="w-full bg-moss/40 border border-white/[0.08] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-bone placeholder:text-mist/50 outline-none focus:border-signal/40 transition-all font-sans"
+                    className="w-full bg-white dark:bg-moss/40 border border-slate-300 dark:border-white/[0.08] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-slate-900 dark:text-bone placeholder:text-slate-400 dark:placeholder:text-mist/50 outline-none focus:border-emerald-500 dark:focus:border-signal/40 transition-all font-sans"
                   />
                 </div>
 
@@ -283,13 +283,13 @@ const EcoComments = () => {
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder={t('comments', 'comment')}
                     rows="4"
-                    className="w-full bg-moss/40 border border-white/[0.08] rounded-xl p-3 text-xs text-bone placeholder:text-mist/50 outline-none focus:border-signal/40 transition-all resize-none font-sans"
+                    className="w-full bg-white dark:bg-moss/40 border border-slate-300 dark:border-white/[0.08] rounded-xl p-3 text-xs text-slate-900 dark:text-bone placeholder:text-slate-400 dark:placeholder:text-mist/50 outline-none focus:border-emerald-500 dark:focus:border-signal/40 transition-all resize-none font-sans"
                   ></textarea>
                 </div>
 
                 <button 
                   type="submit"
-                  className="w-full py-2.5 bg-signal text-ink hover:bg-signal/90 font-medium text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"
+                  className="w-full py-2.5 bg-emerald-600 text-white hover:bg-emerald-500 dark:bg-signal dark:text-ink dark:hover:bg-signal/90 font-medium text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm cursor-pointer"
                 >
                   {t('comments', 'send')} <Send size={14} />
                 </button>
