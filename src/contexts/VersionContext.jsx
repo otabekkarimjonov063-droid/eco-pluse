@@ -48,14 +48,18 @@ export const VersionProvider = ({ children }) => {
     setToast(null);
   }, []);
 
+  const updateTimerRef = React.useRef(null);
+
   // Apply update to a target version
   const applyUpdate = useCallback((targetVersion) => {
-    setIsUpdating(true);
-    setUpdateProgress(10);
+    if (updateTimerRef.current) {
+      clearTimeout(updateTimerRef.current);
+    }
 
-    const step1 = setTimeout(() => setUpdateProgress(45), 250);
-    const step2 = setTimeout(() => setUpdateProgress(80), 550);
-    const step3 = setTimeout(() => {
+    setIsUpdating(true);
+    setUpdateProgress(25);
+
+    updateTimerRef.current = setTimeout(() => {
       setUpdateProgress(100);
       setCurrentVersion(targetVersion);
       try {
@@ -70,13 +74,7 @@ export const VersionProvider = ({ children }) => {
         title: `EcoPulse ${targetVersion} ga muvaffaqiyatli yangilandi!`,
         message: 'Barcha yangi imkoniyatlar va 60 FPS optimizatsiyalar faollashtirildi.'
       });
-    }, 900);
-
-    return () => {
-      clearTimeout(step1);
-      clearTimeout(step2);
-      clearTimeout(step3);
-    };
+    }, 350);
   }, []);
 
   // Check for updates manually

@@ -29,25 +29,24 @@ export default function VersionUpdateModal() {
   const langKey = language === 'RU' ? 'RU' : language === 'EN' ? 'EN' : 'UZ';
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setIsModalOpen(false)}
-          className="fixed inset-0 bg-black/80 backdrop-blur-md"
-        />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      {/* Backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setIsModalOpen(false)}
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+      />
 
-        {/* Modal Window */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94, y: 16 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.94, y: 16 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-3xl rounded-3xl bg-[#07120f]/95 border border-signal/25 p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl text-bone z-10 my-auto"
-        >
+      {/* Modal Window */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.96 }}
+        transition={{ duration: 0.2 }}
+        className="relative w-full max-w-3xl rounded-3xl bg-[#081410]/95 border border-signal/25 p-6 sm:p-8 shadow-2xl backdrop-blur-md text-bone z-10 my-auto"
+      >
           {/* Header */}
           <div className="flex items-center justify-between pb-5 border-b border-white/[0.08]">
             <div className="flex items-center gap-3">
@@ -238,6 +237,5 @@ export default function VersionUpdateModal() {
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
   );
 }
