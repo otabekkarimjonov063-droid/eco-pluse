@@ -23,7 +23,7 @@ export default function Sidebar({
   setActiveTab, 
   onOpenLogin 
 }) {
-  const { t, language, setLanguage } = useLanguage()
+  const { t, language, setLanguage, currentLanguage, openLangModal } = useLanguage()
   const { user: authUser, isAdmin, logout: authLogout } = useAuth()
   const { isDark, toggleTheme } = useTheme()
   const { currentVersion, hasNewUpdate, setIsModalOpen } = useVersion()
@@ -81,20 +81,15 @@ export default function Sidebar({
             {isDark ? <Moon size={15} className="text-signal" /> : <Sun size={15} className="text-amber-500" />}
           </button>
 
-          {/* Lang pill */}
-          <div className="flex items-center rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] p-0.5 text-[11px] font-mono">
-            {langs.map((l) => (
-              <button
-                key={l}
-                onClick={() => setLanguage(l)}
-                className={`px-1.5 py-0.5 rounded transition ${
-                  language === l ? 'bg-black/10 dark:bg-white/15 text-emerald-700 dark:text-signal font-semibold' : 'text-slate-600 dark:text-mist'
-                }`}
-              >
-                {l}
-              </button>
-            ))}
-          </div>
+          {/* Shaffof Language Switcher Button */}
+          <button
+            onClick={openLangModal}
+            title="Tilni tanlash (35+ Dunyo tillari)"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 text-slate-700 dark:text-bone text-[11px] font-mono transition-all cursor-pointer shadow-2xs"
+          >
+            <span className="text-sm leading-none">{currentLanguage?.flag || '🌐'}</span>
+            <span className="font-semibold text-emerald-700 dark:text-signal">{language}</span>
+          </button>
 
           {/* User / Login */}
           {currentUser ? (
@@ -235,22 +230,17 @@ export default function Sidebar({
               <span className="text-[11px] font-medium">{isDark ? 'Dark' : 'Light'}</span>
             </button>
 
-            {/* Language Switcher Pills */}
-            <div className="flex items-center gap-0.5">
-              {langs.map((l) => (
-                <button
-                  key={l}
-                  onClick={() => setLanguage(l)}
-                  className={`px-2 py-1 rounded-md text-[11px] font-mono transition cursor-pointer ${
-                    language === l
-                      ? 'bg-emerald-500/15 dark:bg-white/10 text-emerald-700 dark:text-signal font-semibold shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-mist dark:hover:text-bone'
-                  }`}
-                >
-                  {l}
-                </button>
-              ))}
-            </div>
+            {/* Shaffof Language Switcher Button */}
+            <button
+              onClick={openLangModal}
+              title="Tilni tanlash (35+ Dunyo tillari)"
+              className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 hover:border-emerald-500/30 text-slate-700 dark:text-bone text-xs font-mono transition-all cursor-pointer group shadow-2xs"
+            >
+              <Globe size={13} className="text-emerald-600 dark:text-signal group-hover:rotate-45 transition-transform" />
+              <span className="text-sm leading-none">{currentLanguage?.flag || '🌐'}</span>
+              <span className="font-bold text-slate-900 dark:text-bone">{language}</span>
+              <span className="text-[10px] text-slate-400 dark:text-mist group-hover:text-emerald-600 dark:group-hover:text-signal transition-colors">▾</span>
+            </button>
           </div>
         </div>
       </aside>

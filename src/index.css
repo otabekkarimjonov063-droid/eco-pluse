@@ -89,6 +89,20 @@ html:not(.dark) textarea::placeholder {
 
   html {
     scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ── 120 FPS High Refresh Rate Optimization ── */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .eco-glass,
+  .eco-glass-card,
+  .premium-glass {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   html.dark body {
@@ -124,34 +138,45 @@ html:not(.dark) textarea::placeholder {
   /* ── Unified Crystal Glassmorphic System (Translucent 60 FPS) ── */
   .eco-glass {
     background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.04);
   }
   html.dark .eco-glass,
   .dark .eco-glass {
-    background: rgba(8, 20, 15, 0.45) !important;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(8, 20, 15, 0.50) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35) !important;
   }
 
   .eco-glass-card {
-    background: rgba(255, 255, 255, 0.62);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
   }
   html.dark .eco-glass-card,
   .dark .eco-glass-card {
-    background: rgba(8, 20, 15, 0.35) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(8, 20, 15, 0.40) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.09) !important;
     box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25) !important;
+  }
+
+  @media (max-width: 768px) {
+    .eco-glass, html.dark .eco-glass, .dark .eco-glass {
+      backdrop-filter: blur(6px) !important;
+      -webkit-backdrop-filter: blur(6px) !important;
+    }
+    .eco-glass-card, html.dark .eco-glass-card, .dark .eco-glass-card {
+      backdrop-filter: blur(5px) !important;
+      -webkit-backdrop-filter: blur(5px) !important;
+    }
   }
 
   .eco-glass-input {

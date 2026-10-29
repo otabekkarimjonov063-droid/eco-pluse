@@ -236,7 +236,7 @@ const EcoProjects = () => {
       {/* Dynamic Looping Video Background */}
       <VideoBackdrop 
         src="/videos/sunlight.mp4" 
-        poster="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=1600" 
+        poster="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=75&w=1080" 
         opacity={0.25} 
       />
 

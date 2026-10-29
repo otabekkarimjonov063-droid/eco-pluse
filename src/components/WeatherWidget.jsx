@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sun, Cloud, CloudSun, CloudRain, CloudLightning, 
-  Snowflake, Wind, Droplets, Activity, RefreshCw, Compass
+  Snowflake, Wind, Droplets, Activity, RefreshCw 
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -31,87 +31,125 @@ const getWeatherMeta = (code) => {
   return { label: { UZ: "Mo'tadil", RU: 'Умеренно', EN: 'Mild' }, icon: CloudSun, color: 'text-emerald-400' };
 };
 
+// ── Shared Singleton Store (Zero Duplicate Timers or Duplicate API calls) ──
 const weatherCache = new Map();
+let sharedCityIndex = 0;
+let sharedWeather = {
+  temp: WEATHER_CITIES[0].baseTemp,
+  humidity: 45,
+  wind: 12,
+  code: 0,
+  aqi: 42,
+};
+let sharedIsLoading = false;
+let sharedCycleTick = 0;
+let sharedTimer = null;
+let sharedAbortCtrl = null;
+const sharedListeners = new Set();
+
+const notifyListeners = () => {
+  sharedListeners.forEach((fn) => fn());
+};
+
+const fetchWeatherForCity = async (index, force = false) => {
+  const city = WEATHER_CITIES[index];
+  const cacheKey = `${city.lat},${city.lon}`;
+  const cached = weatherCache.get(cacheKey);
+
+  if (!force && cached && Date.now() - cached.time < 120000) {
+    sharedWeather = cached.data;
+    sharedCityIndex = index;
+    notifyListeners();
+    return;
+  }
+
+  if (sharedAbortCtrl) sharedAbortCtrl.abort();
+  sharedAbortCtrl = new AbortController();
+
+  sharedIsLoading = true;
+  notifyListeners();
+
+  try {
+    const res = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`,
+      { signal: sharedAbortCtrl.signal }
+    );
+    if (!res.ok) throw new Error('Weather fetch failed');
+    const data = await res.json();
+    const current = data.current || {};
+    sharedWeather = {
+      temp: Math.round(current.temperature_2m ?? city.baseTemp),
+      humidity: Math.round(current.relative_humidity_2m ?? 48),
+      wind: Math.round(current.wind_speed_10m ?? 12),
+      code: current.weather_code ?? 0,
+      aqi: Math.round(35 + (city.lat % 50)),
+    };
+    weatherCache.set(cacheKey, { time: Date.now(), data: sharedWeather });
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      sharedWeather = {
+        ...sharedWeather,
+        temp: city.baseTemp,
+      };
+    }
+  } finally {
+    sharedIsLoading = false;
+    sharedCityIndex = index;
+    notifyListeners();
+  }
+};
+
+const advanceToNextCity = () => {
+  const next = (sharedCityIndex + 1) % WEATHER_CITIES.length;
+  sharedCycleTick += 1;
+  fetchWeatherForCity(next);
+};
+
+const setSharedCity = (index) => {
+  sharedCycleTick += 1;
+  fetchWeatherForCity(index);
+};
+
+const startSharedTimer = () => {
+  if (sharedTimer) return;
+  fetchWeatherForCity(sharedCityIndex);
+  sharedTimer = setInterval(() => {
+    if (typeof document !== 'undefined' && document.hidden) return;
+    advanceToNextCity();
+  }, 10000);
+};
+
+const stopSharedTimerIfNoListeners = () => {
+  if (sharedListeners.size === 0 && sharedTimer) {
+    clearInterval(sharedTimer);
+    sharedTimer = null;
+    if (sharedAbortCtrl) sharedAbortCtrl.abort();
+  }
+};
 
 export default function WeatherWidget({ variant = 'sidebar', compact = false }) {
   const isCompact = compact || variant === 'compact';
   const isBanner = variant === 'banner';
   const { language } = useLanguage();
-  const [cityIndex, setCityIndex] = useState(0);
-  const [weather, setWeather] = useState({
-    temp: WEATHER_CITIES[0].baseTemp,
-    humidity: 45,
-    wind: 12,
-    code: 0,
-    aqi: 42,
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [cycleTick, setCycleTick] = useState(0);
-  const abortRef = useRef(null);
 
-  const currentCity = WEATHER_CITIES[cityIndex];
+  const [, setRenderTick] = useState(0);
 
-  // Fetch live weather data for city
-  const fetchWeather = async (city) => {
-    const cacheKey = `${city.lat},${city.lon}`;
-    const cached = weatherCache.get(cacheKey);
-    if (cached && Date.now() - cached.time < 60000) {
-      setWeather(cached.data);
-      return;
-    }
-
-    if (abortRef.current) abortRef.current.abort();
-    abortRef.current = new AbortController();
-
-    try {
-      setIsLoading(true);
-      const res = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`,
-        { signal: abortRef.current.signal }
-      );
-      if (!res.ok) throw new Error('Weather fetch failed');
-      const data = await res.json();
-      const current = data.current || {};
-      const newWeather = {
-        temp: Math.round(current.temperature_2m ?? city.baseTemp),
-        humidity: Math.round(current.relative_humidity_2m ?? 48),
-        wind: Math.round(current.wind_speed_10m ?? 12),
-        code: current.weather_code ?? 0,
-        aqi: Math.round(35 + (city.lat % 50)),
-      };
-      weatherCache.set(cacheKey, { time: Date.now(), data: newWeather });
-      setWeather(newWeather);
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        // Fallback to baseline
-        setWeather((prev) => ({
-          ...prev,
-          temp: city.baseTemp,
-        }));
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Fetch when active city changes
   useEffect(() => {
-    fetchWeather(currentCity);
-  }, [cityIndex]);
-
-  // Exact 10-second automatic cycle timer
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (typeof document !== 'undefined' && document.hidden) return;
-      setCityIndex((prev) => (prev + 1) % WEATHER_CITIES.length);
-      setCycleTick((prev) => prev + 1);
-    }, 10000); // 10000ms = 10s
+    const onStoreUpdate = () => setRenderTick((c) => c + 1);
+    sharedListeners.add(onStoreUpdate);
+    startSharedTimer();
 
     return () => {
-      clearInterval(timer);
-      if (abortRef.current) abortRef.current.abort();
+      sharedListeners.delete(onStoreUpdate);
+      stopSharedTimerIfNoListeners();
     };
   }, []);
+
+  const cityIndex = sharedCityIndex;
+  const weather = sharedWeather;
+  const isLoading = sharedIsLoading;
+  const cycleTick = sharedCycleTick;
+  const currentCity = WEATHER_CITIES[cityIndex];
 
   const meta = getWeatherMeta(weather.code);
   const Icon = meta.icon;
@@ -122,7 +160,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
   if (isCompact) {
     return (
       <div 
-        onClick={() => setCityIndex((prev) => (prev + 1) % WEATHER_CITIES.length)}
+        onClick={advanceToNextCity}
         className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-full border border-black/[0.08] dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] text-xs font-mono cursor-pointer hover:border-signal/40 transition select-none shadow-xs"
         title="Keyingi shaharga o'tish (Har 10s avtomatik yangilanadi)"
       >
@@ -136,7 +174,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
             initial={{ opacity: 0, y: 3 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -3 }}
-            transition={{ duration: 0.22 }}
+            transition={{ duration: 0.18 }}
             className="flex items-center gap-1.5 text-bone"
           >
             <Icon size={13} className={`${meta.color} shrink-0`} />
@@ -173,7 +211,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => fetchWeather(currentCity)}
+              onClick={() => fetchWeatherForCity(cityIndex, true)}
               className="p-1 rounded-lg text-slate-500 hover:text-emerald-600 dark:text-mist dark:hover:text-signal transition cursor-pointer"
               title="Yangilash"
             >
@@ -201,10 +239,10 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
         <AnimatePresence mode="wait">
           <motion.div
             key={cityName}
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
             className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center"
           >
             {/* City & Condition */}
@@ -270,7 +308,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
             return (
               <button
                 key={c.lat}
-                onClick={() => setCityIndex(idx)}
+                onClick={() => setSharedCity(idx)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-mono whitespace-nowrap transition cursor-pointer ${
                   isSelected
                     ? 'bg-emerald-600 text-white dark:bg-signal dark:text-ink font-semibold shadow-sm'
@@ -301,7 +339,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
           </span>
         </div>
         <button
-          onClick={() => setCityIndex((prev) => (prev + 1) % WEATHER_CITIES.length)}
+          onClick={advanceToNextCity}
           className="text-[10px] font-mono text-slate-500 hover:text-emerald-700 dark:text-mist dark:hover:text-signal transition cursor-pointer"
           title="Keyingi shaharga o'tish"
         >
@@ -328,7 +366,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
           initial={{ opacity: 0, x: -6 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 6 }}
-          transition={{ duration: 0.28, ease: 'easeOut' }}
+          transition={{ duration: 0.22, ease: 'easeOut' }}
         >
           <div className="flex items-center justify-between mb-1.5">
             <div>

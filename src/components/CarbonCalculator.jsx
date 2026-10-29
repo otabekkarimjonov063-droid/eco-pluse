@@ -92,16 +92,21 @@ const CarbonCalculator = () => {
 
   const [result, setResult] = useState(savedCalc?.result ?? { total: 0, breakdown: [] });
 
+  // Debounced persistence to avoid blocking UI during slider dragging
   React.useEffect(() => {
-    try {
-      const prev = JSON.parse(localStorage.getItem('ecopulse_calc_data')) || {};
-      localStorage.setItem('ecopulse_calc_data', JSON.stringify({
-        ...prev,
-        inputs: { carKm, flights, energy, meat, shopping }
-      }));
-    } catch (e) {
-      console.error(e);
-    }
+    const timer = setTimeout(() => {
+      try {
+        const prev = JSON.parse(localStorage.getItem('ecopulse_calc_data')) || {};
+        localStorage.setItem('ecopulse_calc_data', JSON.stringify({
+          ...prev,
+          inputs: { carKm, flights, energy, meat, shopping }
+        }));
+      } catch (e) {
+        console.error(e);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, [carKm, flights, energy, meat, shopping]);
 
   const steps = [
@@ -172,7 +177,7 @@ const CarbonCalculator = () => {
       {/* Dynamic Looping Video Background */}
       <VideoBackdrop 
         src="/videos/forest.mp4" 
-        poster="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=1600" 
+        poster="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=75&w=1080" 
         opacity={0.3} 
       />
 

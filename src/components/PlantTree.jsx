@@ -19,6 +19,13 @@ const PlantTree = () => {
   const [viewMode, setViewMode] = useState('3d'); // '3d' or 'photo'
   const [isLoading, setIsLoading] = useState(false);
   const [orderId, setOrderId] = useState('');
+  const [isDesktop, setIsDesktop] = useState(() => (typeof window !== 'undefined' ? window.innerWidth >= 768 : true));
+
+  React.useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const [cardData, setCardData] = useState({ name: '', number: '', expiry: '', cvv: '' });
 
@@ -172,7 +179,7 @@ const PlantTree = () => {
       {/* Dynamic Looping Video Background */}
       <VideoBackdrop 
         src="/videos/growth.mp4" 
-        poster="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=1600" 
+        poster="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=75&w=1080" 
         opacity={0.3} 
       />
 
@@ -202,7 +209,7 @@ const PlantTree = () => {
           {/* Mobile Preview Showcase */}
           <div className="md:hidden mb-6 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/15 bg-black/40">
             <div className="relative h-60 overflow-hidden bg-[#08090a]">
-              {step !== 2 && viewMode === '3d' ? (
+              {!isDesktop && step !== 2 && viewMode === '3d' ? (
                 <Tree3D treeType={activeTree.id} quantity={quantity} />
               ) : (
                 <img 
@@ -671,7 +678,7 @@ const PlantTree = () => {
 
                 {/* Dedicated 3D Tree Viewport */}
                 <div className="relative flex-1 w-full min-h-[340px] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/15 bg-black/20">
-                  {viewMode === '3d' ? (
+                  {isDesktop && viewMode === '3d' ? (
                     <Tree3D treeType={activeTree.id} quantity={quantity} />
                   ) : (
                     <>

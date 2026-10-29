@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Wind, CloudRain, Activity, Droplets, MapPin, ArrowUpRight, ArrowDownRight, Globe, Search, Bot, Loader2, Sparkles, Wifi, WifiOff } from 'lucide-react';
@@ -176,6 +176,8 @@ const getRatingText = (rating, lang) => {
   return rating || '';
 };
 
+const geoCache = new Map();
+
 const GlobalDashboard = () => {
   const { language, t } = useLanguage();
   const [cities, setCities] = useState(generateCityData());
@@ -279,33 +281,41 @@ const GlobalDashboard = () => {
     }
   };
 
-  // Fetch real data from Open-Meteo API
+  // Fetch real data from Open-Meteo API with caching & parallel fetching
   const fetchCityData = async (cityName) => {
     try {
-      // 1. Get Coordinates
-      const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`);
-      const geoData = await geoRes.json();
-      
-      if (!geoData.results || geoData.results.length === 0) {
-        return null;
+      const cacheKey = cityName.toLowerCase().trim();
+      let coords = geoCache.get(cacheKey);
+
+      if (!coords) {
+        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`);
+        const geoData = await geoRes.json();
+        
+        if (!geoData.results || geoData.results.length === 0) {
+          return null;
+        }
+        const first = geoData.results[0];
+        coords = { latitude: first.latitude, longitude: first.longitude, name: first.name };
+        geoCache.set(cacheKey, coords);
       }
       
-      const { latitude, longitude, name } = geoData.results[0];
+      const { latitude, longitude, name } = coords;
       
-      // 2. Get Air Quality & Weather
-      const aqiRes = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=european_aqi,pm2_5,carbon_monoxide`);
-      const aqiData = await aqiRes.json();
-      
-      const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=wind_speed_10m,relative_humidity_2m`);
-      const weatherData = await weatherRes.json();
+      // Parallel fetch for AQI and Weather
+      const [aqiRes, weatherRes] = await Promise.all([
+        fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=european_aqi,pm2_5,carbon_monoxide`),
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=wind_speed_10m,relative_humidity_2m`)
+      ]);
 
-      const aqi = aqiData.current.european_aqi || Math.floor(Math.random() * 100) + 20;
+      const [aqiData, weatherData] = await Promise.all([aqiRes.json(), weatherRes.json()]);
+
+      const aqi = aqiData.current?.european_aqi || Math.floor(Math.random() * 100) + 20;
       const config = getAqiConfig(aqi);
       
       return {
         city: name,
         aqi: aqi,
-        co2: aqiData.current.carbon_monoxide ? Math.round(aqiData.current.carbon_monoxide) : 400,
+        co2: aqiData.current?.carbon_monoxide ? Math.round(aqiData.current.carbon_monoxide) : 400,
         wind: weatherData.current?.wind_speed_10m ? Math.round(weatherData.current.wind_speed_10m) : 12,
         humidity: weatherData.current?.relative_humidity_2m || 50,
         rating: config.rating,
@@ -378,7 +388,7 @@ const GlobalDashboard = () => {
       {/* Dynamic Looping Video Background */}
       <VideoBackdrop 
         src="/videos/clouds.mp4" 
-        poster="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&q=80&w=1600" 
+        poster="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&q=75&w=1080" 
         opacity={0.25} 
       />
 

@@ -598,5 +598,958 @@ export const translations = {
       login_btn: 'Login',
       register_btn: 'Continue'
     }
+  },
+  TR: {
+    navbar: {
+      menu: 'Menü',
+      home: 'Ana Sayfa',
+      dashboard: 'Küresel İstatistikler',
+      calculator: 'Karbon Hesaplayıcı',
+      projects: 'Proje Galerisi',
+      plant: 'Ağaç Dik',
+      admin: 'Yönetim Paneli',
+      login: 'Giriş Yap',
+      logout: 'Çıkış Yap'
+    },
+    hero: {
+      title: 'Gezegenimizin geleceği adımlarınızda',
+      subtitle: 'EcoPulse — sadece bir izleme paneli değil. Ekolojik sorumluluğunuzu küresel ölçekte gerçek değişimlere dönüştüren kurumsal mega platformdur.',
+      cta: 'Platforma Başla',
+      explore: 'Daha Fazla Bilgi',
+      stats: {
+        users: '1M+ Aktif Kullanıcı',
+        co2: '500K Ton Tasarruf Edilen CO2',
+        projects: '1.2K+ Fonlanan Proje'
+      },
+      live_impact: 'Canlı Etki',
+      live: 'Canlı',
+      co2_reduction: 'Küresel CO2 Azaltımı',
+      members: 'Üyeler',
+      projects_count: 'Projeler',
+      tree: 'Ağaç',
+      planted_today: 'Bugün Dikilen'
+    },
+    dashboard: {
+      title: 'Küresel Çevre İzleme Paneli',
+      subtitle: 'Dünya şehirlerinin canlı izlenmesi ve akıllı analitiği',
+      search_placeholder: 'Şehrinizi girin (Örn: İstanbul, Londra)...',
+      search_offline: 'İnternet bağlantısı yok...',
+      analyze_btn: 'Analiz Et',
+      live: 'CANLI',
+      offline: 'ÇEVRİMDIŞI',
+      global_co2: 'Küresel Ortalama CO2',
+      global_aqi: 'Küresel Ortalama AQI',
+      last_update: 'Son güncelleme:',
+      aqi: 'Hava Kalitesi (AQI)',
+      co2: 'CO2 Seviyesi',
+      wind: 'Rüzgar Hızı',
+      humidity: 'Nem Oranı',
+      rating: 'Eko Puan'
+    },
+    footer: {
+      about: 'EcoPulse, küresel çevre sorunlarını izlemek, farkındalığı artırmak ve yeşil projeleri desteklemek için tasarlanmış uluslararası kurumsal platformdur.',
+      links: 'Hızlı Bağlantılar',
+      contact: 'İletişim',
+      rights: '© 2026 EcoPulse. Tüm hakları saklıdır.',
+      privacy: 'Gizlilik Politikası',
+      terms: 'Kullanım Şartları',
+      faq: 'SSS'
+    },
+    auth: {
+      login_title: 'Sisteme Giriş',
+      register_title: 'Hesap Oluştur',
+      email: 'E-posta Adresi',
+      password: 'Şifre',
+      name: 'Adınız',
+      login_btn: 'Giriş Yap',
+      register_btn: 'Devam Et',
+      no_account: 'Hesabınız yok mu? ',
+      has_account: 'Zaten hesabınız var mı? '
+    }
+  },
+  AR: {
+    navbar: {
+      menu: 'القائمة',
+      home: 'الرئيسية',
+      dashboard: 'الإحصائيات العالمية',
+      calculator: 'حاسبة الكربون',
+      projects: 'معرض المشاريع',
+      plant: 'ازرع شجرة',
+      admin: 'لوحة الإدارة',
+      login: 'تسجيل الدخول',
+      logout: 'تسجيل الخروج'
+    },
+    hero: {
+      title: 'مستقبل كوكبنا بين يديك وخطواتك',
+      subtitle: 'EcoPulse — ليست مجرد لوحة مراقبة، بل منصة بيئية ضخمة تحول مسؤوليتك المناخية إلى تأثيرات حقيقية وملموسة حول العالم.',
+      cta: 'دخول المنصة',
+      explore: 'اكتشف المزيد',
+      stats: {
+        users: '1M+ مستخدم نشط',
+        co2: '500K طن CO2 تم توفيره',
+        projects: '1.2K+ مشروع مدعوم'
+      },
+      live_impact: 'تأثير مباشر',
+      live: 'مباشر',
+      co2_reduction: 'تقليل CO2 العالمي',
+      members: 'الأعضاء',
+      projects_count: 'المشاريع',
+      tree: 'شجرة',
+      planted_today: 'زرعت اليوم'
+    },
+    dashboard: {
+      title: 'لوحة المراقبة البيئية العالمية',
+      subtitle: 'المراقبة الحية والتحليلات الذكية لمدن العالم',
+      search_placeholder: 'أدخل مدينتك (مثل: الرياض، دبي، لندن)...',
+      search_offline: 'لا يوجد اتصال بالإنترنت...',
+      analyze_btn: 'تحليل',
+      live: 'مباشر',
+      offline: 'غير متصل',
+      global_co2: 'متوسط CO2 العالمي',
+      global_aqi: 'متوسط جودة الهواء العالمي',
+      last_update: 'آخر تحديث:',
+      aqi: 'مؤشر جودة الهواء (AQI)',
+      co2: 'مستوى CO2',
+      wind: 'سرعة الرياح',
+      humidity: 'الرطوبة',
+      rating: 'التقييم البيئي'
+    },
+    footer: {
+      about: 'EcoPulse هي منصة دولية متكاملة تهدف إلى مراقبة قضايا البيئة وتعزيز الاستدامة ودعم المشاريع الخضراء.',
+      links: 'روابط سريعة',
+      contact: 'اتصل بنا',
+      rights: '© 2026 EcoPulse. جميع الحقوق محفوظة.',
+      privacy: 'سياسة الخصوصية',
+      terms: 'شروط الخدمة',
+      faq: 'الأسئلة الشائعة'
+    },
+    auth: {
+      login_title: 'تسجيل الدخول',
+      register_title: 'إنشاء حساب جديد',
+      email: 'البريد الإلكتروني',
+      password: 'كلمة المرور',
+      name: 'الاسم الكامل',
+      login_btn: 'تسجيل الدخول',
+      register_btn: 'متابعة',
+      no_account: 'ليس لديك حساب؟ ',
+      has_account: 'هل لديك حساب بالفعل؟ '
+    }
+  },
+  ZH: {
+    navbar: {
+      menu: '菜单',
+      home: '首页',
+      dashboard: '全球数据看板',
+      calculator: '碳足迹计算器',
+      projects: '生态项目库',
+      plant: '认领植树',
+      admin: '管理后台',
+      login: '登录',
+      logout: '退出'
+    },
+    hero: {
+      title: '地球的未来始于您的每一步',
+      subtitle: 'EcoPulse — 不仅是一个监测面板。这是一个将您的生态责任转化为全球真正改变的企业级绿色超级平台。',
+      cta: '进入生态平台',
+      explore: '了解更多',
+      stats: {
+        users: '100万+ 活跃用户',
+        co2: '50万吨 减排二氧化碳',
+        projects: '1200+ 资助项目'
+      },
+      live_impact: '实时影响',
+      live: '实时',
+      co2_reduction: '全球二氧化碳减排量',
+      members: '守护者成员',
+      projects_count: '绿色项目',
+      tree: '棵树木',
+      planted_today: '今日已种植'
+    },
+    dashboard: {
+      title: '全球生态实时监测大屏',
+      subtitle: '世界主要城市的实时监测与智能大数据分析',
+      search_placeholder: '输入城市名称 (例如: 北京, 上海, 伦敦)...',
+      search_offline: '无网络连接...',
+      analyze_btn: '开始分析',
+      live: '实时在线',
+      offline: '离线模式',
+      global_co2: '全球平均 CO2',
+      global_aqi: '全球平均 AQI',
+      last_update: '最后更新:',
+      aqi: '空气质量指数 (AQI)',
+      co2: 'CO2 浓度',
+      wind: '风速',
+      humidity: '湿度',
+      rating: '生态评级'
+    },
+    footer: {
+      about: 'EcoPulse 是一家国际企业级生态平台，致力于监测气候环境、提升公众意识并支持全球绿色碳汇项目。',
+      links: '快速导航',
+      contact: '联系我们',
+      rights: '© 2026 EcoPulse. 保留所有权利。',
+      privacy: '隐私政策',
+      terms: '服务条款',
+      faq: '常见问题'
+    },
+    auth: {
+      login_title: '登录系统',
+      register_title: '创建账户',
+      email: '电子邮箱',
+      password: '密码',
+      name: '您的姓名',
+      login_btn: '立即登录',
+      register_btn: '继续',
+      no_account: '还没有账户？ ',
+      has_account: '已有账户？ '
+    }
+  },
+  DE: {
+    navbar: {
+      menu: 'Menü',
+      home: 'Startseite',
+      dashboard: 'Globale Statistiken',
+      calculator: 'CO2-Rechner',
+      projects: 'Projektgalerie',
+      plant: 'Baum Pflanzen',
+      admin: 'Admin-Panel',
+      login: 'Anmelden',
+      logout: 'Abmelden'
+    },
+    hero: {
+      title: 'Die Zukunft unserer Erde liegt in Ihren Schritten',
+      subtitle: 'EcoPulse — Mehr als ein Kontrollzentrum. Eine unternehmensweite Plattform, die Ihre Umweltverantwortung in weltweiten Wandel transformiert.',
+      cta: 'Plattform starten',
+      explore: 'Mehr erfahren',
+      stats: {
+        users: '1M+ Aktive Nutzer',
+        co2: '500K Tonnen CO2 gespart',
+        projects: '1.2K+ Geförderte Projekte'
+      },
+      live_impact: 'Live-Wirkung',
+      live: 'Live',
+      co2_reduction: 'Globale CO2-Reduktion',
+      members: 'Mitglieder',
+      projects_count: 'Projekte',
+      tree: 'Bäume',
+      planted_today: 'Heute gepflanzt'
+    },
+    dashboard: {
+      title: 'Globales Umwelt-Dashboard',
+      subtitle: 'Live-Monitoring und intelligente Analyse von Weltstädten',
+      search_placeholder: 'Stadt eingeben (z.B. Berlin, München, London)...',
+      search_offline: 'Keine Internetverbindung...',
+      analyze_btn: 'Analysieren',
+      live: 'LIVE',
+      offline: 'OFFLINE',
+      global_co2: 'Globaler CO2-Durchschnitt',
+      global_aqi: 'Globaler AQI-Durchschnitt',
+      last_update: 'Letzte Aktualisierung:',
+      aqi: 'Luftqualität (AQI)',
+      co2: 'CO2-Gehalt',
+      wind: 'Windgeschwindigkeit',
+      humidity: 'Luftfeuchtigkeit',
+      rating: 'Öko-Bewertung'
+    },
+    footer: {
+      about: 'EcoPulse ist eine internationale Unternehmensplattform zur Überwachung von Umweltproblemen und Förderung grüner Initiativen.',
+      links: 'Schnelllinks',
+      contact: 'Kontakt',
+      rights: '© 2026 EcoPulse. Alle Rechte vorbehalten.',
+      privacy: 'Datenschutz',
+      terms: 'Nutzungsbedingungen',
+      faq: 'FAQ'
+    },
+    auth: {
+      login_title: 'Anmelden',
+      register_title: 'Konto erstellen',
+      email: 'E-Mail-Adresse',
+      password: 'Passwort',
+      name: 'Ihr Name',
+      login_btn: 'Anmelden',
+      register_btn: 'Weiter',
+      no_account: 'Noch kein Konto? ',
+      has_account: 'Bereits registriert? '
+    }
+  },
+  FR: {
+    navbar: {
+      menu: 'Menu',
+      home: 'Accueil',
+      dashboard: 'Statistiques Globales',
+      calculator: 'Calculateur Carbone',
+      projects: 'Galerie de Projets',
+      plant: 'Planter un Arbre',
+      admin: 'Panneau Admin',
+      login: 'Connexion',
+      logout: 'Déconnexion'
+    },
+    hero: {
+      title: 'L\'avenir de notre planète dépend de vos actions',
+      subtitle: 'EcoPulse — bien plus qu\'un tableau de bord. Une méga-plateforme d\'entreprise transformant votre engagement écologique en véritable impact mondial.',
+      cta: 'Accéder à la plateforme',
+      explore: 'En savoir plus',
+      stats: {
+        users: '1M+ Utilisateurs Actifs',
+        co2: '500K Tonnes CO2 économisées',
+        projects: '1.2K+ Projets Financés'
+      },
+      live_impact: 'Impact en Direct',
+      live: 'En Direct',
+      co2_reduction: 'Réduction Mondiale de CO2',
+      members: 'Membres',
+      projects_count: 'Projets',
+      tree: 'Arbres',
+      planted_today: 'Plantés aujourd\'hui'
+    },
+    dashboard: {
+      title: 'Tableau de Bord Environnemental Global',
+      subtitle: 'Surveillance en temps réel et analyse intelligente des métropoles',
+      search_placeholder: 'Entrez votre ville (ex: Paris, Lyon, Londres)...',
+      search_offline: 'Aucune connexion internet...',
+      analyze_btn: 'Analyser',
+      live: 'EN DIRECT',
+      offline: 'HORS LIGNE',
+      global_co2: 'Moyenne Mondiale CO2',
+      global_aqi: 'Moyenne Mondiale AQI',
+      last_update: 'Dernière mise à jour:',
+      aqi: 'Qualité de l\'air (AQI)',
+      co2: 'Niveau de CO2',
+      wind: 'Vitesse du vent',
+      humidity: 'Humidité',
+      rating: 'Score Éco'
+    },
+    footer: {
+      about: 'EcoPulse est une plateforme d\'entreprise internationale conçue pour surveiller l\'environnement et soutenir les projets verts mondiaux.',
+      links: 'Liens Rapides',
+      contact: 'Contact',
+      rights: '© 2026 EcoPulse. Tous droits réservés.',
+      privacy: 'Politique de Confidentialité',
+      terms: 'Conditions d\'Utilisation',
+      faq: 'FAQ'
+    },
+    auth: {
+      login_title: 'Connexion',
+      register_title: 'Créer un Compte',
+      email: 'Adresse E-mail',
+      password: 'Mot de passe',
+      name: 'Votre Nom',
+      login_btn: 'Se Connecter',
+      register_btn: 'Continuer',
+      no_account: 'Pas encore de compte ? ',
+      has_account: 'Vous avez déjà un compte ? '
+    }
+  },
+  ES: {
+    navbar: {
+      menu: 'Menú',
+      home: 'Inicio',
+      dashboard: 'Estadísticas Globales',
+      calculator: 'Calculadora de Carbono',
+      projects: 'Galería de Proyectos',
+      plant: 'Plantar un Árbol',
+      admin: 'Panel de Admin',
+      login: 'Iniciar Sesión',
+      logout: 'Cerrar Sesión'
+    },
+    hero: {
+      title: 'El futuro de nuestro planeta comienza con tus pasos',
+      subtitle: 'EcoPulse — no es solo un panel de control. Es una mega plataforma corporativa que convierte tu compromiso ecológico en un impacto global real.',
+      cta: 'Entrar a la Plataforma',
+      explore: 'Descubrir Más',
+      stats: {
+        users: '1M+ Usuarios Activos',
+        co2: '500K Toneladas CO2 Ahorradas',
+        projects: '1.2K+ Proyectos Financiados'
+      },
+      live_impact: 'Impacto en Vivo',
+      live: 'En Vivo',
+      co2_reduction: 'Reducción Global de CO2',
+      members: 'Miembros',
+      projects_count: 'Proyectos',
+      tree: 'Árboles',
+      planted_today: 'Plantados hoy'
+    },
+    dashboard: {
+      title: 'Panel Ecológico Global',
+      subtitle: 'Monitoreo en tiempo real y análisis inteligente de ciudades del mundo',
+      search_placeholder: 'Ingresa tu ciudad (ej: Madrid, Barcelona, Londres)...',
+      search_offline: 'Sin conexión a internet...',
+      analyze_btn: 'Analizar',
+      live: 'EN VIVO',
+      offline: 'OFFLINE',
+      global_co2: 'CO2 Promedio Global',
+      global_aqi: 'AQI Promedio Global',
+      last_update: 'Última actualización:',
+      aqi: 'Calidad del Aire (AQI)',
+      co2: 'Nivel de CO2',
+      wind: 'Velocidad del Viento',
+      humidity: 'Humedad',
+      rating: 'Calificación Eco'
+    },
+    footer: {
+      about: 'EcoPulse es una plataforma corporativa internacional orientada a monitorear el medio ambiente y respaldar proyectos verdes.',
+      links: 'Enlaces Rápidos',
+      contact: 'Contacto',
+      rights: '© 2026 EcoPulse. Todos los derechos reservados.',
+      privacy: 'Política de Privacidad',
+      terms: 'Términos de Servicio',
+      faq: 'Preguntas Frecuentes'
+    },
+    auth: {
+      login_title: 'Iniciar Sesión',
+      register_title: 'Crear Cuenta',
+      email: 'Correo Electrónico',
+      password: 'Contraseña',
+      name: 'Tu Nombre',
+      login_btn: 'Acceder',
+      register_btn: 'Continuar',
+      no_account: '¿No tienes cuenta? ',
+      has_account: '¿Ya tienes cuenta? '
+    }
+  },
+  JA: {
+    navbar: {
+      menu: 'メニュー',
+      home: 'ホーム',
+      dashboard: 'グローバル統計',
+      calculator: '排出量計算機',
+      projects: 'プロジェクト一覧',
+      plant: '木を植える',
+      admin: '管理パネル',
+      login: 'ログイン',
+      logout: 'ログアウト'
+    },
+    hero: {
+      title: '地球の未来はあなたの一歩から始まる',
+      subtitle: 'EcoPulse — 単なる監視ダッシュボードではありません。環境への責任を世界規模の変革へと導くエンタープライズ・プラットフォームです。',
+      cta: 'プラットフォームへ',
+      explore: '詳細を見る',
+      stats: {
+        users: '100万人+ アクティブユーザー',
+        co2: '50万トン CO2削減達成',
+        projects: '1200+ 支援プロジェクト'
+      },
+      live_impact: 'リアルタイム影響',
+      live: 'LIVE',
+      co2_reduction: '世界CO2削減量',
+      members: '参加メンバー',
+      projects_count: 'プロジェクト数',
+      tree: '本の木',
+      planted_today: '本日植樹'
+    },
+    dashboard: {
+      title: 'グローバル環境モニタリング',
+      subtitle: '世界主要都市のリアルタイム測定とインテリジェント分析',
+      search_placeholder: '都市名を入力 (例: 東京, 大阪, ロンドン)...',
+      search_offline: 'オフラインです...',
+      analyze_btn: '分析実行',
+      live: 'ライブ',
+      offline: 'オフライン',
+      global_co2: '世界平均 CO2',
+      global_aqi: '世界平均 AQI',
+      last_update: '最終更新:',
+      aqi: '大気質指数 (AQI)',
+      co2: 'CO2 レベル',
+      wind: '風速',
+      humidity: '湿度',
+      rating: 'エコインデックス'
+    },
+    footer: {
+      about: 'EcoPulseは、地球環境の課題をモニタリングし、グリーンプロジェクトを支援する国際的なプラットフォームです。',
+      links: 'クイックリンク',
+      contact: 'お問い合わせ',
+      rights: '© 2026 EcoPulse. 全著作権所有。',
+      privacy: 'プライバシーポリシー',
+      terms: '利用規約',
+      faq: 'よくある質問'
+    },
+    auth: {
+      login_title: 'システムへログイン',
+      register_title: '新規アカウント作成',
+      email: 'メールアドレス',
+      password: 'パスワード',
+      name: 'お名前',
+      login_btn: 'ログイン',
+      register_btn: '次へ進む',
+      no_account: 'アカウントをお持ちでない方 ',
+      has_account: 'すでに登録済みの方 '
+    }
+  },
+  KO: {
+    navbar: {
+      menu: '메뉴',
+      home: '홈',
+      dashboard: '글로벌 통계',
+      calculator: '탄소 계산기',
+      projects: '프로젝트 갤러리',
+      plant: '나무 심기',
+      admin: '관리자 패널',
+      login: '로그인',
+      logout: '로그아웃'
+    },
+    hero: {
+      title: '지구의 미래는 당신의 발걸음에 있습니다',
+      subtitle: 'EcoPulse — 단순한 모니터링 패널이 아닌, 당신의 환경적 책임을 전 세계의 실질적인 변화로 이끄는 엔터프라이즈 플랫폼입니다.',
+      cta: '플랫폼 시작하기',
+      explore: '자세히 알아보기',
+      stats: {
+        users: '100만+ 활성 사용자',
+        co2: '50만 톤 CO2 절감',
+        projects: '1,200+ 후원 프로젝트'
+      },
+      live_impact: '실시간 영향',
+      live: 'LIVE',
+      co2_reduction: '글로벌 CO2 감축량',
+      members: '참여 회원',
+      projects_count: '프로젝트',
+      tree: '그루의 나무',
+      planted_today: '오늘 식재됨'
+    },
+    dashboard: {
+      title: '글로벌 환경 모니터링 대시보드',
+      subtitle: '전 세계 도시의 실시간 대기 질 및 스마트 분석',
+      search_placeholder: '도시명을 입력하세요 (예: 서울, 부산, 런던)...',
+      search_offline: '인터넷 연결 없음...',
+      analyze_btn: '분석하기',
+      live: '실시간',
+      offline: '오프라인',
+      global_co2: '전 세계 평균 CO2',
+      global_aqi: '전 세계 평균 AQI',
+      last_update: '최종 업데이트:',
+      aqi: '대기질 지수 (AQI)',
+      co2: 'CO2 농도',
+      wind: '풍속',
+      humidity: '습도',
+      rating: '에코 등급'
+    },
+    footer: {
+      about: 'EcoPulse는 환경 문제를 모니터링하고 전 세계의 친환경 프로젝트를 지원하는 국제 플랫폼입니다.',
+      links: '빠른 링크',
+      contact: '고객센터',
+      rights: '© 2026 EcoPulse. All rights reserved.',
+      privacy: '개인정보처리방침',
+      terms: '이용약관',
+      faq: '자주 묻는 질문'
+    },
+    auth: {
+      login_title: '시스템 로그인',
+      register_title: '새 계정 생성',
+      email: '이메일 주소',
+      password: '비밀번호',
+      name: '이름',
+      login_btn: '로그인',
+      register_btn: '계속하기',
+      no_account: '계정이 없으신가요? ',
+      has_account: '이미 계정이 있으신가요? '
+    }
+  },
+  HI: {
+    navbar: {
+      menu: 'मेनू',
+      home: 'होम',
+      dashboard: 'वैश्विक आँकड़े',
+      calculator: 'कार्बन कैलकुलेटर',
+      projects: 'परियोजना गैलरी',
+      plant: 'पेड़ लगाएँ',
+      admin: 'एडमिन पैनल',
+      login: 'लॉग इन',
+      logout: 'लॉग आउट'
+    },
+    hero: {
+      title: 'हमारी पृथ्वी का भविष्य आपके कदमों में है',
+      subtitle: 'EcoPulse — केवल एक निगरानी डैशबोर्ड नहीं, बल्कि आपकी पर्यावरण जिम्मेदारी को वास्तविक वैश्विक बदलाव में बदलने वाला एक विशाल मंच है।',
+      cta: 'प्लेटफ़ॉर्म पर जाएँ',
+      explore: 'और जानें',
+      stats: {
+        users: '10 लाख+ सक्रिय उपयोगकर्ता',
+        co2: '5 लाख टन CO2 की बचत',
+        projects: '1200+ वित्तपोषित परियोजनाएं'
+      },
+      live_impact: 'लाइव प्रभाव',
+      live: 'लाइव',
+      co2_reduction: 'वैश्विक CO2 कटौती',
+      members: 'सदस्य',
+      projects_count: 'परियोजनाएं',
+      tree: 'पेड़',
+      planted_today: 'आज लगाए गए'
+    },
+    dashboard: {
+      title: 'वैश्विक पर्यावरण निगरानी डैशबोर्ड',
+      subtitle: 'विश्व के शहरों की लाइव ट्रैकिंग और स्मार्ट विश्लेषण',
+      search_placeholder: 'अपना शहर दर्ज करें (उदा: दिल्ली, मुंबई, लंदन)...',
+      search_offline: 'इंटरनेट नहीं है...',
+      analyze_btn: 'विश्लेषण करें',
+      live: 'लाइव',
+      offline: 'ऑफ़लाइन',
+      global_co2: 'वैश्विक औसत CO2',
+      global_aqi: 'वैश्विक औसत AQI',
+      last_update: 'अंतिम अपडेट:',
+      aqi: 'वायु गुणवत्ता (AQI)',
+      co2: 'CO2 स्तर',
+      wind: 'हवा की गति',
+      humidity: 'नमी',
+      rating: 'पर्यावरण रेटिंग'
+    },
+    footer: {
+      about: 'EcoPulse एक अंतरराष्ट्रीय कॉर्पोरेट प्लेटफॉर्म है जो पर्यावरण निगरानी और हरित परियोजनाओं का समर्थन करता है।',
+      links: 'त्वरित लिंक',
+      contact: 'संपर्क करें',
+      rights: '© 2026 EcoPulse. सर्वाधिकार सुरक्षित।',
+      privacy: 'गोपनीयता नीति',
+      terms: 'सेवा की शर्तें',
+      faq: 'अक्सर पूछे जाने वाले प्रश्न'
+    },
+    auth: {
+      login_title: 'लॉग इन करें',
+      register_title: 'खाता बनाएँ',
+      email: 'ईमेल पता',
+      password: 'पासवर्ड',
+      name: 'आपका नाम',
+      login_btn: 'लॉग इन',
+      register_btn: 'जारी रखें',
+      no_account: 'खाता नहीं है? ',
+      has_account: 'पहले से खाता है? '
+    }
+  },
+  KZ: {
+    navbar: {
+      menu: 'Мәзір',
+      home: 'Басты бет',
+      dashboard: 'Ғаламдық Статистика',
+      calculator: 'Көміртек калькуляторы',
+      projects: 'Жобалар галереясы',
+      plant: 'Ағаш отырғызу',
+      admin: 'Әкімші панелі',
+      login: 'Кіру',
+      logout: 'Шығу'
+    },
+    hero: {
+      title: 'Планетамыздың болашағы сіздің қадамыңызда',
+      subtitle: 'EcoPulse — бұл жай ғана бақылау тақтасы емес. Бұл сіздің экологиялық жауапкершілігіңізді бүкіл әлемдегі нақты өзгерістерге айналдыратын ірі мегаплатформа.',
+      cta: 'Платформаға кіру',
+      explore: 'Толығырақ білу',
+      stats: {
+        users: '1M+ Белсенді пайдаланушы',
+        co2: '500K Тонна CO2 үнемделді',
+        projects: '1.2K+ Қаржыландырылған жоба'
+      },
+      live_impact: 'Тікелей әсер',
+      live: 'Тікелей',
+      co2_reduction: 'Ғаламдық CO2 азаюы',
+      members: 'Мүшелер',
+      projects_count: 'Жобалар',
+      tree: 'Ағаш',
+      planted_today: 'Бүгін отырғызылды'
+    },
+    dashboard: {
+      title: 'Ғаламдық Экологиялық Бақылау Тақтасы',
+      subtitle: 'Әлем қалаларының тікелей мониторингі және ақылды талдауы',
+      search_placeholder: 'Қалаңызды енгізіңіз (мысалы: Астана, Алматы, Лондон)...',
+      search_offline: 'Интернет байланысы жоқ...',
+      analyze_btn: 'Талдау',
+      live: 'ТІКЕЛЕЙ',
+      offline: 'ОФЛАЙН',
+      global_co2: 'Ғаламдық орташа CO2',
+      global_aqi: 'Ғаламдық орташа AQI',
+      last_update: 'Соңғы жаңарту:',
+      aqi: 'Ауа сапасы (AQI)',
+      co2: 'CO2 деңгейі',
+      wind: 'Жел жылдамдығы',
+      humidity: 'Ылғалдылық',
+      rating: 'Эко рейтинг'
+    },
+    footer: {
+      about: 'EcoPulse — экологиялық мәселелерді бақылауға және жасыл жобаларды қолдауға арналған халықаралық корпоративтік платформа.',
+      links: 'Жылдам сілтемелер',
+      contact: 'Байланыс',
+      rights: '© 2026 EcoPulse. Барлық құқықтар қорғалған.',
+      privacy: 'Құпиялылық саясаты',
+      terms: 'Қызмет көрсету шарттары',
+      faq: 'Жиі қойылатын сұрақтар'
+    },
+    auth: {
+      login_title: 'Жүйеге кіру',
+      register_title: 'Тіркелу',
+      email: 'Электрондық пошта',
+      password: 'Құпия сөз',
+      name: 'Атыңыз',
+      login_btn: 'Кіру',
+      register_btn: 'Жалғастыру',
+      no_account: 'Тіркелмегенсіз бе? ',
+      has_account: 'Аккаунтыңыз бар ма? '
+    }
+  },
+  AZ: {
+    navbar: {
+      menu: 'Menyu',
+      home: 'Əsas Səhifə',
+      dashboard: 'Qlobal Statistika',
+      calculator: 'Karbon Kalkulyatoru',
+      projects: 'Layihə Qalereyası',
+      plant: 'Ağac Ək',
+      admin: 'Admin Panel',
+      login: 'Daxil ol',
+      logout: 'Çıxış'
+    },
+    hero: {
+      title: 'Planetimizin gələcəyi addımlarınızdadır',
+      subtitle: 'EcoPulse — yalnız monitorinq paneli deyil. Ekoloji məsuliyyətinizi qlobal miqyasda real dəyişikliklərə çevirən korporativ platformadır.',
+      cta: 'Platformaya Daxil Ol',
+      explore: 'Ətraflı Öyrən',
+      stats: {
+        users: '1M+ Aktiv İstifadəçi',
+        co2: '500K Ton Qənaət Edilmiş CO2',
+        projects: '1.2K+ Maliyyələşdirilmiş Layihə'
+      },
+      live_impact: 'Canlı Təsir',
+      live: 'Canlı',
+      co2_reduction: 'Qlobal CO2 Azalması',
+      members: 'Üzvlər',
+      projects_count: 'Layihələr',
+      tree: 'Ağac',
+      planted_today: 'Bu gün əkildi'
+    },
+    dashboard: {
+      title: 'Qlobal Ekoloji Monitorinq Paneli',
+      subtitle: 'Dünya şəhərlərinin canlı izlənməsi və intellektual təhlili',
+      search_placeholder: 'Şəhərinizi daxil edin (məs: Bakı, London)...',
+      search_offline: 'İnternet bağlantısı yoxdur...',
+      analyze_btn: 'Təhlil et',
+      live: 'CANLI',
+      offline: 'OFLAYN',
+      global_co2: 'Qlobal Orta CO2',
+      global_aqi: 'Qlobal Orta AQI',
+      last_update: 'Son yenilənmə:',
+      aqi: 'Hava Keyfiyyəti (AQI)',
+      co2: 'CO2 Səviyyəsi',
+      wind: 'Külək Sürəti',
+      humidity: 'Rütubət',
+      rating: 'Eko Reytinq'
+    },
+    footer: {
+      about: 'EcoPulse ekoloji problemləri izləmək və yaşıl layihələri dəstəkləmək üçün beynəlxalq platformadır.',
+      links: 'Keçidlər',
+      contact: 'Əlaqə',
+      rights: '© 2026 EcoPulse. Bütün hüquqlar qorunur.',
+      privacy: 'Məxfilik Siyasəti',
+      terms: 'İstifadə Şərtləri',
+      faq: 'FAQ'
+    },
+    auth: {
+      login_title: 'Sistemə Giriş',
+      register_title: 'Qeydiyyat',
+      email: 'E-poçt ünvanı',
+      password: 'Şifrə',
+      name: 'Adınız',
+      login_btn: 'Daxil ol',
+      register_btn: 'Davam et',
+      no_account: 'Hesabınız yoxdur? ',
+      has_account: 'Artıq hesabınız var? '
+    }
+  },
+  FA: {
+    navbar: {
+      menu: 'منو',
+      home: 'صفحه اصلی',
+      dashboard: 'آمار جهانی',
+      calculator: 'ماشین حساب کربن',
+      projects: 'گالری پروژه‌ها',
+      plant: 'کاشت درخت',
+      admin: 'پنل مدیریت',
+      login: 'ورود',
+      logout: 'خروج'
+    },
+    hero: {
+      title: 'آینده سیاره ما در گام‌های شماست',
+      subtitle: 'EcoPulse — فراتر از یک داشبورد ساده. یک پلتفرم پیشرفته شرکتی برای تبدیل مسئولیت زیست‌محیطی به تغییرات واقعی در سراسر جهان.',
+      cta: 'ورود به پلتفرم',
+      explore: 'اطلاعات بیشتر',
+      stats: {
+        users: '۱ میلیون+ کاربر فعال',
+        co2: '۵۰۰ هزار تن صرفه‌جویی CO2',
+        projects: '۱۲۰۰+ پروژه پشتیبانی شده'
+      },
+      live_impact: 'اثر زنده',
+      live: 'زنده',
+      co2_reduction: 'کاهش جهانی CO2',
+      members: 'اعضا',
+      projects_count: 'پروژه‌ها',
+      tree: 'درخت',
+      planted_today: 'امروز کاشته شد'
+    },
+    dashboard: {
+      title: 'داشبورد نظارت زیست‌محیطی جهان',
+      subtitle: 'پایش زنده و تحلیل هوشمند شهرهای سراسر جهان',
+      search_placeholder: 'شهر خود را وارد کنید (مثال: تهران، لندن)...',
+      search_offline: 'اتصال اینترنت برقرار نیست...',
+      analyze_btn: 'تحلیل',
+      live: 'زنده',
+      offline: 'آفلاین',
+      global_co2: 'میانگین جهانی CO2',
+      global_aqi: 'میانگین جهانی کیفیت هوا',
+      last_update: 'آخرین به‌روزرسانی:',
+      aqi: 'شاخص کیفیت هوا (AQI)',
+      co2: 'سطح CO2',
+      wind: 'سرعت باد',
+      humidity: 'رطوبت',
+      rating: 'امتیاز بوم‌شناختی'
+    },
+    footer: {
+      about: 'EcoPulse یک پلتفرم بین‌المللی سازمانی برای نظارت بر مسائل زیست‌محیطی و حمایت از پروژه‌های سبز در سراسر جهان است.',
+      links: 'لینک‌های سریع',
+      contact: 'تماس با ما',
+      rights: '© ۲۰۲۶ EcoPulse. تمامی حقوق محفوظ است.',
+      privacy: 'سیاست حفظ حریم خصوصی',
+      terms: 'شرایط خدمات',
+      faq: 'سوالات متداول'
+    },
+    auth: {
+      login_title: 'ورود به سامانه',
+      register_title: 'ایجاد حساب کاربری',
+      email: 'آدرس ایمیل',
+      password: 'رمز عبور',
+      name: 'نام شما',
+      login_btn: 'ورود',
+      register_btn: 'ادامه',
+      no_account: 'حساب کاربری ندارید؟ ',
+      has_account: 'قبلاً ثبت‌نام کرده‌اید؟ '
+    }
+  },
+  IT: {
+    navbar: {
+      menu: 'Menu',
+      home: 'Home',
+      dashboard: 'Statistiche Globali',
+      calculator: 'Calcolatore Carbonio',
+      projects: 'Galleria Progetti',
+      plant: 'Pianta un Albero',
+      admin: 'Pannello Admin',
+      login: 'Accedi',
+      logout: 'Esci'
+    },
+    hero: {
+      title: 'Il futuro del pianeta è nei tuoi passi',
+      subtitle: 'EcoPulse — non un semplice cruscotto. Una piattaforma globale che trasforma la tua responsabilità ecologica in un impatto reale nel mondo.',
+      cta: 'Entra nella Piattaforma',
+      explore: 'Scopri di Più',
+      stats: {
+        users: '1M+ Utenti Attivi',
+        co2: '500K Tonnellate CO2 Risparmiate',
+        projects: '1.2K+ Progetti Finanziati'
+      },
+      live_impact: 'Impatto Live',
+      live: 'Live',
+      co2_reduction: 'Riduzione Globale CO2',
+      members: 'Membri',
+      projects_count: 'Progetti',
+      tree: 'Alberi',
+      planted_today: 'Piantati oggi'
+    },
+    dashboard: {
+      title: 'Pannello Ambientale Globale',
+      subtitle: 'Monitoraggio in tempo reale e analisi intelligente delle città',
+      search_placeholder: 'Inserisci la tua città (es: Roma, Milano, Londra)...',
+      search_offline: 'Nessuna connessione internet...',
+      analyze_btn: 'Analizza',
+      live: 'LIVE',
+      offline: 'OFFLINE',
+      global_co2: 'Media Globale CO2',
+      global_aqi: 'Media Globale AQI',
+      last_update: 'Ultimo aggiornamento:',
+      aqi: 'Qualità dell\'Aria (AQI)',
+      co2: 'Livello CO2',
+      wind: 'Velocità Vento',
+      humidity: 'Umidità',
+      rating: 'Valutazione Eco'
+    },
+    footer: {
+      about: 'EcoPulse è una piattaforma d\'impresa internazionale per monitorare l\'ambiente e sostenere progetti verdi.',
+      links: 'Collegamenti Rapidi',
+      contact: 'Contatto',
+      rights: '© 2026 EcoPulse. Tutti i diritti riservati.',
+      privacy: 'Informativa sulla Privacy',
+      terms: 'Termini di Servizio',
+      faq: 'FAQ'
+    },
+    auth: {
+      login_title: 'Accedi al Sistema',
+      register_title: 'Crea Account',
+      email: 'Indirizzo Email',
+      password: 'Password',
+      name: 'Il tuo Nome',
+      login_btn: 'Accedi',
+      register_btn: 'Continua',
+      no_account: 'Non hai un account? ',
+      has_account: 'Hai già un account? '
+    }
+  },
+  PT: {
+    navbar: {
+      menu: 'Menu',
+      home: 'Início',
+      dashboard: 'Estatísticas Globais',
+      calculator: 'Calculadora de Carbono',
+      projects: 'Galeria de Projetos',
+      plant: 'Plantar uma Árvore',
+      admin: 'Painel Admin',
+      login: 'Entrar',
+      logout: 'Sair'
+    },
+    hero: {
+      title: 'O futuro do nosso planeta está nos seus passos',
+      subtitle: 'EcoPulse — mais do que um painel de controle. Uma plataforma corporativa que transforma a responsabilidade ecológica em impacto real no mundo todo.',
+      cta: 'Acessar Plataforma',
+      explore: 'Saber Mais',
+      stats: {
+        users: '1M+ Usuários Ativos',
+        co2: '500K Toneladas CO2 Economizadas',
+        projects: '1.2K+ Projetos Financiados'
+      },
+      live_impact: 'Impacto ao Vivo',
+      live: 'Ao Vivo',
+      co2_reduction: 'Redução Global de CO2',
+      members: 'Membros',
+      projects_count: 'Projetos',
+      tree: 'Árvores',
+      planted_today: 'Plantadas hoje'
+    },
+    dashboard: {
+      title: 'Painel Ambiental Global',
+      subtitle: 'Monitoramento em tempo real e análise inteligente de cidades mundiais',
+      search_placeholder: 'Digite sua cidade (ex: São Paulo, Lisboa, Londres)...',
+      search_offline: 'Sem conexão com a internet...',
+      analyze_btn: 'Analisar',
+      live: 'AO VIVO',
+      offline: 'OFFLINE',
+      global_co2: 'Média Global de CO2',
+      global_aqi: 'Média Global de AQI',
+      last_update: 'Última atualização:',
+      aqi: 'Qualidade do Ar (AQI)',
+      co2: 'Nível de CO2',
+      wind: 'Velocidade do Vento',
+      humidity: 'Umidade',
+      rating: 'Avaliação Eco'
+    },
+    footer: {
+      about: 'EcoPulse é uma plataforma corporativa internacional projetada para monitorar o meio ambiente e apoiar projetos sustentáveis globais.',
+      links: 'Links Rápidos',
+      contact: 'Contato',
+      rights: '© 2026 EcoPulse. Todos os direitos reservados.',
+      privacy: 'Política de Privacidade',
+      terms: 'Termos de Serviço',
+      faq: 'Perguntas Frequentes'
+    },
+    auth: {
+      login_title: 'Entrar no Sistema',
+      register_title: 'Criar Conta',
+      email: 'Endereço de E-mail',
+      password: 'Senha',
+      name: 'Seu Nome',
+      login_btn: 'Entrar',
+      register_btn: 'Continuar',
+      no_account: 'Não tem uma conta? ',
+      has_account: 'Já tem uma conta? '
+    }
   }
 };
+

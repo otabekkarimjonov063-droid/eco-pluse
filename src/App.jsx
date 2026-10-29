@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useCallback, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Sidebar from './components/Sidebar';
-import { useAuth } from './contexts/AuthContext';
 
 // Lazy load heavy page components & modals — only load when first visited
 const LoginModal       = lazy(() => import('./components/LoginModal'));
@@ -16,6 +15,7 @@ const AdminPanel      = lazy(() => import('./components/AdminPanel'));
 const EcoComments     = lazy(() => import('./components/EcoComments'));
 import VersionUpdateModal from './components/VersionUpdateModal';
 import VersionToast   from './components/VersionToast';
+import LanguageModal  from './components/LanguageModal';
 
 // Minimal restrained loading spinner that matches theme (no black flashing in light mode)
 const PageLoader = () => (
@@ -51,7 +51,6 @@ function App() {
     return 'home';
   });
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const { isAdmin } = useAuth();
 
   const handleTabChange = useCallback((tab) => {
     if (tab === activeTab) return; // ignore same-tab clicks
@@ -61,7 +60,7 @@ function App() {
     } catch (e) {
       console.error(e);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
   }, [activeTab]);
 
   const openLogin  = useCallback(() => setIsLoginModalOpen(true),  []);
@@ -142,6 +141,9 @@ function App() {
       {/* Version Updates Modal & Floating Toast */}
       <VersionUpdateModal />
       <VersionToast />
+
+      {/* Transparent World Language Switcher Modal */}
+      <LanguageModal />
     </div>
   );
 }

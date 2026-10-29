@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion, useSpring, useTransform, useInView } from 'framer-motion';
 import { useRef } from 'react';
 

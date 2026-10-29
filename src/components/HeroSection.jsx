@@ -1,23 +1,8 @@
-import React, { useRef, useMemo, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Leaf, Globe2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import CountUp from './CountUp';
-
-// Deterministic star field (no Math.random on every render)
-const useStars = (n) =>
-  useMemo(
-    () =>
-      Array.from({ length: n }, (_, i) => ({
-        id: i,
-        x: (i * 137.5) % 100,
-        y: (i * 61.8) % 100,
-        s: 1 + (i % 3),
-        o: 0.25 + ((i * 7) % 10) / 14,
-        d: 2 + (i % 5),
-      })),
-    [n]
-  );
 
 const HeroSection = ({ setActiveTab }) => {
   const { t, language } = useLanguage();
@@ -39,12 +24,10 @@ const HeroSection = ({ setActiveTab }) => {
     offset: ['start start', 'end start'],
   });
 
-  // Scroll-driven parallax
-  const globeScale = useTransform(scrollYProgress, [0, 1], [1, 2.4]);
-  const globeY = useTransform(scrollYProgress, [0, 1], ['0%', '-12%']);
-  const bigTextY = useTransform(scrollYProgress, [0, 1], ['0%', '60%']);
+  // Scroll-driven parallax (GPU optimized)
+  const bigTextY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   const bigTextOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-35%']);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
 
   const title = t('hero', 'title') || '';
@@ -66,11 +49,11 @@ const HeroSection = ({ setActiveTab }) => {
         {/* Giant background wordmark */}
         <motion.div
           style={{ y: bigTextY, opacity: bigTextOpacity }}
-          className="absolute inset-x-0 top-[18%] flex justify-center pointer-events-none select-none"
+          className="absolute inset-x-0 top-[18%] flex justify-center pointer-events-none select-none will-change-transform"
         >
           <span
-            className="font-black tracking-[0.18em] text-transparent bg-clip-text bg-gradient-to-b from-slate-900/10 dark:from-white/20 to-transparent whitespace-nowrap font-display"
-            style={{ fontSize: 'clamp(3.5rem, 15vw, 14rem)', lineHeight: 1, fontWeight: 300 }}
+            className="font-black tracking-[0.18em] text-transparent bg-clip-text bg-gradient-to-b from-slate-900/10 dark:from-white/20 to-transparent whitespace-nowrap font-display transform-gpu"
+            style={{ fontSize: 'clamp(3.5rem, 15vw, 14rem)', lineHeight: 1, fontWeight: 300, transform: 'translateZ(0)' }}
           >
             ECOPULSE
           </span>
@@ -164,7 +147,7 @@ const HeroSection = ({ setActiveTab }) => {
           className="hidden lg:flex absolute right-10 top-28 z-10 w-64 flex-col gap-3.5 pointer-events-none select-none"
         >
           {/* Card 1: Air Quality */}
-          <div className="animate-float-slow rounded-2xl p-5 shadow-2xl backdrop-blur-xl border border-white/15 bg-black/40 relative overflow-hidden group">
+          <div className="animate-float-slow rounded-2xl p-5 shadow-2xl backdrop-blur-md border border-white/15 bg-black/40 relative overflow-hidden group">
             <div className="absolute -top-10 -right-10 w-24 h-24 bg-emerald-500/15 rounded-full blur-xl pointer-events-none" />
 
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-white/70">
@@ -189,7 +172,7 @@ const HeroSection = ({ setActiveTab }) => {
           </div>
 
           {/* Card 2: CO2 */}
-          <div className="animate-float rounded-2xl p-5 shadow-2xl backdrop-blur-xl border border-white/15 bg-black/40 relative overflow-hidden group mt-1" style={{ animationDelay: '-2s' }}>
+          <div className="animate-float rounded-2xl p-5 shadow-2xl backdrop-blur-md border border-white/15 bg-black/40 relative overflow-hidden group mt-1" style={{ animationDelay: '-2s' }}>
             <div className="absolute -top-10 -right-10 w-24 h-24 bg-teal-500/15 rounded-full blur-xl pointer-events-none" />
 
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-white/70">

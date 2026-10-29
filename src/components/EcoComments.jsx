@@ -129,7 +129,7 @@ const EcoComments = () => {
       {/* Dynamic Looping Video Background */}
       <VideoBackdrop 
         src="/videos/aurora.mp4" 
-        poster="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&q=80&w=1600" 
+        poster="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&q=75&w=1080" 
         opacity={0.2} 
       />
 

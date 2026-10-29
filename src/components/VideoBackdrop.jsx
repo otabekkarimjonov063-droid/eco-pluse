@@ -47,7 +47,11 @@ export default function VideoBackdrop({
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none" aria-hidden="true">
+    <div 
+      className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none will-change-transform" 
+      style={{ transform: 'translateZ(0)', contain: 'strict' }}
+      aria-hidden="true"
+    >
       {/* Fallback poster image */}
       {poster && (
         <img
@@ -55,7 +59,7 @@ export default function VideoBackdrop({
           alt=""
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
           style={{ opacity: canPlay ? 0 : opacity }}
         />
       )}
