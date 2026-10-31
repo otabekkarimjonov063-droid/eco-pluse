@@ -251,16 +251,24 @@ const HeroSection = ({ setActiveTab }) => {
           </motion.div>
         </motion.div>
 
-        {/* ───────── Floating Data Cards on the Right (Exact to Screenshots & Animated) ───────── */}
+        {/* ───────── Floating Data Cards on the Right (Lively synchronized interaction) ───────── */}
         <motion.div
           style={{ opacity: contentOpacity }}
-          className="hidden lg:flex absolute right-12 top-24 z-10 w-64 flex-col gap-4 select-none"
+          className="hidden lg:flex absolute right-12 top-24 z-10 w-64 flex-col gap-3 select-none"
         >
-          {/* Card 1: Air Quality (Exact to media_1793454503203_f2f17857.jpg) */}
+          {/* Card 1: Air Quality - Floats down towards Card 2 */}
           <motion.div
-            animate={{ y: [0, -7, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-            className="rounded-[22px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl border border-white/[0.08] bg-[#071912]/85 relative overflow-hidden"
+            animate={{ 
+              y: [0, 8.5, 0, -3.5, 0],
+              rotate: [0, 0.6, 0, -0.4, 0]
+            }}
+            transition={{ 
+              duration: 3.6, 
+              repeat: Infinity, 
+              ease: 'easeInOut' 
+            }}
+            whileHover={{ scale: 1.03 }}
+            className="rounded-[22px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl border border-white/[0.08] bg-[#071912]/85 relative overflow-hidden cursor-default transition-shadow hover:shadow-[0_25px_60px_rgba(52,211,153,0.15)]"
           >
             {/* Top row */}
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.22em] uppercase">
@@ -279,7 +287,7 @@ const HeroSection = ({ setActiveTab }) => {
             {/* Value row */}
             <div className="mt-3 flex items-baseline">
               <span className="font-serif font-light text-5xl text-white tracking-tight">
-                {aqi ?? 93}
+                {aqi ?? 94}
               </span>
               <span className="ml-3 font-mono text-xs text-white/60 font-medium">US AQI</span>
             </div>
@@ -288,18 +296,26 @@ const HeroSection = ({ setActiveTab }) => {
             <div className="mt-4 h-1 rounded-full bg-white/10 overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: `${Math.min(((aqi || 93) / 150) * 100, 100)}%` }}
+                animate={{ width: `${Math.min(((aqi || 94) / 150) * 100, 100)}%` }}
                 transition={{ duration: 1.2, ease: 'easeOut' }}
                 className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] rounded-full"
               />
             </div>
           </motion.div>
 
-          {/* Card 2: CO2 (Exact to media_1793454503203_f2f17857.jpg) */}
+          {/* Card 2: CO2 - Floats up towards Card 1 */}
           <motion.div
-            animate={{ y: [0, 7, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-            className="rounded-[22px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl border border-white/[0.08] bg-[#071912]/85 relative overflow-hidden"
+            animate={{ 
+              y: [0, -8.5, 0, 3.5, 0],
+              rotate: [0, -0.6, 0, 0.4, 0]
+            }}
+            transition={{ 
+              duration: 3.6, 
+              repeat: Infinity, 
+              ease: 'easeInOut' 
+            }}
+            whileHover={{ scale: 1.03 }}
+            className="rounded-[22px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl border border-white/[0.08] bg-[#071912]/85 relative overflow-hidden cursor-default transition-shadow hover:shadow-[0_25px_60px_rgba(52,211,153,0.15)]"
           >
             {/* Top row */}
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.22em] uppercase">
