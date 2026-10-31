@@ -16,7 +16,7 @@ const PlantTree = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedRegion, setSelectedRegion] = useState(0);
   const [step, setStep] = useState(1); // 1: Tree, 2: Region, 3: Impact/Pay, 4: Success
-  const [viewMode, setViewMode] = useState('3d'); // '3d' or 'photo'
+  const [viewMode, setViewMode] = useState('photo'); // 'photo' by default, switches to '3d' when selected
   const [isLoading, setIsLoading] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [isDesktop, setIsDesktop] = useState(() => (typeof window !== 'undefined' ? window.innerWidth >= 768 : true));

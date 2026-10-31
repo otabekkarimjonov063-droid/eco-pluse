@@ -67,14 +67,7 @@ function App() {
   const closeLogin = useCallback(() => setIsLoginModalOpen(false), []);
 
   return (
-    <div className="min-h-screen relative flex bg-eco-light dark:bg-eco-dark text-slate-900 dark:text-bone overflow-x-hidden selection:bg-signal/30 font-sans transition-colors duration-200">
-      {/* Ambient Forest Gradient Lights */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none">
-        <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(16,185,129,0.12)_0%,transparent_70%)] blur-3xl" />
-        <div className="absolute top-[35%] left-[-10%] w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(5,150,105,0.09)_0%,transparent_70%)] blur-3xl" />
-        <div className="absolute bottom-[-10%] right-[10%] w-[850px] h-[850px] bg-[radial-gradient(circle,rgba(4,120,87,0.10)_0%,transparent_70%)] blur-3xl" />
-      </div>
-
+    <div className="min-h-screen relative flex text-slate-900 dark:text-bone overflow-x-hidden selection:bg-signal/30 font-sans transition-colors duration-200">
       {activeTab === 'admin' ? (
         <Suspense fallback={<PageLoader />}>
           <AdminPanel onExit={() => handleTabChange('home')} onOpenLogin={openLogin} />
@@ -88,7 +81,7 @@ function App() {
             onOpenLogin={openLogin}
           />
 
-          {/* Main Content */}
+          {/* Main Content - Padded on desktop so NO content ever goes behind sidebar */}
           <main className="flex-1 lg:pl-72 pb-28 lg:pb-16 relative z-10 w-full min-h-screen flex flex-col">
             {/* Page content with smooth fade-up */}
             <AnimatePresence mode="wait">
@@ -101,7 +94,7 @@ function App() {
                 className="flex-1 w-full"
               >
                 <Suspense fallback={<PageLoader />}>
-                  {activeTab === 'home'       && (
+                  {activeTab === 'home' && (
                     <>
                       <Hero 
                         setActiveTab={handleTabChange}

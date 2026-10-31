@@ -63,20 +63,8 @@ const HeroSection = ({ setActiveTab }) => {
       {/* ───────── HERO SECTION (Matches Reference Screenshot 1:1) ───────── */}
       <section
         ref={ref}
-        className="relative min-h-screen w-full overflow-hidden bg-[#030d08] text-white select-none"
+        className="relative min-h-screen w-full overflow-hidden bg-transparent text-white select-none"
       >
-        {/* Background Aurora / Night Sky Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&q=85&w=2000')`,
-          }}
-        />
-
-        {/* Ambient Dark Green Atmospheric Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#030d08]/65 via-[#04130c]/40 to-[#020805]/95 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_25%,rgba(16,185,129,0.18)_0%,transparent_60%)] pointer-events-none" />
-
         {/* Dynamic Twinkling Animated Stars */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {stars.map((s) => (
@@ -344,8 +332,8 @@ const HeroSection = ({ setActiveTab }) => {
           />
         </div>
 
-        {/* Continuous Running Ticker Ribbon */}
-        <div className="absolute bottom-0 inset-x-0 z-10 overflow-hidden border-t border-white/[0.08] bg-[#03100a]/85 backdrop-blur-md py-3">
+        {/* Continuous Running Ticker Ribbon - Edge to Edge */}
+        <div className="fixed bottom-0 inset-x-0 z-20 overflow-hidden border-t border-white/[0.08] bg-[#03100a]/90 backdrop-blur-md py-2.5">
           <div className="flex w-max animate-[marquee_45s_linear_infinite] whitespace-nowrap text-[10px] tracking-[0.4em] uppercase text-white/60 font-mono">
             {[0, 1].map((k) => (
               <span key={k} className="flex shrink-0">

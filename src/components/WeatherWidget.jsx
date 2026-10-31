@@ -326,7 +326,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
 
   // SIDEBAR VARIANT (Matches screenshot layout)
   return (
-    <div className="w-full rounded-2xl border border-white/[0.10] bg-[#04100c]/60 p-3 text-white backdrop-blur-md">
+    <div className="w-full rounded-2xl border border-white/[0.08] bg-black/25 p-3 text-white backdrop-blur-md">
       {/* Header telemetry status */}
       <div className="flex items-center justify-between mb-1.5">
         <div className="flex items-center gap-1.5">

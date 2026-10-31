@@ -81,8 +81,8 @@ export default function Sidebar({
         </div>
       </header>
 
-      {/* Desktop Sidebar (Identical to Screenshot) */}
-      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-[1.75rem] bg-[#07130e]/75 p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl lg:flex text-white border border-white/[0.10]">
+      {/* Desktop Sidebar (Identical to Screenshot - Translucent Glass) */}
+      <aside className="fixed bottom-14 left-5 top-5 z-40 hidden w-64 flex-col rounded-[1.75rem] bg-[#04120b]/20 p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-md lg:flex text-white border border-white/[0.10]">
         
         {/* Brand Header */}
         <div className="flex items-center justify-between px-2 pb-3 pt-1 shrink-0 mb-2">
@@ -93,7 +93,7 @@ export default function Sidebar({
           <button
             onClick={() => setIsModalOpen(true)}
             title="EcoPulse Yangilanishlar Markazi (Changelog)"
-            className="px-2.5 py-0.5 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.10] text-white/80 font-mono text-[11px] tracking-wider transition-all cursor-pointer"
+            className="px-2.5 py-0.5 rounded-full border border-white/20 bg-white/[0.06] hover:bg-white/[0.12] text-white/80 font-mono text-[11px] tracking-wider transition-all cursor-pointer"
           >
             <span>{currentVersion || 'v2.8'}</span>
           </button>
@@ -110,8 +110,8 @@ export default function Sidebar({
                 aria-current={isActive ? 'page' : undefined}
                 className={`relative flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-sm transition-all outline-none cursor-pointer ${
                   isActive 
-                    ? 'text-white font-medium bg-white/[0.08] border border-white/[0.12] shadow-sm' 
-                    : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
+                    ? 'text-white font-medium bg-white/[0.10] border border-white/[0.14] shadow-sm backdrop-blur-sm' 
+                    : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
                 }`}
               >
                 <Icon size={17} strokeWidth={1.5} className="shrink-0 text-white/80" />
@@ -128,7 +128,7 @@ export default function Sidebar({
           <WeatherWidget variant="sidebar" />
 
           {/* User Profile Card */}
-          <div className="flex items-center justify-between rounded-2xl border border-white/[0.10] bg-[#04100c]/60 p-2.5 backdrop-blur-md">
+          <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-black/25 p-2.5 backdrop-blur-md">
             <div className="flex items-center gap-2.5 min-w-0">
               <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-serif text-xs">
                 O
@@ -155,14 +155,14 @@ export default function Sidebar({
             {/* Theme Toggle Pill */}
             <button
               onClick={toggleTheme}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/[0.10] bg-[#04100c]/60 hover:bg-white/10 transition text-xs font-mono text-white/80 cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/[0.08] bg-black/25 hover:bg-white/10 transition text-xs font-mono text-white/80 cursor-pointer backdrop-blur-md"
             >
               <Moon size={12} className="text-[#34d399]" />
               <span className="text-[11px]">Dark</span>
             </button>
 
             {/* Language Segmented Control */}
-            <div className="flex items-center gap-1 p-0.5 rounded-xl border border-white/[0.10] bg-[#04100c]/60 text-xs font-mono">
+            <div className="flex items-center gap-1 p-0.5 rounded-xl border border-white/[0.08] bg-black/25 text-xs font-mono backdrop-blur-md">
               {langs.map((l) => (
                 <button
                   key={l}
