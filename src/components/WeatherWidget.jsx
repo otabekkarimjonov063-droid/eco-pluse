@@ -328,13 +328,13 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
   return (
     <div className="w-full rounded-2xl border border-white/[0.10] bg-[#04100c]/60 p-3 text-white backdrop-blur-md">
       {/* Header telemetry status */}
-      <div className="flex items-center justify-between mb-2 pb-1 border-b border-white/[0.08]">
+      <div className="flex items-center justify-between mb-1.5">
         <div className="flex items-center gap-1.5">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400 shadow-[0_0_6px_#34d399]" />
           </span>
-          <span className="text-[10px] font-mono tracking-wider uppercase text-white/70 font-semibold">
+          <span className="text-[10px] font-mono tracking-wider uppercase text-white/80 font-semibold">
             OB-HAVO • 10S
           </span>
         </div>
@@ -348,14 +348,14 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
       </div>
 
       {/* 10-Second Progress Bar */}
-      <div className="w-full bg-white/[0.06] h-0.5 rounded-full overflow-hidden mb-2">
+      <div className="w-full bg-white/[0.06] h-[1.5px] rounded-full overflow-hidden mb-2.5">
         <motion.div
           key={`sidebar-progress-${cityIndex}-${cycleTick}`}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 10, ease: 'linear' }}
           style={{ transformOrigin: 'left' }}
-          className="h-full bg-emerald-400 shadow-[0_0_6px_#34d399]"
+          className="h-full bg-emerald-400 shadow-[0_0_8px_#34d399]"
         />
       </div>
 

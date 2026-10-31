@@ -1,10 +1,10 @@
-import React, { useRef, useMemo, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Leaf, Globe2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import CountUp from './CountUp';
 
-// Deterministic star field for biosphere atmosphere
+// Deterministic star field for organic twinkle & floating animations
 const useStars = (n) =>
   useMemo(
     () =>
@@ -12,8 +12,8 @@ const useStars = (n) =>
         id: i,
         x: (i * 137.5) % 100,
         y: (i * 61.8) % 100,
-        s: 1 + (i % 2.5),
-        o: 0.2 + ((i * 7) % 10) / 16,
+        s: 1.5 + (i % 3),
+        o: 0.25 + ((i * 7) % 10) / 14,
         d: 2.5 + (i % 4),
       })),
     [n]
@@ -22,120 +22,206 @@ const useStars = (n) =>
 const HeroSection = ({ setActiveTab }) => {
   const { t, language } = useLanguage();
   const ref = useRef(null);
-  const stars = useStars(50);
-  const [aqi, setAqi] = useState(null);
+  const stars = useStars(60);
+  const [aqi, setAqi] = useState(93);
 
-  // Real air quality for Tashkent (Open-Meteo, no key needed)
+  // Real air quality for Tashkent (Open-Meteo)
   useEffect(() => {
     let off = false;
     fetch('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=41.3&longitude=69.2&current=us_aqi')
       .then((r) => r.json())
-      .then((d) => { if (!off && d?.current?.us_aqi != null) setAqi(Math.round(d.current.us_aqi)); })
+      .then((d) => {
+        if (!off && d?.current?.us_aqi != null) {
+          setAqi(Math.round(d.current.us_aqi));
+        }
+      })
       .catch(() => {});
-    return () => { off = true; };
+    return () => {
+      off = true;
+    };
   }, []);
-  
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   });
 
-  // Scroll-driven parallax (GPU optimized)
+  // Scroll-driven parallax animations
   const bigTextY = useTransform(scrollYProgress, [0, 1], ['0%', '45%']);
   const bigTextOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%']);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   const tickerItems = {
-    UZ: ['Havo sifati', 'CO₂ monitoring', 'Daraxt ekish', 'Uglerod izi', 'Yashil loyihalar', 'Real vaqt'],
-    RU: ['Качество воздуха', 'Мониторинг CO₂', 'Посадка деревьев', 'Углеродный след', 'Зеленые проекты', 'Реальное время'],
-    EN: ['Air Quality', 'CO₂ Monitoring', 'Planting Trees', 'Carbon Footprint', 'Green Projects', 'Real-time']
-  }[language] || ['Havo sifati', 'CO₂ monitoring', 'Daraxt ekish', 'Uglerod izi', 'Yashil loyihalar', 'Real vaqt'];
+    UZ: ['CO₂ MONITORING', 'DARAXT EKISH', 'UGLEROD IZI', 'YASHIL LOYIHALAR'],
+    RU: ['МОНИТОРИНГ CO₂', 'ПОСАДКА ДЕРЕВЬЕВ', 'УГЛЕРОДНЫЙ СЛЕД', 'ЗЕЛЕНЫЕ ПРОЕКТЫ'],
+    EN: ['CO₂ MONITORING', 'PLANTING TREES', 'CARBON FOOTPRINT', 'GREEN PROJECTS'],
+  }[language] || ['CO₂ MONITORING', 'DARAXT EKISH', 'UGLEROD IZI', 'YASHIL LOYIHALAR'];
 
   return (
     <>
-      {/* ───────── HERO ───────── */}
+      {/* ───────── HERO SECTION (Matches Reference Screenshot 1:1) ───────── */}
       <section
         ref={ref}
-        className="relative min-h-screen w-full overflow-hidden bg-[#030d08] text-white"
+        className="relative min-h-screen w-full overflow-hidden bg-[#030d08] text-white select-none"
       >
-        {/* Deep forest / emerald gradient atmosphere */}
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_70%_20%,rgba(16,185,129,0.20)_0%,rgba(5,70,50,0.14)_45%,transparent_75%)]" />
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_20%_65%,rgba(4,120,87,0.18)_0%,rgba(2,44,30,0.10)_45%,transparent_70%)]" />
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#030d08]/40 via-transparent to-[#030d08]/90" />
+        {/* Background Aurora / Night Sky Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&q=85&w=2000')`,
+          }}
+        />
 
-        {/* Ambient Biosphere Stars */}
-        <div className="absolute inset-0 pointer-events-none">
+        {/* Ambient Dark Green Atmospheric Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#030d08]/65 via-[#04130c]/40 to-[#020805]/95 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_25%,rgba(16,185,129,0.18)_0%,transparent_60%)] pointer-events-none" />
+
+        {/* Dynamic Twinkling Animated Stars */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {stars.map((s) => (
-            <span
+            <motion.span
               key={s.id}
-              className="absolute rounded-full bg-emerald-100 animate-pulse"
+              className="absolute rounded-full bg-white"
               style={{
                 left: `${s.x}%`,
                 top: `${s.y}%`,
                 width: s.s,
                 height: s.s,
-                opacity: s.o,
-                animationDuration: `${s.d}s`,
+              }}
+              animate={{
+                opacity: [s.o * 0.35, s.o, s.o * 0.35],
+                scale: [0.9, 1.25, 0.9],
+              }}
+              transition={{
+                duration: s.d,
+                repeat: Infinity,
+                ease: 'easeInOut',
               }}
             />
           ))}
         </div>
 
-        {/* Giant background wordmark */}
+        {/* Giant Background Wordmark 'ECOPULSE' with Parallax */}
         <motion.div
           style={{ y: bigTextY, opacity: bigTextOpacity }}
-          className="absolute inset-x-0 top-[16%] flex justify-center pointer-events-none select-none will-change-transform"
+          className="absolute inset-x-0 top-[18%] flex justify-center pointer-events-none select-none will-change-transform z-0"
         >
           <span
-            className="font-black tracking-[0.18em] text-transparent bg-clip-text bg-gradient-to-b from-white/15 via-white/5 to-transparent whitespace-nowrap font-display transform-gpu"
-            style={{ fontSize: 'clamp(3.5rem, 15vw, 14rem)', lineHeight: 1, fontWeight: 300, transform: 'translateZ(0)' }}
+            className="font-serif tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-b from-white/[0.12] via-white/[0.04] to-transparent whitespace-nowrap select-none"
+            style={{ fontSize: 'clamp(4rem, 15vw, 13.5rem)', lineHeight: 0.9, fontWeight: 300, transform: 'translateZ(0)' }}
           >
             ECOPULSE
           </span>
         </motion.div>
 
-        {/* Foreground content */}
+        {/* Foreground Content */}
         <motion.div
           style={{ y: contentY, opacity: contentOpacity }}
-          className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center lg:items-start lg:text-left px-6 lg:pl-16 pt-24 pb-32"
+          className="relative z-10 min-h-screen flex flex-col justify-center items-start px-6 lg:pl-16 pt-20 pb-32 max-w-5xl"
         >
-          {/* Live Pill Badge */}
+          {/* Live Pill Badge with Pulsing Green Dot */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 px-3.5 py-1.5 mb-7 rounded-full border border-emerald-500/25 bg-[#051a11]/75 backdrop-blur-md text-[11px] font-mono tracking-wider text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.12)]"
+            className="inline-flex items-center gap-2 px-3.5 py-1 mb-8 rounded-full border border-white/15 bg-black/40 backdrop-blur-md text-[11px] font-mono tracking-wider text-white/90"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
-            <span>• {t('hero', 'live') || 'JONLI'}</span>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+            </span>
+            <span className="uppercase tracking-widest">{t('hero', 'live') || 'JONLI'}</span>
           </motion.div>
 
-          {/* Luxury Editorial Slogan */}
+          {/* Luxury Editorial Headline matching Screenshot */}
           <h1
-            className="font-serif font-light leading-[1.08] max-w-4xl tracking-tight text-white pb-1 drop-shadow-sm"
-            style={{ fontSize: 'clamp(2.6rem, 6.4vw, 5.6rem)' }}
+            className="font-serif font-normal leading-[1.06] tracking-tight text-white pb-1"
+            style={{ fontSize: 'clamp(2.5rem, 5.8vw, 5.25rem)' }}
           >
             {language === 'RU' ? (
               <>
-                <span className="text-[#f4f0e6]">Будущее планеты </span>
-                <span className="italic font-serif bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898]">в ваших</span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="text-white inline-block"
+                >
+                  Будущее планеты{' '}
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="italic font-serif bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898] inline-block"
+                >
+                  в ваших
+                </motion.span>
                 <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898]">шагах</span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898] inline-block"
+                >
+                  шагах
+                </motion.span>
               </>
             ) : language === 'EN' ? (
               <>
-                <span className="text-[#f4f0e6]">Future of our planet </span>
-                <span className="italic font-serif bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898]">in your</span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="text-white inline-block"
+                >
+                  Future of our planet{' '}
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="italic font-serif bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898] inline-block"
+                >
+                  in your
+                </motion.span>
                 <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898]">footsteps</span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898] inline-block"
+                >
+                  footsteps
+                </motion.span>
               </>
             ) : (
               <>
-                <span className="text-[#f4f0e6]">Sayyoramiz kelajagi </span>
-                <span className="italic font-serif bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898]">sizning</span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="text-white inline-block"
+                >
+                  Sayyoramiz kelajagi{' '}
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="italic font-serif bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898] inline-block"
+                >
+                  sizning
+                </motion.span>
                 <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898]">qadamlaringizda</span>
+                <motion.span
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="bg-clip-text text-transparent bg-gradient-to-r from-[#dfcfaf] via-[#ecdcc3] to-[#cbb898] inline-block"
+                >
+                  qadamlaringizda
+                </motion.span>
               </>
             )}
           </h1>
@@ -144,124 +230,153 @@ const HeroSection = ({ setActiveTab }) => {
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 max-w-2xl text-sm sm:text-base text-[#b4c7bd] leading-relaxed font-sans"
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="mt-6 max-w-2xl text-sm sm:text-base text-white/70 leading-relaxed font-sans"
           >
-            {language === 'RU' 
-              ? "EcoPulse — это не просто панель мониторинга. Это крупная мегаплатформа, превращающая экологическую ответственность в реальные глобальные изменения."
+            {language === 'RU'
+              ? 'EcoPulse — это не просто панель мониторинга. Это крупная мегаплатформа, превращающая экологическую ответственность в реальные глобальные изменения.'
               : language === 'EN'
-              ? "EcoPulse is more than a dashboard. It is an enterprise environmental megaplaform turning ecological responsibility into verified global impact."
+              ? 'EcoPulse is more than a dashboard. It is an enterprise environmental megaplaform turning ecological responsibility into verified global impact.'
               : "EcoPulse — bu shunchaki kuzatish paneli emas. Bu sizning ekologik mas'uliyatingizni dunyo bo'ylab haqiqiy o'zgarishlarga aylantiruvchi yirik korporativ megaplatforma."}
           </motion.p>
 
-          {/* Action Buttons Matching Screenshot */}
+          {/* Action Buttons matching Screenshot */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35 }}
+            transition={{ duration: 0.7, delay: 0.55 }}
             className="mt-10 flex flex-col sm:flex-row items-center gap-4"
           >
             <button
               onClick={() => setActiveTab && setActiveTab('dashboard')}
-              className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#eddab5] hover:bg-white text-[#0f1712] font-medium text-sm tracking-wide transition-all shadow-[0_4px_24px_rgba(237,218,181,0.25)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer font-sans"
+              className="flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#eddab5] hover:bg-white text-[#121c16] font-medium text-sm tracking-wide transition-all shadow-[0_4px_24px_rgba(237,218,181,0.22)] hover:scale-[1.03] active:scale-[0.98] cursor-pointer font-sans"
             >
               <span>{language === 'RU' ? 'Войти на платформу' : language === 'EN' ? 'Enter platform' : 'Platformaga kirish'}</span>
               <ArrowRight size={16} />
             </button>
             <button
               onClick={() => setActiveTab && setActiveTab('projects')}
-              className="px-8 py-3.5 rounded-full border border-white/20 bg-black/20 hover:bg-white/10 backdrop-blur-md text-[#eddab5] font-medium text-sm tracking-wide hover:border-white/35 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer font-sans"
+              className="px-8 py-3.5 rounded-full border border-white/20 bg-black/30 hover:bg-white/10 backdrop-blur-md text-white/90 font-medium text-sm tracking-wide hover:border-white/35 transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer font-sans"
             >
               {language === 'RU' ? 'Узнать больше' : language === 'EN' ? 'Learn more' : "Batafsil o'rganish"}
             </button>
           </motion.div>
         </motion.div>
 
-        {/* Floating data cards (Unified Eco-Glass on the right) */}
+        {/* ───────── Floating Data Cards on the Right (Exact to Screenshots & Animated) ───────── */}
         <motion.div
           style={{ opacity: contentOpacity }}
-          className="hidden lg:flex absolute right-10 top-24 z-10 w-64 flex-col gap-3.5 pointer-events-none select-none"
+          className="hidden lg:flex absolute right-12 top-24 z-10 w-64 flex-col gap-4 select-none"
         >
-          {/* Card 1: Air Quality */}
-          <div className="animate-float-slow rounded-2xl p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-white/[0.12] bg-[#06140e]/75 relative overflow-hidden group">
-            <div className="absolute -top-10 -right-10 w-24 h-24 bg-emerald-500/15 rounded-full blur-xl pointer-events-none" />
-
-            <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-white/70">
-              <span className="font-semibold text-white/90">
+          {/* Card 1: Air Quality (Exact to media_1793454503203_f2f17857.jpg) */}
+          <motion.div
+            animate={{ y: [0, -7, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            className="rounded-[22px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl border border-white/[0.08] bg-[#071912]/85 relative overflow-hidden"
+          >
+            {/* Top row */}
+            <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.22em] uppercase">
+              <span className="font-semibold text-white/80">
                 {language === 'RU' ? 'ВОЗДУХ · ТАШКЕНТ' : language === 'EN' ? 'AIR · TASHKENT' : 'HAVO · TOSHKENT'}
               </span>
-              <span className="text-emerald-300 font-bold flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
-                • {t('hero', 'live') || 'JONLI'}
+              <div className="flex items-center gap-1.5 font-mono text-[10px] text-emerald-300 font-semibold tracking-wider">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+                </span>
+                <span>• {t('hero', 'live') || 'JONLI'}</span>
+              </div>
+            </div>
+
+            {/* Value row */}
+            <div className="mt-3 flex items-baseline">
+              <span className="font-serif font-light text-5xl text-white tracking-tight">
+                {aqi ?? 93}
               </span>
+              <span className="ml-3 font-mono text-xs text-white/60 font-medium">US AQI</span>
             </div>
-            <div className="mt-3 font-display font-light text-4xl text-white drop-shadow flex items-baseline">
-              {aqi ?? '67'}
-              <span className="ml-2 font-mono text-xs text-white/60 font-medium">US AQI</span>
-            </div>
-            <div className="mt-3.5 h-1 rounded-full bg-white/10 overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]" 
-                style={{ width: `${Math.min((aqi || 67) / 2, 100)}%` }} 
+
+            {/* Progress bar */}
+            <div className="mt-4 h-1 rounded-full bg-white/10 overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${Math.min(((aqi || 93) / 150) * 100, 100)}%` }}
+                transition={{ duration: 1.2, ease: 'easeOut' }}
+                className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] rounded-full"
               />
             </div>
-          </div>
+          </motion.div>
 
-          {/* Card 2: CO2 */}
-          <div className="animate-float rounded-2xl p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-white/[0.12] bg-[#06140e]/75 relative overflow-hidden group mt-0.5" style={{ animationDelay: '-2s' }}>
-            <div className="absolute -top-10 -right-10 w-24 h-24 bg-teal-500/15 rounded-full blur-xl pointer-events-none" />
+          {/* Card 2: CO2 (Exact to media_1793454503203_f2f17857.jpg) */}
+          <motion.div
+            animate={{ y: [0, 7, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+            className="rounded-[22px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl border border-white/[0.08] bg-[#071912]/85 relative overflow-hidden"
+          >
+            {/* Top row */}
+            <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.22em] uppercase">
+              <span className="font-bold text-white/80">CO₂</span>
+              <span className="text-white/60 font-mono font-medium tracking-[0.2em]">PPM</span>
+            </div>
 
-            <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-white/70">
-              <span className="font-semibold text-white/90">CO₂</span>
-              <span className="text-white/60 font-mono font-medium">PPM</span>
+            {/* Value row */}
+            <div className="mt-3 flex items-baseline">
+              <span className="font-serif font-light text-5xl text-white tracking-tight">
+                420+
+              </span>
+              <span className="ml-3 font-mono text-xs text-white/60 font-normal">global</span>
             </div>
-            <div className="mt-3 font-display font-light text-4xl text-white drop-shadow flex items-baseline">
-              420+
-              <span className="ml-2 font-mono text-xs text-white/60 font-medium">global</span>
-            </div>
-            <p className="mt-1 text-xs text-white/50 font-sans tracking-wide">
+
+            {/* Subtext */}
+            <p className="mt-2 text-xs text-white/50 font-mono tracking-wide">
               {language === 'RU' ? 'в среднем' : language === 'EN' ? 'average' : "o'rtacha"}
             </p>
-          </div>
+          </motion.div>
         </motion.div>
 
-        {/* Ticker */}
-        <div className="absolute bottom-0 inset-x-0 z-10 overflow-hidden border-t border-white/[0.08] bg-[#03130c]/80 backdrop-blur-md py-3.5">
-          <div className="flex w-max animate-[marquee_45s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.4em] uppercase text-white/70">
+        {/* Scroll Indicator with smooth bouncing line */}
+        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/40">
+          <span className="text-[10px] tracking-[0.35em] uppercase font-mono">SCROLL</span>
+          <motion.span
+            animate={{ y: [0, 8, 0], opacity: [0.3, 0.9, 0.3] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            className="block w-px h-8 bg-gradient-to-b from-white/50 to-transparent"
+          />
+        </div>
+
+        {/* Continuous Running Ticker Ribbon */}
+        <div className="absolute bottom-0 inset-x-0 z-10 overflow-hidden border-t border-white/[0.08] bg-[#03100a]/85 backdrop-blur-md py-3">
+          <div className="flex w-max animate-[marquee_45s_linear_infinite] whitespace-nowrap text-[10px] tracking-[0.4em] uppercase text-white/60 font-mono">
             {[0, 1].map((k) => (
               <span key={k} className="flex shrink-0">
                 {tickerItems.map((w) => (
-                  <span key={w} className="px-8">{w}<span className="ml-16 text-emerald-400">✦</span></span>
+                  <span key={w} className="px-10 flex items-center gap-10">
+                    <span>{w}</span>
+                    <span className="text-amber-200/80">✦</span>
+                  </span>
                 ))}
               </span>
             ))}
           </div>
         </div>
-
-        {/* Scroll hint */}
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/50">
-          <span className="text-[10px] tracking-[0.35em] uppercase font-mono">Scroll</span>
-          <motion.span
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity }}
-            className="block w-px h-8 bg-gradient-to-b from-emerald-400/80 to-transparent"
-          />
-        </div>
       </section>
 
-      {/* ───────── IMPACT STATEMENT ───────── */}
+      {/* ───────── IMPACT STATEMENT SECTION ───────── */}
       <section className="relative w-full bg-[#030d08] text-white px-6 py-32 overflow-hidden border-t border-white/[0.06]">
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#030d08] to-transparent pointer-events-none" />
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-10 flex items-center gap-4 text-[11px] font-medium tracking-[0.35em] uppercase text-emerald-400">
-            <span>01</span><span className="h-px w-16 bg-emerald-500/40" /><span>{language === 'RU' ? 'Воздействие' : language === 'EN' ? 'Impact' : 'Ta’sir'}</span>
+            <span>01</span>
+            <span className="h-px w-16 bg-emerald-500/40" />
+            <span>{language === 'RU' ? 'Воздействие' : language === 'EN' ? 'Impact' : 'Ta’sir'}</span>
           </div>
+
           <motion.p
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-light leading-snug text-white/95"
+            className="font-serif font-light leading-snug text-white/95"
             style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.5rem)' }}
           >
             <Globe2 className="inline-block mr-3 -mt-2 text-emerald-400" size={40} />
@@ -283,7 +398,7 @@ const HeroSection = ({ setActiveTab }) => {
                 className="rounded-2xl p-8 sm:p-10 text-center sm:text-left shadow-2xl border border-white/10 bg-[#04160f]/60 backdrop-blur-xl"
               >
                 <div
-                  className="font-display font-light bg-clip-text text-transparent bg-gradient-to-br from-white via-emerald-100 to-emerald-400"
+                  className="font-serif font-light bg-clip-text text-transparent bg-gradient-to-br from-white via-emerald-100 to-emerald-400"
                   style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}
                 >
                   <CountUp value={s.v} decimals={s.d} duration={2.5} suffix={s.suf} />

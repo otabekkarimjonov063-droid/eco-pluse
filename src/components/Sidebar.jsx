@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
-  Sprout, LayoutDashboard, Calculator, GalleryVerticalEnd, 
-  TreePine, ShieldAlert, LogIn, LogOut, Moon, Sun
+  Sprout, LayoutGrid, Calculator, Archive, 
+  TreePine, Shield, LogIn, LogOut, Moon, Sun
 } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
@@ -35,11 +35,11 @@ export default function Sidebar({
 
   const navItems = items || [
     { id: 'home', label: t('navbar', 'home') || 'Bosh sahifa', icon: Sprout },
-    { id: 'dashboard', label: t('navbar', 'dashboard') || 'Global Statistika', icon: LayoutDashboard },
+    { id: 'dashboard', label: t('navbar', 'dashboard') || 'Global Statistika', icon: LayoutGrid },
     { id: 'calculator', label: t('navbar', 'calculator') || 'Kalkulyator', icon: Calculator },
-    { id: 'projects', label: t('navbar', 'projects') || 'Loyiha Galereyasi', icon: GalleryVerticalEnd },
+    { id: 'projects', label: t('navbar', 'projects') || 'Loyiha Galereyasi', icon: Archive },
     { id: 'plant', label: t('navbar', 'plant') || 'Daraxt Ekish', icon: TreePine },
-    { id: 'admin', label: 'Admin Panel', icon: ShieldAlert }
+    { id: 'admin', label: 'Admin Panel', icon: Shield }
   ]
 
   const langs = ['UZ', 'RU', 'EN']
