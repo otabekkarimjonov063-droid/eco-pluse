@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 
-// Three levels of importance - unified single glassmorphic system (bir xil shaffoflik)
+// Three levels of importance - unified transparent crystal glassmorphic system
 const tones = {
-  base: 'rounded-2xl eco-glass-card shadow-lg text-slate-800 dark:text-bone',
-  raised: 'rounded-2xl eco-glass shadow-xl text-slate-800 dark:text-bone border-emerald-500/30 dark:border-emerald-400/40',
-  feature: 'rounded-[1.75rem] eco-glass shadow-2xl text-slate-800 dark:text-bone',
+  base: 'rounded-2xl bg-black/15 backdrop-blur-[3px] border border-white/[0.08] shadow-lg text-slate-800 dark:text-bone',
+  raised: 'rounded-2xl bg-black/20 backdrop-blur-[4px] border border-white/[0.12] shadow-xl text-slate-800 dark:text-bone',
+  feature: 'rounded-[1.75rem] bg-black/20 backdrop-blur-[4px] border border-white/[0.12] shadow-2xl text-slate-800 dark:text-bone',
 };
 
 export default function GlassCard({ tone = 'base', as: Tag = 'div', className = '', children, ...rest }) {

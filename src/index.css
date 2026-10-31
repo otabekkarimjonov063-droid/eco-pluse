@@ -145,37 +145,30 @@ html:not(.dark) textarea::placeholder {
   }
   html.dark .eco-glass,
   .dark .eco-glass {
-    background: rgba(4, 22, 15, 0.65) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.16) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 255, 255, 0.10) !important;
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45) !important;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.25) !important;
   }
 
-  .eco-glass-card {
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
-  }
   html.dark .eco-glass-card,
   .dark .eco-glass-card {
-    background: rgba(4, 22, 15, 0.50) !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.14) !important;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 8px 28px 0 rgba(0, 0, 0, 0.35) !important;
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.20) !important;
   }
 
   @media (max-width: 768px) {
     .eco-glass, html.dark .eco-glass, .dark .eco-glass {
-      backdrop-filter: blur(6px) !important;
-      -webkit-backdrop-filter: blur(6px) !important;
+      backdrop-filter: blur(3px) !important;
+      -webkit-backdrop-filter: blur(3px) !important;
     }
     .eco-glass-card, html.dark .eco-glass-card, .dark .eco-glass-card {
-      backdrop-filter: blur(5px) !important;
-      -webkit-backdrop-filter: blur(5px) !important;
+      backdrop-filter: blur(2px) !important;
+      -webkit-backdrop-filter: blur(2px) !important;
     }
   }
 
@@ -185,8 +178,10 @@ html:not(.dark) textarea::placeholder {
   }
   html.dark .eco-glass-input,
   .dark .eco-glass-input {
-    background: rgba(14, 28, 22, 0.60) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(0, 0, 0, 0.20) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
   /* ── Premium Glassmorphism (Antigravity) ── */

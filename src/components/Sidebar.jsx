@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Sprout, LayoutGrid, Calculator, Archive, 
-  TreePine, Shield, LogIn, LogOut, Moon, Sun
+  TreePine, Shield, LogIn, LogOut, Moon, Sun, Globe
 } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
@@ -23,14 +23,14 @@ export default function Sidebar({
   setActiveTab, 
   onOpenLogin 
 }) {
-  const { t, language, setLanguage } = useLanguage()
+  const { t, language, setLanguage, currentLanguage, openLangModal } = useLanguage()
   const { user: authUser, isAdmin, logout: authLogout } = useAuth()
   const { isDark, toggleTheme } = useTheme()
   const { currentVersion, hasNewUpdate, setIsModalOpen } = useVersion()
 
   const currentActive = active || activeTab || 'home'
   const handleSelect = onSelect || setActiveTab
-  const currentUser = userProp || authUser || { name: 'Otabek Karimjonov' }
+  const currentUser = userProp !== undefined ? userProp : authUser
   const handleLogout = onLogout || authLogout
 
   const navItems = items || [
@@ -39,7 +39,7 @@ export default function Sidebar({
     { id: 'calculator', label: t('navbar', 'calculator') || 'Kalkulyator', icon: Calculator },
     { id: 'projects', label: t('navbar', 'projects') || 'Loyiha Galereyasi', icon: Archive },
     { id: 'plant', label: t('navbar', 'plant') || 'Daraxt Ekish', icon: TreePine },
-    { id: 'admin', label: 'Admin Panel', icon: Shield }
+    ...(isAdmin ? [{ id: 'admin', label: 'Admin Panel', icon: Shield }] : [])
   ]
 
   const langs = ['UZ', 'RU', 'EN']
@@ -78,6 +78,34 @@ export default function Sidebar({
           >
             {isDark ? <Moon size={14} className="text-[#34d399]" /> : <Sun size={14} className="text-amber-400" />}
           </button>
+
+          <button
+            onClick={openLangModal}
+            title="Tilni tanlash (35+ Dunyo tillari)"
+            className="flex items-center gap-1 px-2 py-1 rounded-lg border border-white/10 bg-white/5 text-white/90 text-xs font-mono cursor-pointer"
+          >
+            <span>{currentLanguage?.flag || '🌐'}</span>
+            <span className="font-semibold text-emerald-400">{language}</span>
+          </button>
+
+          {currentUser ? (
+            <button
+              onClick={handleLogout}
+              title="Chiqish"
+              className="p-1.5 rounded-lg border border-white/10 bg-white/5 text-white/80 hover:text-red-400 cursor-pointer"
+            >
+              <LogOut size={14} />
+            </button>
+          ) : (
+            <button
+              onClick={onOpenLogin}
+              title="Kirish"
+              className="px-2 py-1 rounded-lg border border-white/10 bg-white/5 text-white/90 text-xs font-medium cursor-pointer flex items-center gap-1"
+            >
+              <LogIn size={13} className="text-emerald-400" />
+              <span>Kirish</span>
+            </button>
+          )}
         </div>
       </header>
 
@@ -127,30 +155,43 @@ export default function Sidebar({
           {/* Weather Widget */}
           <WeatherWidget variant="sidebar" />
 
-          {/* User Profile Card */}
-          <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-black/25 p-2.5 backdrop-blur-md">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-serif text-xs">
-                O
-              </span>
-              <div className="min-w-0">
-                <p className="truncate text-xs font-medium text-white/95 leading-tight">
-                  {currentUser.name || 'Otabek Karimjonov'}
-                </p>
-                <button 
-                  onClick={handleLogout} 
-                  className="text-[10px] text-white/50 hover:text-white transition flex items-center gap-1 cursor-pointer"
-                >
-                  <span>↪ Chiqish</span>
-                </button>
+          {/* User Profile Card OR Login Button */}
+          {currentUser ? (
+            <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-black/25 p-2.5 backdrop-blur-md">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-serif text-xs">
+                  {currentUser.name?.[0] || 'U'}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-xs font-medium text-white/95 leading-tight">
+                    {currentUser.name}
+                  </p>
+                  <button 
+                    onClick={handleLogout} 
+                    className="text-[10px] text-white/50 hover:text-red-400 transition flex items-center gap-1 cursor-pointer"
+                  >
+                    <LogOut size={11} />
+                    <span>↪ Chiqish</span>
+                  </button>
+                </div>
               </div>
+              {isAdmin && (
+                <span className="rounded-md border border-white/15 bg-white/[0.04] px-1.5 py-0.5 text-[10px] font-mono text-white/70">
+                  Admin
+                </span>
+              )}
             </div>
-            <span className="rounded-md border border-white/15 bg-white/[0.04] px-1.5 py-0.5 text-[10px] font-mono text-white/70">
-              Admin
-            </span>
-          </div>
+          ) : (
+            <button
+              onClick={onOpenLogin}
+              className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 p-2.5 text-xs font-medium text-white transition hover:border-emerald-500/40 cursor-pointer shadow-xs backdrop-blur-md"
+            >
+              <LogIn size={15} className="text-emerald-400" />
+              <span>{t('navbar', 'login') || 'Kirish'}</span>
+            </button>
+          )}
 
-          {/* Dark Toggle & UZ/RU/EN Segmented Control */}
+          {/* Dark Toggle & UZ/RU/EN Segmented Control + 35+ Languages Button */}
           <div className="flex items-center justify-between gap-1.5">
             {/* Theme Toggle Pill */}
             <button
@@ -158,11 +199,11 @@ export default function Sidebar({
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/[0.08] bg-black/25 hover:bg-white/10 transition text-xs font-mono text-white/80 cursor-pointer backdrop-blur-md"
             >
               <Moon size={12} className="text-[#34d399]" />
-              <span className="text-[11px]">Dark</span>
+              <span className="text-[11px]">{isDark ? 'Dark' : 'Light'}</span>
             </button>
 
-            {/* Language Segmented Control */}
-            <div className="flex items-center gap-1 p-0.5 rounded-xl border border-white/[0.08] bg-black/25 text-xs font-mono backdrop-blur-md">
+            {/* Language Segmented Control with 35+ Languages Modal Trigger */}
+            <div className="flex items-center gap-0.5 p-0.5 rounded-xl border border-white/[0.08] bg-black/25 text-xs font-mono backdrop-blur-md">
               {langs.map((l) => (
                 <button
                   key={l}
@@ -176,6 +217,14 @@ export default function Sidebar({
                   {l}
                 </button>
               ))}
+              <button
+                onClick={openLangModal}
+                title="Barcha tillar (35+ Dunyo tillari)"
+                className="px-2 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-white rounded-lg transition cursor-pointer text-xs flex items-center justify-center gap-1 border border-emerald-500/20"
+              >
+                <Globe size={12} />
+                <span className="text-[10px] font-bold">35+</span>
+              </button>
             </div>
           </div>
 

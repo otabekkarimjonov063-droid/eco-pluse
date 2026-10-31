@@ -268,7 +268,7 @@ const HeroSection = ({ setActiveTab }) => {
               ease: 'easeInOut' 
             }}
             whileHover={{ scale: 1.03 }}
-            className="rounded-[22px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl border border-white/[0.08] bg-[#071912]/85 relative overflow-hidden cursor-default transition-shadow hover:shadow-[0_25px_60px_rgba(52,211,153,0.15)]"
+            className="rounded-[22px] p-5 shadow-[0_15px_35px_rgba(0,0,0,0.3)] backdrop-blur-[3px] border border-white/[0.12] bg-black/15 relative overflow-hidden cursor-default transition-all hover:bg-black/25"
           >
             {/* Top row */}
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.22em] uppercase">
@@ -315,7 +315,7 @@ const HeroSection = ({ setActiveTab }) => {
               ease: 'easeInOut' 
             }}
             whileHover={{ scale: 1.03 }}
-            className="rounded-[22px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl border border-white/[0.08] bg-[#071912]/85 relative overflow-hidden cursor-default transition-shadow hover:shadow-[0_25px_60px_rgba(52,211,153,0.15)]"
+            className="rounded-[22px] p-5 shadow-[0_15px_35px_rgba(0,0,0,0.3)] backdrop-blur-[3px] border border-white/[0.12] bg-black/15 relative overflow-hidden cursor-default transition-all hover:bg-black/25"
           >
             {/* Top row */}
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.22em] uppercase">
@@ -365,9 +365,8 @@ const HeroSection = ({ setActiveTab }) => {
         </div>
       </section>
 
-      {/* ───────── IMPACT STATEMENT SECTION ───────── */}
-      <section className="relative w-full bg-[#030d08] text-white px-6 py-32 overflow-hidden border-t border-white/[0.06]">
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#030d08] to-transparent pointer-events-none" />
+      {/* ───────── IMPACT STATEMENT SECTION (Transparent Glass) ───────── */}
+      <section className="relative w-full bg-transparent text-white px-6 py-32 overflow-hidden border-t border-white/[0.06]">
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-10 flex items-center gap-4 text-[11px] font-medium tracking-[0.35em] uppercase text-emerald-400">
             <span>01</span>
@@ -399,7 +398,7 @@ const HeroSection = ({ setActiveTab }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.12 }}
-                className="rounded-2xl p-8 sm:p-10 text-center sm:text-left shadow-2xl border border-white/10 bg-[#04160f]/60 backdrop-blur-xl"
+                className="rounded-2xl p-8 sm:p-10 text-center sm:text-left shadow-2xl border border-white/[0.12] bg-black/15 backdrop-blur-[3px] transition-all hover:bg-black/25"
               >
                 <div
                   className="font-serif font-light bg-clip-text text-transparent bg-gradient-to-br from-white via-emerald-100 to-emerald-400"

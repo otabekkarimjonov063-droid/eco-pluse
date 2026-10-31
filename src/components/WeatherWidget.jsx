@@ -193,7 +193,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
   // BANNER VARIANT (For Global Dashboard or Wide sections)
   if (isBanner) {
     return (
-      <div className="w-full rounded-3xl eco-glass p-4 md:p-6 text-slate-800 dark:text-bone shadow-xl transition-colors border border-black/[0.06] dark:border-white/[0.08]">
+      <div className="w-full rounded-3xl bg-black/15 backdrop-blur-[4px] p-4 md:p-6 text-slate-800 dark:text-bone shadow-xl transition-all border border-white/[0.12]">
         {/* Top Header Row with 10s indicator & API status */}
         <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-black/[0.06] dark:border-white/[0.06]">
           <div className="flex items-center gap-2">
