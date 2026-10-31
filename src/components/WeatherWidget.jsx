@@ -326,7 +326,7 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
 
   // SIDEBAR VARIANT (Default Desktop Sidebar Widget)
   return (
-    <div className="w-full rounded-2xl eco-glass-card p-3 text-slate-800 dark:text-white transition-colors border border-black/[0.06] dark:border-white/[0.08]">
+    <div className="w-full rounded-2xl eco-glass-card dark:bg-[#03130c]/75 p-3 text-slate-800 dark:text-white transition-colors border border-black/[0.06] dark:border-white/[0.08] shadow-sm">
       {/* Header telemetry status */}
       <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-black/[0.06] dark:border-white/[0.06]">
         <div className="flex items-center gap-1.5">

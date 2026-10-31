@@ -47,8 +47,7 @@ export default function Sidebar({
   return (
     <>
       {/* Mobile Top Bar with Brand, Weather, Theme, Language & Login */}
-      {/* Mobile Top Bar with Brand, Weather, Theme, Language & Login */}
-      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-3 py-2 bg-white/90 dark:bg-moss/90 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] lg:hidden text-slate-800 dark:text-white">
+      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-3 py-2 bg-white/90 dark:bg-[#04160f]/90 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] lg:hidden text-slate-800 dark:text-white">
         <div className="flex items-center gap-2 shrink-0">
           <button 
             onClick={() => handleSelect('home')} 
@@ -111,8 +110,8 @@ export default function Sidebar({
         </div>
       </header>
 
-      {/* Desktop Sidebar (Unified Eco-Glass) */}
-      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl eco-glass p-4 shadow-2xl lg:flex text-slate-800 dark:text-white border border-black/10 dark:border-white/15">
+      {/* Desktop Sidebar (Unified Deep Emerald Eco-Glass) */}
+      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl eco-glass dark:bg-[#04160f]/80 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl lg:flex text-slate-800 dark:text-white border border-black/10 dark:border-white/[0.09]">
         {/* Brand */}
         <div className="flex items-center justify-between px-3 pb-3 pt-1 shrink-0 border-b border-black/[0.06] dark:border-white/[0.06] mb-2">
           <div className="flex items-center gap-2.5">

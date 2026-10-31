@@ -68,6 +68,12 @@ function App() {
 
   return (
     <div className="min-h-screen relative flex bg-eco-light dark:bg-eco-dark text-slate-900 dark:text-bone overflow-x-hidden selection:bg-signal/30 font-sans transition-colors duration-200">
+      {/* Ambient Forest Gradient Lights */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(16,185,129,0.12)_0%,transparent_70%)] blur-3xl" />
+        <div className="absolute top-[35%] left-[-10%] w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(5,150,105,0.09)_0%,transparent_70%)] blur-3xl" />
+        <div className="absolute bottom-[-10%] right-[10%] w-[850px] h-[850px] bg-[radial-gradient(circle,rgba(4,120,87,0.10)_0%,transparent_70%)] blur-3xl" />
+      </div>
 
       {activeTab === 'admin' ? (
         <Suspense fallback={<PageLoader />}>
