@@ -249,12 +249,11 @@ const EcoAIChat = () => {
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-24 lg:bottom-8 right-5 lg:right-8 h-12 px-4 rounded-full bg-emerald-600/90 hover:bg-emerald-500 dark:bg-emerald-950/85 dark:hover:bg-emerald-900 border border-emerald-400/40 text-white backdrop-blur-2xl shadow-[0_10px_30px_rgba(16,185,129,0.35)] z-50 group flex items-center gap-2.5 transition-all font-sans cursor-pointer ring-2 ring-emerald-400/25 hover:scale-105 active:scale-95"
+            className="fixed bottom-2 lg:bottom-2.5 right-4 lg:right-6 h-8 px-3 rounded-full bg-[#04120b]/85 hover:bg-[#071f13] border border-white/15 text-white/90 backdrop-blur-xl shadow-lg z-50 group flex items-center gap-1.5 transition-all font-sans cursor-pointer text-xs"
             aria-label="Eco-AI Chat"
           >
-            <MessageSquare size={17} className="text-emerald-200 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-mono font-semibold tracking-wide text-white">AI Chat</span>
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+            <MessageSquare size={14} className="text-white/80 group-hover:scale-110 transition-transform" />
+            <span className="text-[11px] font-mono tracking-wide text-white/90">AI Chat</span>
           </motion.button>
         )}
       </AnimatePresence>

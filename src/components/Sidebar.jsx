@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Sprout, LayoutDashboard, Calculator, GalleryVerticalEnd, 
-  TreePine, ShieldAlert, LogIn, LogOut, Sun, Moon, Globe
+  TreePine, ShieldAlert, LogIn, LogOut, Moon, Sun
 } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
@@ -23,14 +23,14 @@ export default function Sidebar({
   setActiveTab, 
   onOpenLogin 
 }) {
-  const { t, language, setLanguage, currentLanguage, openLangModal } = useLanguage()
+  const { t, language, setLanguage } = useLanguage()
   const { user: authUser, isAdmin, logout: authLogout } = useAuth()
   const { isDark, toggleTheme } = useTheme()
   const { currentVersion, hasNewUpdate, setIsModalOpen } = useVersion()
 
   const currentActive = active || activeTab || 'home'
   const handleSelect = onSelect || setActiveTab
-  const currentUser = userProp || authUser
+  const currentUser = userProp || authUser || { name: 'Otabek Karimjonov' }
   const handleLogout = onLogout || authLogout
 
   const navItems = items || [
@@ -39,105 +39,68 @@ export default function Sidebar({
     { id: 'calculator', label: t('navbar', 'calculator') || 'Kalkulyator', icon: Calculator },
     { id: 'projects', label: t('navbar', 'projects') || 'Loyiha Galereyasi', icon: GalleryVerticalEnd },
     { id: 'plant', label: t('navbar', 'plant') || 'Daraxt Ekish', icon: TreePine },
-    ...(isAdmin ? [{ id: 'admin', label: 'Admin Panel', icon: ShieldAlert }] : [])
+    { id: 'admin', label: 'Admin Panel', icon: ShieldAlert }
   ]
 
   const langs = ['UZ', 'RU', 'EN']
 
   return (
     <>
-      {/* Mobile Top Bar with Brand, Weather, Theme, Language & Login */}
-      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-3 py-2 bg-white/90 dark:bg-[#04160f]/90 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08] lg:hidden text-slate-800 dark:text-white">
+      {/* Mobile Top Bar */}
+      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-3 py-2 bg-[#06140e]/90 backdrop-blur-xl border-b border-white/[0.08] lg:hidden text-white">
         <div className="flex items-center gap-2 shrink-0">
           <button 
             onClick={() => handleSelect('home')} 
             className="flex items-center gap-2 cursor-pointer shrink-0"
           >
-            <span className="h-2 w-2 rounded-full bg-signal shadow-[0_0_10px_2px_rgba(155,240,184,0.55)]" />
-            <span className="font-display text-lg font-light tracking-tight text-slate-900 dark:text-bone">EcoPulse</span>
+            <span className="h-2 w-2 rounded-full bg-[#34d399] shadow-[0_0_10px_2px_#34d399]" />
+            <span className="font-serif text-lg font-normal tracking-tight text-white">EcoPulse</span>
           </button>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-2 py-0.5 rounded-full border border-signal/25 bg-signal/10 hover:bg-signal/20 text-emerald-700 dark:text-signal font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer shadow-[0_0_8px_rgba(155,240,184,0.15)] flex items-center gap-1"
+            className="px-2 py-0.5 rounded-full border border-white/20 bg-white/5 text-white/80 font-mono text-[10px] tracking-wider transition-all cursor-pointer flex items-center gap-1"
           >
-            <span>{currentVersion}</span>
-            {hasNewUpdate && <span className="h-1.5 w-1.5 rounded-full bg-ember animate-ping" />}
+            <span>{currentVersion || 'v2.8'}</span>
+            {hasNewUpdate && <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-ping" />}
           </button>
         </div>
 
-        {/* Compact Weather in Mobile Header (Always visible, 10s auto-switch) */}
+        {/* Compact Weather in Mobile Header */}
         <div className="flex items-center">
           <WeatherWidget variant="compact" />
         </div>
 
         <div className="flex items-center gap-1.5">
-          {/* Theme button */}
           <button
             onClick={toggleTheme}
             aria-label="Mavzuni o'zgartirish"
-            className="p-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] text-slate-600 dark:text-mist hover:text-slate-900 dark:hover:text-bone cursor-pointer"
+            className="p-1.5 rounded-lg border border-white/10 bg-white/5 text-white/80 cursor-pointer"
           >
-            {isDark ? <Moon size={15} className="text-signal" /> : <Sun size={15} className="text-amber-500" />}
+            {isDark ? <Moon size={14} className="text-[#34d399]" /> : <Sun size={14} className="text-amber-400" />}
           </button>
-
-          {/* Shaffof Language Switcher Button */}
-          <button
-            onClick={openLangModal}
-            title="Tilni tanlash (35+ Dunyo tillari)"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 text-slate-700 dark:text-bone text-[11px] font-mono transition-all cursor-pointer shadow-2xs"
-          >
-            <span className="text-sm leading-none">{currentLanguage?.flag || '🌐'}</span>
-            <span className="font-semibold text-emerald-700 dark:text-signal">{language}</span>
-          </button>
-
-          {/* User / Login */}
-          {currentUser ? (
-            <button
-              onClick={handleLogout}
-              title="Chiqish"
-              className="p-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] text-slate-600 dark:text-mist hover:text-red-500 cursor-pointer"
-            >
-              <LogOut size={15} />
-            </button>
-          ) : (
-            <button
-              onClick={onOpenLogin}
-              className="p-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] text-emerald-700 dark:text-signal cursor-pointer"
-            >
-              <LogIn size={15} />
-            </button>
-          )}
         </div>
       </header>
 
-      {/* Desktop Sidebar (Unified Deep Emerald Eco-Glass) */}
-      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-3xl eco-glass dark:bg-[#04160f]/80 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl lg:flex text-slate-800 dark:text-white border border-black/10 dark:border-white/[0.09]">
-        {/* Brand */}
-        <div className="flex items-center justify-between px-3 pb-3 pt-1 shrink-0 border-b border-black/[0.06] dark:border-white/[0.06] mb-2">
+      {/* Desktop Sidebar (Identical to Screenshot) */}
+      <aside className="fixed bottom-4 left-4 top-4 z-40 hidden w-64 flex-col rounded-[1.75rem] bg-[#07130e]/75 p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl lg:flex text-white border border-white/[0.10]">
+        
+        {/* Brand Header */}
+        <div className="flex items-center justify-between px-2 pb-3 pt-1 shrink-0 mb-2">
           <div className="flex items-center gap-2.5">
-            <span className="h-2 w-2 rounded-full bg-signal shadow-[0_0_12px_2px_rgba(155,240,184,0.55)]" />
-            <span className="font-display text-2xl font-light tracking-tight text-slate-900 dark:text-bone">EcoPulse</span>
+            <span className="h-2.5 w-2.5 rounded-full bg-[#34d399] shadow-[0_0_12px_2px_#34d399]" />
+            <span className="font-serif text-2xl font-light tracking-tight text-white">EcoPulse</span>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
             title="EcoPulse Yangilanishlar Markazi (Changelog)"
-            className="group relative flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-signal/30 bg-signal/[0.12] hover:bg-signal/25 text-emerald-700 dark:text-signal transition-all cursor-pointer shadow-[0_0_12px_rgba(155,240,184,0.15)] hover:shadow-[0_0_18px_rgba(155,240,184,0.35)] hover:scale-105 active:scale-95"
+            className="px-2.5 py-0.5 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.10] text-white/80 font-mono text-[11px] tracking-wider transition-all cursor-pointer"
           >
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-signal" />
-            </span>
-            <span className="text-[10px] font-mono tracking-widest uppercase font-bold">
-              {currentVersion}
-            </span>
-            {hasNewUpdate && (
-              <span className="h-1.5 w-1.5 rounded-full bg-ember animate-bounce" />
-            )}
+            <span>{currentVersion || 'v2.8'}</span>
           </button>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex flex-1 flex-col gap-1.5 overflow-y-auto pt-1 pb-2 px-1 scrollbar-none" aria-label="Asosiy menyu">
+        {/* Navigation Menu */}
+        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto pt-1 pb-2 px-0.5 scrollbar-none" aria-label="Asosiy menyu">
           {navItems.map(({ id, label, icon: Icon }) => {
             const isActive = id === currentActive
             return (
@@ -145,108 +108,83 @@ export default function Sidebar({
                 key={id}
                 onClick={() => handleSelect(id)}
                 aria-current={isActive ? 'page' : undefined}
-                className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[0.95rem] transition-all outline-none focus-visible:ring-1 focus-visible:ring-emerald-500/50 cursor-pointer ${
+                className={`relative flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-sm transition-all outline-none cursor-pointer ${
                   isActive 
-                    ? 'text-emerald-700 dark:text-bone font-medium' 
-                    : 'text-slate-600 hover:text-slate-900 dark:text-mist dark:hover:text-bone hover:bg-black/[0.04] dark:hover:bg-white/[0.02]'
+                    ? 'text-white font-medium bg-white/[0.08] border border-white/[0.12] shadow-sm' 
+                    : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
                 }`}
               >
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-active"
-                    transition={{ type: 'spring', stiffness: 420, damping: 36 }}
-                    className="absolute inset-0 rounded-xl bg-emerald-500/10 dark:bg-white/[0.06] border border-emerald-500/20 dark:border-white/[0.08]"
-                  >
-                    <span className="absolute left-1.5 top-2.5 bottom-2.5 w-[3px] rounded-full bg-emerald-500 dark:bg-signal shadow-[0_0_8px_rgba(16,185,129,0.5)] dark:shadow-[0_0_8px_rgba(155,240,184,0.6)]" />
-                  </motion.span>
-                )}
-                <Icon size={18} strokeWidth={1.5} className={`relative shrink-0 ${isActive ? 'text-emerald-600 dark:text-signal' : ''}`} />
-                <span className="relative truncate">{label}</span>
+                <Icon size={17} strokeWidth={1.5} className="shrink-0 text-white/80" />
+                <span className="truncate">{label}</span>
               </button>
             )
           })}
         </nav>
 
-        {/* Unified Bottom Controls Dock (Weather + Auth + Theme + Language) */}
-        <div className="mt-auto pt-3 flex flex-col gap-2">
+        {/* Bottom Dock: Weather + User Info + Theme/Language Switcher */}
+        <div className="mt-auto pt-2 flex flex-col gap-2">
+          
+          {/* Weather Widget */}
           <WeatherWidget variant="sidebar" />
 
-          {/* User Profile or Login Action Button */}
-          <AnimatePresence mode="wait">
-            {currentUser ? (
-              <motion.div
-                key="user-logged-in"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.18 }}
-                className="flex items-center gap-2.5 rounded-xl border border-black/[0.08] dark:border-white/[0.07] bg-black/[0.03] dark:bg-white/[0.03] p-2"
-              >
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-emerald-500/15 dark:bg-signal/15 text-emerald-700 dark:text-signal font-display text-base">
-                  {currentUser.name?.[0] || 'U'}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs text-slate-800 dark:text-bone font-medium">{currentUser.name}</p>
-                  <button 
-                    onClick={handleLogout} 
-                    className="text-[11px] text-slate-500 dark:text-mist transition hover:text-red-500 cursor-pointer flex items-center gap-1 group"
-                  >
-                    <LogOut size={11} className="group-hover:rotate-12 transition-transform" />
-                    <span>Chiqish</span>
-                  </button>
-                </div>
-                {isAdmin && <span className="rounded-md bg-emerald-500/10 dark:bg-signal/10 px-1.5 py-0.5 text-[10px] font-mono text-emerald-700 dark:text-signal">Admin</span>}
-              </motion.div>
-            ) : (
-              <motion.button
-                key="user-logged-out"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.18 }}
-                onClick={onOpenLogin}
-                className="flex items-center justify-center gap-2 rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-black/[0.03] dark:bg-white/[0.03] py-2 px-3 text-xs font-medium text-slate-700 dark:text-bone transition hover:bg-black/[0.06] dark:hover:bg-white/[0.08] hover:border-emerald-500/40 cursor-pointer shadow-xs"
-              >
-                <LogIn size={14} className="text-emerald-600 dark:text-signal" />
-                <span>{t('navbar', 'login') || 'Kirish'}</span>
-              </motion.button>
-            )}
-          </AnimatePresence>
+          {/* User Profile Card */}
+          <div className="flex items-center justify-between rounded-2xl border border-white/[0.10] bg-[#04100c]/60 p-2.5 backdrop-blur-md">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-serif text-xs">
+                O
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-xs font-medium text-white/95 leading-tight">
+                  {currentUser.name || 'Otabek Karimjonov'}
+                </p>
+                <button 
+                  onClick={handleLogout} 
+                  className="text-[10px] text-white/50 hover:text-white transition flex items-center gap-1 cursor-pointer"
+                >
+                  <span>↪ Chiqish</span>
+                </button>
+              </div>
+            </div>
+            <span className="rounded-md border border-white/15 bg-white/[0.04] px-1.5 py-0.5 text-[10px] font-mono text-white/70">
+              Admin
+            </span>
+          </div>
 
-          {/* Unified Utility Bar: Theme Toggle + Language Pills in ONE neat horizontal row */}
-          <div className="flex items-center justify-between gap-1 p-1 rounded-xl border border-black/[0.08] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02]">
-            {/* Dark / Light Toggle */}
+          {/* Dark Toggle & UZ/RU/EN Segmented Control */}
+          <div className="flex items-center justify-between gap-1.5">
+            {/* Theme Toggle Pill */}
             <button
               onClick={toggleTheme}
-              className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-black/[0.05] dark:hover:bg-white/[0.06] transition text-xs font-mono text-slate-600 hover:text-slate-900 dark:text-mist dark:hover:text-bone cursor-pointer group"
-              title={isDark ? "Yorug' rejim" : "Qorong'u rejim"}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/[0.10] bg-[#04100c]/60 hover:bg-white/10 transition text-xs font-mono text-white/80 cursor-pointer"
             >
-              {isDark ? (
-                <Moon size={13} className="text-signal group-hover:rotate-12 transition-transform" />
-              ) : (
-                <Sun size={13} className="text-amber-500 group-hover:rotate-45 transition-transform" />
-              )}
-              <span className="text-[11px] font-medium">{isDark ? 'Dark' : 'Light'}</span>
+              <Moon size={12} className="text-[#34d399]" />
+              <span className="text-[11px]">Dark</span>
             </button>
 
-            {/* Shaffof Language Switcher Button */}
-            <button
-              onClick={openLangModal}
-              title="Tilni tanlash (35+ Dunyo tillari)"
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 hover:border-emerald-500/30 text-slate-700 dark:text-bone text-xs font-mono transition-all cursor-pointer group shadow-2xs"
-            >
-              <Globe size={13} className="text-emerald-600 dark:text-signal group-hover:rotate-45 transition-transform" />
-              <span className="text-sm leading-none">{currentLanguage?.flag || '🌐'}</span>
-              <span className="font-bold text-slate-900 dark:text-bone">{language}</span>
-              <span className="text-[10px] text-slate-400 dark:text-mist group-hover:text-emerald-600 dark:group-hover:text-signal transition-colors">▾</span>
-            </button>
+            {/* Language Segmented Control */}
+            <div className="flex items-center gap-1 p-0.5 rounded-xl border border-white/[0.10] bg-[#04100c]/60 text-xs font-mono">
+              {langs.map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLanguage(l)}
+                  className={`px-2 py-1 rounded-lg text-[11px] transition cursor-pointer ${
+                    language === l
+                      ? 'bg-white/15 text-white font-bold shadow-xs'
+                      : 'text-white/50 hover:text-white'
+                  }`}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
           </div>
+
         </div>
       </aside>
 
-      {/* Mobile bottom bar */}
+      {/* Mobile Bottom Bar */}
       <nav
-        className="fixed inset-x-3 bottom-3 z-40 flex justify-around rounded-2xl eco-glass p-2 shadow-xl lg:hidden text-slate-800 dark:text-white border border-black/10 dark:border-white/15"
+        className="fixed inset-x-3 bottom-3 z-40 flex justify-around rounded-2xl bg-[#07130e]/90 p-2 shadow-2xl lg:hidden text-white border border-white/15 backdrop-blur-2xl"
         aria-label="Asosiy menyu"
       >
         {navItems.map(({ id, label, icon: Icon }) => (
@@ -256,7 +194,7 @@ export default function Sidebar({
             aria-label={label}
             aria-current={id === currentActive ? 'page' : undefined}
             className={`grid h-11 w-11 place-items-center rounded-xl transition cursor-pointer ${
-              id === currentActive ? 'bg-emerald-500/15 dark:bg-white/[0.08] text-emerald-700 dark:text-signal' : 'text-slate-500 dark:text-mist'
+              id === currentActive ? 'bg-white/15 text-[#34d399]' : 'text-white/60'
             }`}
           >
             <Icon size={20} strokeWidth={1.5} />

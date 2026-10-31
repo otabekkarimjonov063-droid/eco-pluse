@@ -324,23 +324,23 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
     );
   }
 
-  // SIDEBAR VARIANT (Default Desktop Sidebar Widget)
+  // SIDEBAR VARIANT (Matches screenshot layout)
   return (
-    <div className="w-full rounded-2xl eco-glass-card dark:bg-[#03130c]/75 p-3 text-slate-800 dark:text-white transition-colors border border-black/[0.06] dark:border-white/[0.08] shadow-sm">
+    <div className="w-full rounded-2xl border border-white/[0.10] bg-[#04100c]/60 p-3 text-white backdrop-blur-md">
       {/* Header telemetry status */}
-      <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-black/[0.06] dark:border-white/[0.06]">
+      <div className="flex items-center justify-between mb-2 pb-1 border-b border-white/[0.08]">
         <div className="flex items-center gap-1.5">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 dark:bg-signal shadow-[0_0_8px_rgba(155,240,184,0.7)]" />
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400 shadow-[0_0_6px_#34d399]" />
           </span>
-          <span className="text-[10px] font-mono tracking-wider uppercase text-emerald-700 dark:text-signal font-semibold">
-            Ob-havo • 10s
+          <span className="text-[10px] font-mono tracking-wider uppercase text-white/70 font-semibold">
+            OB-HAVO • 10S
           </span>
         </div>
         <button
           onClick={advanceToNextCity}
-          className="text-[10px] font-mono text-slate-500 hover:text-emerald-700 dark:text-mist dark:hover:text-signal transition cursor-pointer"
+          className="text-[10px] font-mono text-white/50 hover:text-white transition cursor-pointer"
           title="Keyingi shaharga o'tish"
         >
           {cityIndex + 1}/{WEATHER_CITIES.length}
@@ -348,18 +348,18 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
       </div>
 
       {/* 10-Second Progress Bar */}
-      <div className="w-full bg-black/[0.06] dark:bg-white/[0.04] h-0.5 rounded-full overflow-hidden mb-2">
+      <div className="w-full bg-white/[0.06] h-0.5 rounded-full overflow-hidden mb-2">
         <motion.div
           key={`sidebar-progress-${cityIndex}-${cycleTick}`}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 10, ease: 'linear' }}
           style={{ transformOrigin: 'left' }}
-          className="h-full bg-emerald-500 dark:bg-signal"
+          className="h-full bg-emerald-400 shadow-[0_0_6px_#34d399]"
         />
       </div>
 
-      {/* Main city and temp row with smooth 10s animated swap */}
+      {/* Main city and temp row */}
       <AnimatePresence mode="wait">
         <motion.div
           key={cityName}
@@ -371,34 +371,34 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
           <div className="flex items-center justify-between mb-1.5">
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-display text-base font-medium text-slate-900 dark:text-bone tracking-tight">
+                <span className="text-sm font-medium text-white tracking-tight">
                   {cityName}
                 </span>
-                <span className="text-[10px] font-mono text-slate-500 dark:text-mist/70 px-1 py-0.2 rounded bg-black/[0.05] dark:bg-white/[0.06]">
+                <span className="text-[9px] font-mono text-white/70 px-1 py-0.2 rounded border border-white/20 bg-white/5">
                   {currentCity.country}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-600 dark:text-mist flex items-center gap-1 font-sans mt-0.5">
+              <p className="text-[11px] text-white/60 font-sans mt-0.5">
                 {conditionLabel}
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Icon size={24} className={`${meta.color} shrink-0`} />
-              <span className="font-display text-2xl font-light text-slate-900 dark:text-bone tabular-nums tracking-tight">
+            <div className="flex items-center gap-1.5">
+              <Icon size={20} className={`${meta.color} shrink-0`} />
+              <span className="font-display text-xl font-light text-white tabular-nums tracking-tight">
                 {weather.temp > 0 ? `+${weather.temp}` : weather.temp}°
               </span>
             </div>
           </div>
 
-          {/* Environmental metrics: Wind & Humidity */}
-          <div className="grid grid-cols-2 gap-2 pt-2 border-t border-black/[0.06] dark:border-white/[0.04] text-[11px] font-mono text-slate-600 dark:text-mist">
-            <div className="flex items-center gap-1.5">
-              <Wind size={12} className="text-emerald-600 dark:text-signal/70" />
+          {/* Environmental metrics */}
+          <div className="grid grid-cols-2 gap-1 pt-1.5 border-t border-white/[0.06] text-[11px] font-mono text-white/60">
+            <div className="flex items-center gap-1">
+              <Wind size={11} className="text-white/50" />
               <span>{weather.wind} km/h</span>
             </div>
-            <div className="flex items-center justify-end gap-1.5">
-              <Droplets size={12} className="text-cyan-600 dark:text-cyan-400/80" />
+            <div className="flex items-center justify-end gap-1">
+              <Droplets size={11} className="text-cyan-400/70" />
               <span>{weather.humidity}% namlik</span>
             </div>
           </div>

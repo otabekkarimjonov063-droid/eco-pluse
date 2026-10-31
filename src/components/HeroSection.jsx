@@ -163,14 +163,14 @@ const HeroSection = ({ setActiveTab }) => {
           >
             <button
               onClick={() => setActiveTab && setActiveTab('dashboard')}
-              className="flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#f0ebe1] hover:bg-white text-[#04120b] font-semibold text-sm tracking-wide transition-all shadow-[0_4px_25px_rgba(240,235,225,0.22)] hover:shadow-[0_6px_32px_rgba(240,235,225,0.35)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer font-sans"
+              className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#eddab5] hover:bg-white text-[#0f1712] font-medium text-sm tracking-wide transition-all shadow-[0_4px_24px_rgba(237,218,181,0.25)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer font-sans"
             >
               <span>{language === 'RU' ? 'Войти на платформу' : language === 'EN' ? 'Enter platform' : 'Platformaga kirish'}</span>
               <ArrowRight size={16} />
             </button>
             <button
               onClick={() => setActiveTab && setActiveTab('projects')}
-              className="px-8 py-3.5 rounded-full border border-white/20 bg-white/[0.05] hover:bg-white/[0.12] backdrop-blur-md text-[#f0ebe1] font-medium text-sm tracking-wide hover:border-white/35 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer font-sans"
+              className="px-8 py-3.5 rounded-full border border-white/20 bg-black/20 hover:bg-white/10 backdrop-blur-md text-[#eddab5] font-medium text-sm tracking-wide hover:border-white/35 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer font-sans"
             >
               {language === 'RU' ? 'Узнать больше' : language === 'EN' ? 'Learn more' : "Batafsil o'rganish"}
             </button>
@@ -180,44 +180,44 @@ const HeroSection = ({ setActiveTab }) => {
         {/* Floating data cards (Unified Eco-Glass on the right) */}
         <motion.div
           style={{ opacity: contentOpacity }}
-          className="hidden lg:flex absolute right-12 top-28 z-10 w-72 flex-col gap-4 pointer-events-none select-none"
+          className="hidden lg:flex absolute right-10 top-24 z-10 w-64 flex-col gap-3.5 pointer-events-none select-none"
         >
           {/* Card 1: Air Quality */}
-          <div className="animate-float-slow rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-white/[0.12] bg-[#04160f]/65 relative overflow-hidden group">
-            <div className="absolute -top-10 -right-10 w-28 h-28 bg-emerald-500/20 rounded-full blur-xl pointer-events-none" />
+          <div className="animate-float-slow rounded-2xl p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-white/[0.12] bg-[#06140e]/75 relative overflow-hidden group">
+            <div className="absolute -top-10 -right-10 w-24 h-24 bg-emerald-500/15 rounded-full blur-xl pointer-events-none" />
 
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-white/70">
               <span className="font-semibold text-white/90">
                 {language === 'RU' ? 'ВОЗДУХ · ТАШКЕНТ' : language === 'EN' ? 'AIR · TASHKENT' : 'HAVO · TOSHKENT'}
               </span>
-              <span className="text-emerald-300 font-bold flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30">
+              <span className="text-emerald-300 font-bold flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
                 • {t('hero', 'live') || 'JONLI'}
               </span>
             </div>
-            <div className="mt-3 font-display font-light text-5xl text-white drop-shadow flex items-baseline">
+            <div className="mt-3 font-display font-light text-4xl text-white drop-shadow flex items-baseline">
               {aqi ?? '67'}
-              <span className="ml-2.5 font-mono text-xs text-white/60 font-medium">US AQI</span>
+              <span className="ml-2 font-mono text-xs text-white/60 font-medium">US AQI</span>
             </div>
-            <div className="mt-4 h-1.5 rounded-full bg-white/10 overflow-hidden">
+            <div className="mt-3.5 h-1 rounded-full bg-white/10 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 shadow-[0_0_14px_rgba(52,211,153,0.8)]" 
+                className="h-full bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]" 
                 style={{ width: `${Math.min((aqi || 67) / 2, 100)}%` }} 
               />
             </div>
           </div>
 
           {/* Card 2: CO2 */}
-          <div className="animate-float rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-white/[0.12] bg-[#04160f]/65 relative overflow-hidden group mt-1" style={{ animationDelay: '-2s' }}>
-            <div className="absolute -top-10 -right-10 w-28 h-28 bg-teal-500/20 rounded-full blur-xl pointer-events-none" />
+          <div className="animate-float rounded-2xl p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-white/[0.12] bg-[#06140e]/75 relative overflow-hidden group mt-0.5" style={{ animationDelay: '-2s' }}>
+            <div className="absolute -top-10 -right-10 w-24 h-24 bg-teal-500/15 rounded-full blur-xl pointer-events-none" />
 
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.2em] uppercase text-white/70">
               <span className="font-semibold text-white/90">CO₂</span>
               <span className="text-white/60 font-mono font-medium">PPM</span>
             </div>
-            <div className="mt-3 font-display font-light text-5xl text-white drop-shadow flex items-baseline">
+            <div className="mt-3 font-display font-light text-4xl text-white drop-shadow flex items-baseline">
               420+
-              <span className="ml-2.5 font-mono text-xs text-white/60 font-medium">global</span>
+              <span className="ml-2 font-mono text-xs text-white/60 font-medium">global</span>
             </div>
             <p className="mt-1 text-xs text-white/50 font-sans tracking-wide">
               {language === 'RU' ? 'в среднем' : language === 'EN' ? 'average' : "o'rtacha"}
