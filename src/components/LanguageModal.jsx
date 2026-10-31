@@ -75,7 +75,7 @@ export default function LanguageModal() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeLangModal}
-            className="fixed inset-0 bg-slate-950/60 dark:bg-black/75 backdrop-blur-md"
+            className="fixed inset-0 bg-slate-950/40 dark:bg-black/50 backdrop-blur-sm"
           />
 
           {/* Shaffof Crystal Glass Modal Dialog */}
@@ -88,20 +88,20 @@ export default function LanguageModal() {
             aria-modal="true"
             aria-labelledby="lang-modal-title"
             className="relative w-full max-w-2xl max-h-[85vh] flex flex-col rounded-3xl overflow-hidden
-                       bg-white/80 dark:bg-[#081512]/85 
-                       backdrop-blur-2xl 
-                       border border-slate-200/60 dark:border-emerald-500/25 
-                       shadow-[0_25px_60px_-15px_rgba(0,0,0,0.4),0_0_40px_rgba(16,185,129,0.12)]
+                       bg-white/80 dark:bg-black/25 
+                       backdrop-blur-md 
+                       border border-slate-200/60 dark:border-white/[0.12] 
+                       shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)]
                        text-slate-800 dark:text-slate-100"
           >
             {/* Ambient decorative crystal glow */}
-            <div className="absolute -top-24 -left-24 w-64 h-64 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -top-24 -left-24 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none" />
 
             {/* Modal Header */}
             <div className="relative z-10 px-6 pt-6 pb-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-start justify-between gap-4">
               <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-emerald-500/15 dark:bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-inner">
+                <div className="w-11 h-11 rounded-2xl bg-white/[0.06] dark:bg-white/[0.08] border border-white/15 flex items-center justify-center text-emerald-400 shadow-inner">
                   <Globe className="w-5 h-5 animate-spin-slow" />
                 </div>
                 <div>
@@ -109,7 +109,7 @@ export default function LanguageModal() {
                     <h2 id="lang-modal-title" className="text-xl font-bold font-display tracking-tight text-slate-900 dark:text-bone">
                       Tilni tanlang
                     </h2>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-white/[0.08] text-emerald-300 border border-white/15">
                       <Sparkles className="w-2.5 h-2.5" />
                       35+ Tillar
                     </span>
@@ -141,11 +141,11 @@ export default function LanguageModal() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Til nomini yoki kodini qidiring (masalan: English, Русский, TR, 日本語)..."
                   className="w-full pl-10 pr-9 py-2.5 rounded-xl text-sm 
-                             bg-white/60 dark:bg-black/30 
-                             border border-black/10 dark:border-white/15 
+                             bg-white/60 dark:bg-black/20 
+                             border border-black/10 dark:border-white/10 
                              text-slate-900 dark:text-bone 
                              placeholder:text-slate-400 dark:placeholder:text-slate-500
-                             focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500/50 
+                             focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-white/20 
                              backdrop-blur-sm transition-all"
                   autoFocus
                 />
@@ -168,7 +168,7 @@ export default function LanguageModal() {
                     className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium transition cursor-pointer text-xs ${
                       selectedRegion === r.id
                         ? 'bg-emerald-600 text-white shadow-sm font-semibold'
-                        : 'bg-black/[0.04] dark:bg-white/[0.04] hover:bg-black/[0.08] dark:hover:bg-white/[0.08] text-slate-600 dark:text-mist border border-black/5 dark:border-white/5'
+                        : 'bg-black/[0.04] dark:bg-white/[0.04] hover:bg-black/[0.08] dark:hover:bg-white/[0.08] text-slate-600 dark:text-mist border border-black/5 dark:border-white/10'
                     }`}
                   >
                     {r.label}

@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import Tree3D from './Tree3D';
 import GlassCard from './GlassCard';
-import VideoBackdrop from './VideoBackdrop';
 
 const PlantTree = () => {
   const { language, t, tText } = useLanguage();
@@ -176,13 +175,6 @@ const PlantTree = () => {
 
   return (
     <div className="min-h-[calc(100vh-2rem)] lg:min-h-screen bg-transparent text-slate-900 dark:text-white flex flex-col md:flex-row overflow-hidden font-sans relative lg:border-l border-slate-200 dark:border-white/10 transition-colors duration-300">
-      {/* Dynamic Looping Video Background */}
-      <VideoBackdrop 
-        src="/videos/growth.mp4" 
-        poster="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=75&w=1080" 
-        opacity={0.3} 
-      />
-
       {/* LEFT PANEL - CONTROLS (Unified Eco-Glass) */}
       <div className="w-full md:w-1/2 lg:w-5/12 z-10 flex flex-col justify-start pt-24 pb-12 px-6 lg:px-12 min-h-screen overflow-y-auto relative eco-glass border-r border-slate-200 dark:border-white/10 shadow-2xl transition-colors duration-300 text-slate-900 dark:text-white">
 

@@ -251,24 +251,25 @@ const HeroSection = ({ setActiveTab }) => {
           </motion.div>
         </motion.div>
 
-        {/* ───────── Floating Data Cards on the Right (Lively synchronized interaction) ───────── */}
+        {/* ───────── Floating Data Cards on the Right (Lively synchronized magnetic collision) ───────── */}
         <motion.div
           style={{ opacity: contentOpacity }}
           className="hidden lg:flex absolute right-12 top-24 z-10 w-64 flex-col gap-3 select-none"
         >
-          {/* Card 1: Air Quality - Floats down towards Card 2 */}
+          {/* Card 1: Air Quality - Floats down and magnetically kisses/touches Card 2 */}
           <motion.div
             animate={{ 
-              y: [0, 8.5, 0, -3.5, 0],
-              rotate: [0, 0.6, 0, -0.4, 0]
+              y: [0, 7.5, 1, 7.5, 0, -3.5, 0],
+              rotate: [0, 0.8, -0.2, 0.8, 0, -0.4, 0],
+              scale: [1, 1.018, 0.99, 1.018, 1, 0.995, 1]
             }}
             transition={{ 
-              duration: 3.6, 
+              duration: 3.2, 
               repeat: Infinity, 
               ease: 'easeInOut' 
             }}
-            whileHover={{ scale: 1.03 }}
-            className="rounded-[22px] p-5 shadow-[0_15px_35px_rgba(0,0,0,0.3)] backdrop-blur-[3px] border border-white/[0.12] bg-black/15 relative overflow-hidden cursor-default transition-all hover:bg-black/25"
+            whileHover={{ scale: 1.04 }}
+            className="rounded-[22px] p-5 shadow-[0_15px_35px_rgba(0,0,0,0.25)] backdrop-blur-[2px] border border-white/[0.12] bg-black/10 relative overflow-hidden cursor-default transition-all hover:bg-black/20"
           >
             {/* Top row */}
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.22em] uppercase">
@@ -303,19 +304,20 @@ const HeroSection = ({ setActiveTab }) => {
             </div>
           </motion.div>
 
-          {/* Card 2: CO2 - Floats up towards Card 1 */}
+          {/* Card 2: CO2 - Floats up and magnetically kisses/touches Card 1 */}
           <motion.div
             animate={{ 
-              y: [0, -8.5, 0, 3.5, 0],
-              rotate: [0, -0.6, 0, 0.4, 0]
+              y: [0, -7.5, -1, -7.5, 0, 3.5, 0],
+              rotate: [0, -0.8, 0.2, -0.8, 0, 0.4, 0],
+              scale: [1, 0.982, 1.01, 0.982, 1, 1.005, 1]
             }}
             transition={{ 
-              duration: 3.6, 
+              duration: 3.2, 
               repeat: Infinity, 
               ease: 'easeInOut' 
             }}
-            whileHover={{ scale: 1.03 }}
-            className="rounded-[22px] p-5 shadow-[0_15px_35px_rgba(0,0,0,0.3)] backdrop-blur-[3px] border border-white/[0.12] bg-black/15 relative overflow-hidden cursor-default transition-all hover:bg-black/25"
+            whileHover={{ scale: 1.04 }}
+            className="rounded-[22px] p-5 shadow-[0_15px_35px_rgba(0,0,0,0.25)] backdrop-blur-[2px] border border-white/[0.12] bg-black/10 relative overflow-hidden cursor-default transition-all hover:bg-black/20"
           >
             {/* Top row */}
             <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.22em] uppercase">
@@ -348,8 +350,8 @@ const HeroSection = ({ setActiveTab }) => {
           />
         </div>
 
-        {/* Continuous Running Ticker Ribbon - Edge to Edge */}
-        <div className="fixed bottom-0 inset-x-0 z-20 overflow-hidden border-t border-white/[0.08] bg-[#03100a]/90 backdrop-blur-md py-2.5">
+        {/* Continuous Running Ticker Ribbon - Edge to Edge Translucent Black Glass */}
+        <div className="fixed bottom-0 inset-x-0 z-20 overflow-hidden border-t border-white/[0.08] bg-black/20 backdrop-blur-md py-2.5">
           <div className="flex w-max animate-[marquee_45s_linear_infinite] whitespace-nowrap text-[10px] tracking-[0.4em] uppercase text-white/60 font-mono">
             {[0, 1].map((k) => (
               <span key={k} className="flex shrink-0">
@@ -398,7 +400,7 @@ const HeroSection = ({ setActiveTab }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.12 }}
-                className="rounded-2xl p-8 sm:p-10 text-center sm:text-left shadow-2xl border border-white/[0.12] bg-black/15 backdrop-blur-[3px] transition-all hover:bg-black/25"
+                className="rounded-2xl p-8 sm:p-10 text-center sm:text-left shadow-2xl border border-white/[0.12] bg-black/10 backdrop-blur-[2px] transition-all hover:bg-black/20"
               >
                 <div
                   className="font-serif font-light bg-clip-text text-transparent bg-gradient-to-br from-white via-emerald-100 to-emerald-400"

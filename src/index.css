@@ -145,26 +145,26 @@ html:not(.dark) textarea::placeholder {
   }
   html.dark .eco-glass,
   .dark .eco-glass {
-    background: rgba(0, 0, 0, 0.16) !important;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.10) !important;
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.25) !important;
+    background: rgba(0, 0, 0, 0.10) !important;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.20) !important;
   }
 
   html.dark .eco-glass-card,
   .dark .eco-glass-card {
-    background: rgba(0, 0, 0, 0.14) !important;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
+    background: rgba(0, 0, 0, 0.10) !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.20) !important;
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.16) !important;
   }
 
   @media (max-width: 768px) {
     .eco-glass, html.dark .eco-glass, .dark .eco-glass {
-      backdrop-filter: blur(3px) !important;
-      -webkit-backdrop-filter: blur(3px) !important;
+      backdrop-filter: blur(2px) !important;
+      -webkit-backdrop-filter: blur(2px) !important;
     }
     .eco-glass-card, html.dark .eco-glass-card, .dark .eco-glass-card {
       backdrop-filter: blur(2px) !important;
@@ -178,10 +178,10 @@ html:not(.dark) textarea::placeholder {
   }
   html.dark .eco-glass-input,
   .dark .eco-glass-input {
-    background: rgba(0, 0, 0, 0.20) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.10) !important;
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
   }
 
   /* ── Premium Glassmorphism (Antigravity) ── */

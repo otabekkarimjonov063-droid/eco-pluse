@@ -45,7 +45,7 @@ export default function VersionUpdateModal() {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.2 }}
-        className="relative w-full max-w-3xl rounded-3xl bg-[#081410]/95 border border-signal/25 p-6 sm:p-8 shadow-2xl backdrop-blur-md text-bone z-10 my-auto"
+        className="relative w-full max-w-3xl rounded-3xl bg-black/25 border border-white/[0.12] p-6 sm:p-8 shadow-2xl backdrop-blur-md text-bone z-10 my-auto"
       >
           {/* Header */}
           <div className="flex items-center justify-between pb-5 border-b border-white/[0.08]">

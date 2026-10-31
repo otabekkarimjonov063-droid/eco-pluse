@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, Send, User, ThumbsUp, Star } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import GlassCard from './GlassCard';
-import VideoBackdrop from './VideoBackdrop';
 
 const initialMockComments = [
   {
@@ -126,13 +125,6 @@ const EcoComments = () => {
 
   return (
     <section className="py-20 relative overflow-hidden bg-transparent text-bone">
-      {/* Dynamic Looping Video Background */}
-      <VideoBackdrop 
-        src="/videos/aurora.mp4" 
-        poster="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&q=75&w=1080" 
-        opacity={0.2} 
-      />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-16">
           <motion.div 
@@ -272,7 +264,7 @@ const EcoComments = () => {
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     placeholder={t('comments', 'name')}
-                    className="w-full bg-white dark:bg-moss/40 border border-slate-300 dark:border-white/[0.08] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-slate-900 dark:text-bone placeholder:text-slate-400 dark:placeholder:text-mist/50 outline-none focus:border-emerald-500 dark:focus:border-signal/40 transition-all font-sans"
+                    className="w-full bg-white dark:bg-black/20 border border-slate-300 dark:border-white/[0.10] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-slate-900 dark:text-bone placeholder:text-slate-400 dark:placeholder:text-mist/50 outline-none focus:border-emerald-500 dark:focus:border-signal/40 transition-all font-sans backdrop-blur-sm"
                   />
                 </div>
 
@@ -283,7 +275,7 @@ const EcoComments = () => {
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder={t('comments', 'comment')}
                     rows="4"
-                    className="w-full bg-white dark:bg-moss/40 border border-slate-300 dark:border-white/[0.08] rounded-xl p-3 text-xs text-slate-900 dark:text-bone placeholder:text-slate-400 dark:placeholder:text-mist/50 outline-none focus:border-emerald-500 dark:focus:border-signal/40 transition-all resize-none font-sans"
+                    className="w-full bg-white dark:bg-black/20 border border-slate-300 dark:border-white/[0.10] rounded-xl p-3 text-xs text-slate-900 dark:text-bone placeholder:text-slate-400 dark:placeholder:text-mist/50 outline-none focus:border-emerald-500 dark:focus:border-signal/40 transition-all resize-none font-sans backdrop-blur-sm"
                   ></textarea>
                 </div>
 

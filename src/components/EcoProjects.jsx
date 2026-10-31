@@ -5,7 +5,6 @@ import { Heart, Share2, ArrowRight } from 'lucide-react';
 import PaymentModal from './PaymentModal';
 import CountUp from './CountUp';
 import GlassCard from './GlassCard';
-import VideoBackdrop from './VideoBackdrop';
 
 const mockProjects = [
   {
@@ -233,13 +232,6 @@ const EcoProjects = () => {
 
   return (
     <div className="min-h-screen pt-20 pb-20 px-6 relative overflow-hidden">
-      {/* Dynamic Looping Video Background */}
-      <VideoBackdrop 
-        src="/videos/sunlight.mp4" 
-        poster="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=75&w=1080" 
-        opacity={0.25} 
-      />
-
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header */}

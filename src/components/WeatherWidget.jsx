@@ -190,10 +190,10 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
     );
   }
 
-  // BANNER VARIANT (For Global Dashboard or Wide sections)
+  // BANNER VARIANT (For Global Dashboard or Wide sections - Ultra Translucent Black Glass)
   if (isBanner) {
     return (
-      <div className="w-full rounded-3xl bg-black/15 backdrop-blur-[4px] p-4 md:p-6 text-slate-800 dark:text-bone shadow-xl transition-all border border-white/[0.12]">
+      <div className="w-full rounded-3xl bg-black/10 backdrop-blur-[3px] p-4 md:p-6 text-slate-800 dark:text-bone shadow-xl transition-all border border-white/[0.10]">
         {/* Top Header Row with 10s indicator & API status */}
         <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-black/[0.06] dark:border-white/[0.06]">
           <div className="flex items-center gap-2">
@@ -324,9 +324,9 @@ export default function WeatherWidget({ variant = 'sidebar', compact = false }) 
     );
   }
 
-  // SIDEBAR VARIANT (Matches screenshot layout)
+  // SIDEBAR VARIANT (Matches screenshot layout - Ultra Translucent Black Glass)
   return (
-    <div className="w-full rounded-2xl border border-white/[0.08] bg-black/25 p-3 text-white backdrop-blur-md">
+    <div className="w-full rounded-2xl border border-white/[0.08] bg-black/10 hover:bg-black/15 transition-all p-3 text-white backdrop-blur-sm">
       {/* Header telemetry status */}
       <div className="flex items-center justify-between mb-1.5">
         <div className="flex items-center gap-1.5">

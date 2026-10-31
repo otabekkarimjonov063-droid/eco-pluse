@@ -15,10 +15,10 @@ export default function VersionToast() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.95 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed bottom-6 right-6 z-50 max-w-sm w-full mx-4 sm:mx-0 p-4 rounded-2xl bg-[#091512]/95 border border-signal/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl text-bone"
+        className="fixed bottom-6 right-6 z-50 max-w-sm w-full mx-4 sm:mx-0 p-4 rounded-2xl bg-black/20 border border-white/[0.12] shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-md text-bone"
       >
         <div className="flex items-start gap-3">
-          <div className="p-2 rounded-xl bg-signal/15 text-signal shrink-0 mt-0.5">
+          <div className="p-2 rounded-xl bg-white/[0.08] text-emerald-400 border border-white/10 shrink-0 mt-0.5">
             {toast.type === 'success' ? (
               <CheckCircle size={18} />
             ) : (
@@ -50,7 +50,7 @@ export default function VersionToast() {
                   dismissToast();
                   setIsModalOpen(true);
                 }}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-signal/15 hover:bg-signal/25 text-signal text-xs font-semibold tracking-wide transition-all cursor-pointer border border-signal/20"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-semibold tracking-wide transition-all cursor-pointer border border-white/[0.12]"
               >
                 <span>Batafsil ko'rish</span>
                 <ArrowRight size={13} />
@@ -60,7 +60,7 @@ export default function VersionToast() {
                 <button
                   disabled={isUpdating}
                   onClick={() => applyUpdate(latestVersion)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-signal text-ink text-xs font-bold tracking-wide transition-all hover:bg-signal/90 cursor-pointer shadow-md"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/90 hover:bg-emerald-400 text-ink text-xs font-bold tracking-wide transition-all cursor-pointer shadow-md"
                 >
                   <RefreshCw size={12} className={isUpdating ? "animate-spin" : ""} />
                   <span>{isUpdating ? "O'rnatilmoqda..." : "Hozir yangilash"}</span>

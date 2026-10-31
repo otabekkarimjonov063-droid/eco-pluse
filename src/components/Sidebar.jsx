@@ -157,9 +157,9 @@ export default function Sidebar({
 
           {/* User Profile Card OR Login Button */}
           {currentUser ? (
-            <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-black/25 p-2.5 backdrop-blur-md">
+            <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-black/10 p-2.5 backdrop-blur-sm">
               <div className="flex items-center gap-2.5 min-w-0">
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-serif text-xs">
+                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/20 bg-white/10 text-emerald-300 font-serif text-xs">
                   {currentUser.name?.[0] || 'U'}
                 </span>
                 <div className="min-w-0">
@@ -184,7 +184,7 @@ export default function Sidebar({
           ) : (
             <button
               onClick={onOpenLogin}
-              className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 p-2.5 text-xs font-medium text-white transition hover:border-emerald-500/40 cursor-pointer shadow-xs backdrop-blur-md"
+              className="flex items-center justify-center gap-2 rounded-2xl border border-white/[0.08] bg-black/10 hover:bg-white/[0.08] p-2.5 text-xs font-medium text-white transition hover:border-white/20 cursor-pointer shadow-xs backdrop-blur-sm"
             >
               <LogIn size={15} className="text-emerald-400" />
               <span>{t('navbar', 'login') || 'Kirish'}</span>
@@ -196,14 +196,14 @@ export default function Sidebar({
             {/* Theme Toggle Pill */}
             <button
               onClick={toggleTheme}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/[0.08] bg-black/25 hover:bg-white/10 transition text-xs font-mono text-white/80 cursor-pointer backdrop-blur-md"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/[0.08] bg-black/10 hover:bg-white/[0.08] transition text-xs font-mono text-white/80 cursor-pointer backdrop-blur-sm"
             >
               <Moon size={12} className="text-[#34d399]" />
               <span className="text-[11px]">{isDark ? 'Dark' : 'Light'}</span>
             </button>
 
             {/* Language Segmented Control with 35+ Languages Modal Trigger */}
-            <div className="flex items-center gap-0.5 p-0.5 rounded-xl border border-white/[0.08] bg-black/25 text-xs font-mono backdrop-blur-md">
+            <div className="flex items-center gap-0.5 p-0.5 rounded-xl border border-white/[0.08] bg-black/10 text-xs font-mono backdrop-blur-sm">
               {langs.map((l) => (
                 <button
                   key={l}
@@ -220,9 +220,9 @@ export default function Sidebar({
               <button
                 onClick={openLangModal}
                 title="Barcha tillar (35+ Dunyo tillari)"
-                className="px-2 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-white rounded-lg transition cursor-pointer text-xs flex items-center justify-center gap-1 border border-emerald-500/20"
+                className="px-2 py-1 bg-white/[0.08] hover:bg-white/[0.15] text-white rounded-lg transition cursor-pointer text-xs flex items-center justify-center gap-1 border border-white/[0.12]"
               >
-                <Globe size={12} />
+                <Globe size={12} className="text-emerald-400" />
                 <span className="text-[10px] font-bold">35+</span>
               </button>
             </div>

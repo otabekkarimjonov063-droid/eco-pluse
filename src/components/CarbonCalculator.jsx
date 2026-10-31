@@ -174,26 +174,6 @@ const CarbonCalculator = () => {
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-6 relative flex flex-col justify-center overflow-hidden">
-      {/* Dynamic Looping Video Background */}
-      <VideoBackdrop 
-        src="/videos/forest.mp4" 
-        poster="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=75&w=1080" 
-        opacity={0.3} 
-      />
-
-      {/* Premium Deep Background */}
-      <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-transparent" />
-        
-        {/* Antigravity Floating Orbs (Optimized GPU CSS) */}
-        <div 
-          className="absolute top-[20%] right-[15%] w-[350px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.1)_0%,transparent_70%)] pointer-events-none"
-        />
-        <div 
-          className="absolute bottom-[20%] left-[15%] w-[350px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.1)_0%,transparent_70%)] pointer-events-none"
-        />
-      </div>
-
       <div className="max-w-4xl mx-auto w-full relative z-10">
         
         <motion.div 

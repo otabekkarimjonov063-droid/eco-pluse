@@ -30,13 +30,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    if (user) {
-      const { sendTelegramMessage } = await import('../utils/telegram.js');
-      await sendTelegramMessage(`🚪 <b>Foydalanuvchi chiqdi</b>\n\nIsmi: ${user.name}\nEmail: ${user.email}`);
+    try {
+      if (user) {
+        const { sendTelegramMessage } = await import('../utils/telegram.js');
+        await sendTelegramMessage(`🚪 <b>Foydalanuvchi chiqdi</b>\n\nIsmi: ${user.name}\nEmail: ${user.email}`);
+      }
+    } catch (e) {
+      console.warn('Logout notification failed:', e);
+    } finally {
+      setUser(null);
+      localStorage.removeItem('ecopulse_user');
+      localStorage.removeItem('adminLoggedIn');
     }
-    setUser(null);
-    localStorage.removeItem('ecopulse_user');
-    localStorage.removeItem('adminLoggedIn');
   };
 
   return (

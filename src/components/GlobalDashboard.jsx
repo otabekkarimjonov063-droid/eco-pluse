@@ -8,7 +8,6 @@ import {
 } from 'recharts';
 import CountUp from './CountUp';
 import GlassCard from './GlassCard';
-import VideoBackdrop from './VideoBackdrop';
 import WeatherWidget from './WeatherWidget';
 import { chart, ChartDefs, aqiColor } from '../lib/chartTheme';
 
@@ -385,13 +384,6 @@ const GlobalDashboard = () => {
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-4 md:px-6 relative overflow-hidden text-slate-800 dark:text-bone">
-      {/* Dynamic Looping Video Background */}
-      <VideoBackdrop 
-        src="/videos/clouds.mp4" 
-        poster="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&q=75&w=1080" 
-        opacity={0.25} 
-      />
-
       {/* Deep Antigravity Background */}
       <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-transparent" />
