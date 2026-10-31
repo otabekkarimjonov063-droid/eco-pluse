@@ -68,6 +68,18 @@ function App() {
 
   return (
     <div className="min-h-screen relative flex text-slate-900 dark:text-bone overflow-x-hidden selection:bg-signal/30 font-sans transition-colors duration-200">
+      {/* Full-bleed Aurora & Stars Backdrop - Real DOM layer for proper Chromium backdrop-filter compositing */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#030d08]">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&q=85&w=2000')`,
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#030d08]/50 via-[#04130c]/30 to-[#020805]/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_25%,rgba(16,185,129,0.22)_0%,transparent_60%)]" />
+      </div>
+
       {activeTab === 'admin' ? (
         <Suspense fallback={<PageLoader />}>
           <AdminPanel onExit={() => handleTabChange('home')} onOpenLogin={openLogin} />

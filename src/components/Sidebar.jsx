@@ -82,7 +82,7 @@ export default function Sidebar({
       </header>
 
       {/* Desktop Sidebar (Identical to Screenshot - Translucent Glass) */}
-      <aside className="fixed bottom-14 left-5 top-5 z-40 hidden w-64 flex-col rounded-[1.75rem] bg-[#04120b]/20 p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-md lg:flex text-white border border-white/[0.10]">
+      <aside className="fixed bottom-14 left-5 top-5 z-40 hidden w-64 flex-col rounded-[1.75rem] bg-black/15 backdrop-blur-[3px] p-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.25)] lg:flex text-white border border-white/[0.12]">
         
         {/* Brand Header */}
         <div className="flex items-center justify-between px-2 pb-3 pt-1 shrink-0 mb-2">
